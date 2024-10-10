@@ -1,0 +1,29 @@
+services:
+
+  apache:
+    image: yiisoftware/yii2-php:8.3-apache
+    volumes:
+      - ./:/app:delegated
+      - ~/.composer-docker/cache:/root/.composer/cache:delegated
+    ports:
+      - '8080:80'
+
+  mysql:
+    image: mysql
+    restart: always
+    environment:
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_DATABASE=fitstagram
+
+  phpmyadmin:
+    image: phpmyadmin
+    restart: unless-stopped
+    environment:
+        PMA_HOST: mysql
+        PMA_USER: 'root'
+        UPLOAD_LIMIT: 512M
+    links:
+      - mysql:db
+    ports:
+      - "8888:80"

@@ -1,0 +1,15 @@
+{
+    "phpstan.binPath": "vendor/bin/phpstan",
+    "phpstan.configFile": "phpstan.neon",
+    "phpsab.composerJsonPath": "composer.json",
+    "phpsab.executablePathCBF": "vendor/bin/phpcbf",
+    "phpsab.executablePathCS": "vendor/bin/phpcs",
+    "phpsab.standard": "phpcs.xml",
+    "[php]": {
+        "editor.defaultFormatter": "Jota0222.multi-formatter",
+        "multiFormatter.formatterList": [
+            "valeryanm.vscode-phpsab",
+            "bmewburn.vscode-intelephense-client"
+        ]
+    }
+}

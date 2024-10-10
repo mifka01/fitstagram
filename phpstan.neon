@@ -1,0 +1,24 @@
+parameters:
+    level: 6
+    paths:
+        - ./
+    excludePaths:
+        analyse:
+            - vendor
+            - web/index.php
+            - web/index-test.php
+        analyseAndScan:
+            - stubs
+            - tests
+            - ./requirements.php
+    scanFiles:
+        - vendor/yiisoft/yii2/Yii.php
+        - vendor/yiisoft/yii2/BaseYii.php
+    stubFiles:
+        - stubs/User.stub
+        - stubs/Application.stub
+        - stubs/Yii.stub
+    dynamicConstantNames:
+        - YII_DEBUG
+        - YII_ENV_TEST
+        - YII_ENV_DEV

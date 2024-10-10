@@ -1,0 +1,24 @@
+<?php
+
+namespace yii\web;
+
+/**
+ * Application is the base class for all web application classes.
+ *
+ * For more details and usage information on Application, see the [guide article on applications](guide:structure-applications).
+ *
+ * @property-read ErrorHandler $errorHandler The error handler application component.
+ * @property string $homeUrl The homepage URL.
+ * @property-read Request $request The request component.
+ * @property-read Response $response The response component.
+ * @property-read Session $session The session component.
+ * @property-read User $user The user component.
+ * @property-read \app\components\ActiveSession $activeSession
+ * @property-read \yii\caching\DbCache $aresCache
+ *
+ * @author Qiang Xue <qiang.xue@gmail.com>
+ * @since 2.0
+ */
+class Application
+{
+}
