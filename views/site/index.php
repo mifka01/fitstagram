@@ -2,6 +2,4 @@
 
 /** @var yii\web\View $this */
 
-phpinfo()
-
-?>
+phpinfo();
