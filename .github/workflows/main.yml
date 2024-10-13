@@ -45,7 +45,7 @@ jobs:
       - name: ⚙ Generate Tailwind CSS
         run: |
           npm install -D tailwindcss postcss autoprefixer
-          npx tailwindcss -i ./tailwind/input.css -o ./web/css/tailwind.css --minify
+          npx tailwindcss -c ./tailwind/tailwind.config.js -i ./tailwind/input.css -o ./web/css/tailwind.css --minify
 
       - name: ⚙ Install LFTP
         run: sudo apt install lftp
