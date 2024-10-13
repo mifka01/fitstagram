@@ -1,26 +1,33 @@
 <?php
 
-namespace app\controllers;
+namespace app\services;
 
 use yii\web\UnauthorizedHttpException;
 
-class MigrateController extends \yii\web\Controller
+class MigrationService
 {
-    public function actionUp(string $migrateToken = ''): string
+    public function validateToken(string $migrateToken): void
     {
         $token = env("MIGRATE_TOKEN");
-
-        if (empty($token) || $token !== $migrateToken) {
+        if (empty($migrateToken) || $migrateToken !== $token) {
             throw new UnauthorizedHttpException('Invalid Token');
         }
+    }
 
+    public function runMigrations(): string
+    {
         ob_start();
+        
         // Keep current application
         $oldApp = \Yii::$app;
+
         // Load Console Application config
         $config = require \Yii::getAlias('@app') . '/config/console.php';
         new \yii\console\Application($config);
+
+        // Run migration command
         \Yii::$app->runAction('migrate', ['interactive' => false]);
+
         // Revert application
         \Yii::$app = $oldApp;
 

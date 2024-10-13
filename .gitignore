@@ -37,3 +37,6 @@ tests/_support/_generated
 
 #phpactor
 .phpactor.json
+
+#tailwind css
+/web/css/tailwind.css

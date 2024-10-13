@@ -90,7 +90,7 @@ jobs:
 
       - name: 💾 Migrate database
         run: |
-          curl -L -v --write-out '%{http_code}' --url "http://nitte.cz/migrate/up?migrateToken=${{ secrets.MIGRATE_TOKEN }}"
+          curl -L -v --write-out '%{http_code}' --url "http://nitte.cz/migration/up?migrateToken=${{ secrets.MIGRATE_TOKEN }}"
 
       - name: 🧹 Clear cache and assets folder
         run: lftp -c "set ssl:verify-certificate false; open -u ${{ secrets.ftp_username }},${{ secrets.ftp_password }} ${{ secrets.ftp_server }}; rm -rf ./runtime/cache/*; rm -rf ./www/assets/*;"
