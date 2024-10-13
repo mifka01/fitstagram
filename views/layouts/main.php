@@ -22,21 +22,22 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
-<body class="d-flex flex-column h-100">
+<body class="flex flex-col h-screen bg-gray-100">
 <?php $this->beginBody() ?>
 
 <header id="header">
 </header>
 
-<main id="main" class="flex-shrink-0" role="main">
-    <div class="container">
+<main id="main" class="flex-grow" role="main">
+    <div class="container mx-auto px-4 py-8">
         <?= $content ?>
     </div>
 </main>
 
-<footer id="footer" class="mt-auto py-3 bg-light">
-    <div class="container">
-        <div class="row text-muted">
+<footer id="footer" class="mt-auto py-3 bg-gray-200">
+    <div class="container mx-auto px-4">
+        <div class="flex justify-center text-sm text-gray-600">
+            footer
         </div>
     </div>
 </footer>

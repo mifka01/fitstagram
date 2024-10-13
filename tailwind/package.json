@@ -1,0 +1,14 @@
+{
+  "name": "yii2-tailwind",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tailwindcss -i ./input.css -o /app/output/tailwind.css --minify",
+    "watch": "tailwindcss -i ./input.css -o /app/output/tailwind.css --watch"
+  },
+  "dependencies": {
+    "tailwindcss": "^3.3.0",
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.21",
+    "chokidar-cli": "^3.0.0"
+  }
+}

@@ -25,7 +25,7 @@ class AppAsset extends AssetBundle
     * @var array<string> $css
     */
     public $css = [
-        'css/site.css',
+        'css/tailwind.css',
     ];
 
     /**

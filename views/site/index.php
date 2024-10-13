@@ -1,5 +1,9 @@
 <?php
 
 /** @var yii\web\View $this */
+?>
 
-phpinfo();
+<h1 class="bg-red-500">
+    Hello world!
+</h1>
+

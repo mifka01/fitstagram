@@ -5,6 +5,7 @@ services:
     volumes:
       - ./:/app:delegated
       - ~/.composer-docker/cache:/root/.composer/cache:delegated
+      - ./web/css:/app/web/css
     ports:
       - '8080:80'
 
@@ -16,7 +17,7 @@ services:
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
       - MYSQL_DATABASE=fitstagram
     volumes:
-      - localhost-persistent-mysql-data:/var/lib/mysql
+      - mysql-data:/var/lib/mysql
 
   phpmyadmin:
     image: phpmyadmin
@@ -30,5 +31,20 @@ services:
     ports:
       - "8888:80"
 
+  tailwind:
+    build:
+      context: ./tailwind
+      dockerfile: Dockerfile
+    volumes:
+      - ./tailwind:/app
+      - ./web/css:/app/output
+      - ./views:/app/views
+      - tailwind-node-modules:/app/node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    command: sh -c "npm run watch"
+    tty: true
+
 volumes:
-  localhost-persistent-mysql-data:
+  mysql-data:
+  tailwind-node-modules:
