@@ -1,4 +1,14 @@
 RewriteEngine on
+
+RewriteCond %{HTTPS} off
+RewriteCond %{HTTP_HOST} !^localhost\:8080$ [NC]
+RewriteCond %{HTTP_HOST} !^test\. [NC]
+RewriteCond %{HTTP_HOST} !^apache$ [NC]
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
+
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule . index.php [L]

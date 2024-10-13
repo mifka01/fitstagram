@@ -34,3 +34,6 @@ tests/_support/_generated
 
 #env file
 .env
+
+#phpactor
+.phpactor.json
