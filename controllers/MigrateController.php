@@ -6,7 +6,7 @@ use yii\web\UnauthorizedHttpException;
 
 class MigrateController extends \yii\web\Controller
 {
-    public function actionUp($migrateToken = '')
+    public function actionUp(string $migrateToken = ''): string
     {
         $token = env("MIGRATE_TOKEN");
 
