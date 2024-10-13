@@ -1,0 +1,85 @@
+on:
+  workflow_dispatch:
+name: 🚀 Deploy website
+jobs:
+  static-analysis:
+    name: Static analysis 🧐
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v3
+
+      - name: ⚙ Setup PHP Enviroment
+        uses: shivammathur/setup-php@2.20.1
+        with:
+          php-version: "8.3"
+
+      - name: ⚙ Install Composer Dependencies
+        uses: "ramsey/composer-install@v3"
+        env:
+          COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ secrets.GITHUB_TOKEN }}"}}'
+      
+      - name: 🔎 PHPStan Static Analysis
+        run:  php vendor/bin/phpstan analyse --memory-limit=-1 -c phpstan.neon
+      
+      - name: 🔎 PHP Code Sniffer Analysis
+        run: php vendor/bin/phpcs .
+  web-deploy:
+    name: 🎉 Deploy without vendor
+    needs: [static-analysis]
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v3
+
+      - name: ⚙ Setup PHP Enviroment
+        uses: shivammathur/setup-php@2.20.1
+        with:
+          php-version: "8.3"
+
+      - name: ⚙ Install LFTP
+        run: sudo apt install lftp
+
+      - name: ⚙ Install Composer Dependencies
+        uses: "ramsey/composer-install@v3"
+        env:
+          COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ secrets.COMPOSER_GITHUB_PERSONAL_TOKEN }}"}}'
+
+      - name: "📐 Create env file"
+        run: |
+          touch .env
+          echo DB_HOST=${{ secrets.DB_HOST }} >> .env
+          echo DB_NAME=${{ secrets.DB_NAME }} >> .env
+          echo DB_LOGIN=${{ secrets.DB_LOGIN }} >> .env
+          echo DB_PASS=${{ secrets.DB_PASS }} >> .env
+          echo MAIL_HOST=${{ secrets.MAIL_HOST }} >> .env
+          echo MAIL_PORT=${{ secrets.MAIL_PORT }} >> .env
+          echo MAIL_USERNAME=${{ secrets.MAIL_USERNAME }} >> .env
+          echo MAIL_PASS=${{ secrets.MAIL_PASS }} >> .env
+          echo MIGRATE_TOKEN=${{ secrets.MIGRATE_TOKEN }} >> .env
+          echo "!.env" > .git-ftp-include # Add git untracked file
+
+      - name: "📐 Create index file"
+        run: |
+          rm web/index.php
+          mv web/index-prod.php web/index.php
+          mv web www
+
+      - name: 📂 Sync files
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            **/vendor/**
+
+      - name: 💾 Migrate database
+        run: |
+          curl -L -v --write-out '%{http_code}' --url "http://nitte.cz/migrate/up?migrateToken=${{ secrets.MIGRATE_TOKEN }}"
+
+      - name: 🧹 Clear cache and assets folder
+        run: lftp -c "set ssl:verify-certificate false; open -u ${{ secrets.ftp_username }},${{ secrets.ftp_password }} ${{ secrets.ftp_server }}; rm -rf ./runtime/cache/*; rm -rf ./www/assets/*;"
