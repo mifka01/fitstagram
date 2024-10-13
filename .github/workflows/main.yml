@@ -37,6 +37,16 @@ jobs:
         with:
           php-version: "8.3"
 
+      - name: ⚙ Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22'
+
+      - name: ⚙ Generate Tailwind CSS
+        run: |
+          npm install -D tailwindcss postcss autoprefixer
+          npx tailwindcss -i ./tailwind/input.css -o ./web/css/tailwind.css --minify
+
       - name: ⚙ Install LFTP
         run: sudo apt install lftp
 
