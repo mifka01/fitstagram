@@ -4,6 +4,7 @@
 /** @var string $content */
 
 use app\assets\AppAsset;
+use app\widgets\NavWidget;
 use yii\helpers\Html;
 
 AppAsset::register($this);
@@ -22,10 +23,19 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
-<body class="flex flex-col h-screen bg-gray-100">
+<body class="flex flex-col h-screen bg-gray-50">
 <?php $this->beginBody() ?>
-
-<header id="header">
+        <header id="header">
+            <?=
+            NavWidget::widget([
+                'items' => [
+                    Yii::t('app', 'Home') => ['site/index'],
+                    Yii::t('app', 'Groups') => ['groups/index'],
+                    Yii::t('app', 'Create') => ['post/create'],
+                    Yii::t('app', 'Search') => ['search/index'],
+                ],
+                'brandLabel' => 'Fitstagram',
+            ]);?>
 </header>
 
 <main id="main" class="flex-grow" role="main">
@@ -34,7 +44,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     </div>
 </main>
 
-<footer id="footer" class="mt-auto py-3 bg-gray-200">
+<footer id="footer" class="mt-auto py-3 bg-white">
     <div class="container mx-auto px-4">
         <div class="flex justify-center text-sm text-gray-600">
             footer
