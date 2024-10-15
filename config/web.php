@@ -7,6 +7,8 @@ $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    'language' => 'en',
+    'sourceLanguage' => 'en',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
@@ -50,6 +52,19 @@ $config = [
         ],
          'assetManager' => [
             'appendTimestamp' => true,
+        ],
+         'i18n' => [
+            'translations' => [
+                'app/*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@app/messages',
+                    'sourceLanguage' => 'en',
+                    'fileMap' => [
+                        'app' => 'app.php',
+                        'app/user' => 'user.php',
+                    ],
+                ],
+            ],
         ],
     ],
     'params' => $params,
