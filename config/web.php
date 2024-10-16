@@ -53,6 +53,10 @@ $config = [
          'assetManager' => [
             'appendTimestamp' => true,
         ],
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager',
+            'cache' => 'cache',
+        ],
          'i18n' => [
             'translations' => [
                 'app/*' => [
