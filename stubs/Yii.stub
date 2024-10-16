@@ -1,9 +1,0 @@
-<?php
-
-class Yii
-{
-    /**
-     * @var \yii\web\Application
-     */
-    public static $app;
-}

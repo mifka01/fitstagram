@@ -18,19 +18,19 @@ class MigrationService
     {
         ob_start();
         
-        // Keep current application
         $oldApp = \Yii::$app;
 
-        // Load Console Application config
         $config = require \Yii::getAlias('@app') . '/config/console.php';
         new \yii\console\Application($config);
 
-        // Run migration command
         \Yii::$app->runAction('migrate', ['interactive' => false]);
 
-        // Revert application
         \Yii::$app = $oldApp;
 
-        return nl2br(ob_get_clean());
+        if (($output = ob_get_clean()) === false) {
+            return 'No new migrations found';
+        }
+
+        return nl2br($output);
     }
 }

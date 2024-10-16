@@ -1,5 +1,5 @@
 parameters:
-    level: 6
+    level: 8
     paths:
         - ./
     excludePaths:
@@ -17,7 +17,8 @@ parameters:
     stubFiles:
         - stubs/User.stub
         - stubs/Application.stub
-        - stubs/Yii.stub
+        - stubs/BaseYii.stub
+        - stubs/Migration.stub
     dynamicConstantNames:
         - YII_DEBUG
         - YII_ENV_TEST

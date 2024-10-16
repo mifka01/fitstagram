@@ -1,0 +1,11 @@
+<?php
+
+namespace yii;
+
+class BaseYii
+{
+     /**
+     * @var \yii\web\Application the application instance
+     */
+    public static $app;
+}
