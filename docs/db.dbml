@@ -5,7 +5,7 @@ Project Fitstagram {
 database_type: "MySQL"
 }
 
-Table MediaFile {
+Table Media_File {
   id integer [pk, increment]
   media_path varchar
   name varchar [not null]
@@ -17,11 +17,14 @@ Table Tag {
     id integer [pk, increment]
     created_by integer [not null, ref: > User.id]
     name varchar [not null, unique]
+    created_at timestamp
 }
 
 Table Post_Tag {
     post_id integer [not null, ref: > Post.id]
     tag_id integer [not null, ref: > Tag.id]
+    created_at timestamp
+    updated_at timestamp [default: `CURRENT_TIMESTAMP`]
     Indexes {
         (post_id, tag_id) [pk, unique]
     }
@@ -29,13 +32,14 @@ Table Post_Tag {
 
 Table Post {
   id integer [pk, increment]
-  user_id integer [not null, ref: > User.id]
+  created_by integer [not null, ref: > User.id]
   visibility integer [not null]
   upvote_count integer [default: 0]
   downvote_count integer [default: 0]
   description varchar
-  status integer [not null]
+  deleted boolean 
   created_at timestamp
+  updated_at timestamp [default: `CURRENT_TIMESTAMP`]
 }
 
 Table User {
@@ -46,30 +50,35 @@ Table User {
     password_reset_token varchar
     verification_token varchar [not null]
     auth_key varchar [not null]
-    status integer [not null] 
+    active boolean 
+    deleted boolean 
+    banned boolean 
     created_at timestamp
     updated_at timestamp [default: `CURRENT_TIMESTAMP`]
 }
 
-Table Post_Rated {
+Table Post_Vote {
   up boolean [not null]
-  user_id integer [not null, ref: > User.id]
+  voted_by integer [not null, ref: > User.id]
   post_id integer [not null, ref: > Post.id]
+  created_at timestamp
+  updated_at timestamp [default: `CURRENT_TIMESTAMP`]
  
   Indexes {
-    (post_id, user_id) [pk, unique]
+    (post_id, voted_by) [pk, unique]
   }
 }
 
 Table Comment {
   id integer [pk, increment]
   content varchar [not null]
-  user_id integer [not null, ref: > User.id]
+  created_by integer [not null, ref: > User.id]
   post_id integer [not null, ref: > Post.id]
-  status integer [not null]
-  created_at timestamp [default: `CURRENT_TIMESTAMP`]
+  deleted boolean 
+  created_at timestamp
+  updated_at timestamp [default: `CURRENT_TIMESTAMP`]
   Indexes {
-    (post_id, user_id) [unique]
+    (post_id, created_by) [unique]
   }
 }
 
@@ -77,7 +86,9 @@ Table Group {
   id integer [pk, increment]
   name varchar [not null]
   owner_id integer [not null, ref: > User.id]
-  status integer [not null]
+  active boolean
+  deleted boolean
+  banned boolean
   created_at timestamp 
   updated_at timestamp [default: `CURRENT_TIMESTAMP`]
 }
@@ -94,11 +105,14 @@ Table Group_Users {
 Table Group_Join_Request {
   id integer [pk, increment]
   group_id integer [not null, ref: > Group.id]
-  user_id integer [not null, ref: > User.id]
-  status integer [not null]
+  created_by integer [not null, ref: > User.id]
+  pending boolean
+  declined boolean
+  accepted boolean
   created_at timestamp
+  updated_at timestamp [default: `CURRENT_TIMESTAMP`]
   Indexes {
-    (user_id, group_id) [unique]
+    (created_by, group_id) [unique]
   }
 }
 
@@ -110,12 +124,12 @@ Table Group_Post {
     }
 }
 
-Table Allow_Friend {
+Table Permitted_User {
     user_id int [ref: > User.id] 
-    friend_id int [ref: > User.id] 
+    permitted_user_id int [ref: > User.id] 
     
-    indexes {
-    (user_id, friend_id) [pk, unique] 
+    Indexes {
+    (user_id, permitted_user_id) [pk, unique] 
     }
 }
 
