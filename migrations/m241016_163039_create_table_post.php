@@ -1,5 +1,7 @@
 <?php
 
+namespace app\migrations;
+
 use yii\db\Migration;
 
 /**
@@ -7,10 +9,8 @@ use yii\db\Migration;
  */
 class m241016_163039_create_table_post extends Migration
 {
-
-
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function safeUp()
     {
@@ -26,11 +26,14 @@ class m241016_163039_create_table_post extends Migration
             'visibility' => $this->integer()->notNull(),
             'upvote_count' => $this->integer()->defaultValue(0),
             'downvote_count' => $this->integer()->defaultValue(0),
-            'description' => $this->text(), // Use text for larger descriptions
-            'deleted' => $this->boolean()->defaultValue(false), // Default to false
+            // Use text for larger descriptions
+            'description' => $this->text(),
+            // Default to false
+            'deleted' => $this->boolean()->defaultValue(false),
             'created_at' => $this->timestamp()->defaultExpression('CURRENT_TIMESTAMP')->notNull(),
             'updated_at' => $this->timestamp()->defaultExpression('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')->notNull(),
-        ], $tableOptions); // Use table options here
+            // Use table options here
+        ], $tableOptions);
 
         // Create index for column `created_by`
         $this->createIndex(
@@ -51,7 +54,7 @@ class m241016_163039_create_table_post extends Migration
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function safeDown()
     {

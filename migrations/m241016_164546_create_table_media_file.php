@@ -1,5 +1,7 @@
 <?php
 
+namespace app\migrations;
+
 use yii\db\Migration;
 
 /**
@@ -8,7 +10,7 @@ use yii\db\Migration;
 class m241016_164546_create_table_media_file extends Migration
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function safeUp()
     {
@@ -38,7 +40,7 @@ class m241016_164546_create_table_media_file extends Migration
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function safeDown()
     {

@@ -1,5 +1,7 @@
 <?php
 
+namespace app\migrations;
+
 use yii\db\Migration;
 
 /**
@@ -8,7 +10,7 @@ use yii\db\Migration;
 class m241016_172609_create_table_group_post extends Migration
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function safeUp()
     {
@@ -47,7 +49,7 @@ class m241016_172609_create_table_group_post extends Migration
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function safeDown()
     {

@@ -1,5 +1,7 @@
 <?php
 
+namespace app\migrations;
+
 use yii\db\Migration;
 
 /**
@@ -8,7 +10,7 @@ use yii\db\Migration;
 class m241016_172729_group_join_request extends Migration
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function safeUp()
     {
@@ -51,7 +53,7 @@ class m241016_172729_group_join_request extends Migration
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function safeDown()
     {

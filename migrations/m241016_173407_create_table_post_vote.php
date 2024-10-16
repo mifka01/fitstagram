@@ -1,5 +1,7 @@
 <?php
 
+namespace app\migrations;
+
 use yii\db\Migration;
 
 /**
@@ -8,7 +10,7 @@ use yii\db\Migration;
 class m241016_173407_create_table_post_vote extends Migration
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function safeUp()
     {
@@ -48,7 +50,7 @@ class m241016_173407_create_table_post_vote extends Migration
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function safeDown()
     {

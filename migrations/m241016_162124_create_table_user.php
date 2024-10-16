@@ -1,5 +1,7 @@
 <?php
 
+namespace app\migrations;
+
 use yii\db\Migration;
 
 /**
@@ -7,10 +9,8 @@ use yii\db\Migration;
  */
 class m241016_162124_create_table_user extends Migration
 {
-
-
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function safeUp()
     {
@@ -60,7 +60,7 @@ class m241016_162124_create_table_user extends Migration
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function safeDown()
     {
