@@ -1,0 +1,123 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+Project Fitstagram {
+database_type: "MySQL"
+}
+
+Table MediaFile {
+  id integer [pk, increment]
+  media_path varchar
+  name varchar [not null]
+  place varchar
+  post_id integer [not null, ref: > Post.id]
+}
+
+Table Tag {
+    id integer [pk, increment]
+    created_by integer [not null, ref: > User.id]
+    name varchar [not null, unique]
+}
+
+Table Post_Tag {
+    post_id integer [not null, ref: > Post.id]
+    tag_id integer [not null, ref: > Tag.id]
+    Indexes {
+        (post_id, tag_id) [pk, unique]
+    }
+}
+
+Table Post {
+  id integer [pk, increment]
+  user_id integer [not null, ref: > User.id]
+  visibility integer [not null]
+  upvote_count integer [default: 0]
+  downvote_count integer [default: 0]
+  description varchar
+  status integer [not null]
+  created_at timestamp
+}
+
+Table User {
+    id integer [pk, increment]
+    username varchar [not null]
+    email varchar [not null]
+    password_hash varchar [not null]
+    password_reset_token varchar
+    verification_token varchar [not null]
+    auth_key varchar [not null]
+    status integer [not null] 
+    created_at timestamp
+    updated_at timestamp [default: `CURRENT_TIMESTAMP`]
+}
+
+Table Post_Rated {
+  up boolean [not null]
+  user_id integer [not null, ref: > User.id]
+  post_id integer [not null, ref: > Post.id]
+ 
+  Indexes {
+    (post_id, user_id) [pk, unique]
+  }
+}
+
+Table Comment {
+  id integer [pk, increment]
+  content varchar [not null]
+  user_id integer [not null, ref: > User.id]
+  post_id integer [not null, ref: > Post.id]
+  status integer [not null]
+  created_at timestamp [default: `CURRENT_TIMESTAMP`]
+  Indexes {
+    (post_id, user_id) [unique]
+  }
+}
+
+Table Group {
+  id integer [pk, increment]
+  name varchar [not null]
+  owner_id integer [not null, ref: > User.id]
+  status integer [not null]
+  created_at timestamp 
+  updated_at timestamp [default: `CURRENT_TIMESTAMP`]
+}
+
+Table Group_Users {
+  group_id integer [not null, ref: > Group.id]
+  user_id integer [not null, ref: > User.id]
+  created_at timestamp 
+  Indexes {
+    (user_id, group_id) [pk,unique]
+  }
+}
+
+Table Group_Join_Request {
+  id integer [pk, increment]
+  group_id integer [not null, ref: > Group.id]
+  user_id integer [not null, ref: > User.id]
+  status integer [not null]
+  created_at timestamp
+  Indexes {
+    (user_id, group_id) [unique]
+  }
+}
+
+Table Group_Post {
+    group_id integer [not null, ref: > Group.id]
+    post_id integer [not null, ref: > Post.id]
+    Indexes {
+        (group_id, post_id) [pk,unique]
+    }
+}
+
+Table Allow_Friend {
+    user_id int [ref: > User.id] 
+    friend_id int [ref: > User.id] 
+    
+    indexes {
+    (user_id, friend_id) [pk, unique] 
+    }
+}
+
+
+
