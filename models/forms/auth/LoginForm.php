@@ -1,7 +1,8 @@
 <?php
 
-namespace app\models;
+namespace app\models\forms\auth;
 
+use app\models\User;
 use Yii;
 use yii\base\Model;
 
@@ -47,7 +48,9 @@ class LoginForm extends Model
         if (!$this->hasErrors()) {
             $user = $this->getUser();
 
-            if (!$user || !$user->validatePassword($this->password)) {
+            if (!$user ||
+                    !$user->validatePassword($this->password)
+            ) {
                 $this->addError($attribute, 'Incorrect username or password.');
             }
         }
@@ -60,8 +63,8 @@ class LoginForm extends Model
      */
     public function login(): bool
     {
-        if ($this->validate()) {
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600*24*30 : 0);
+        if ($this->validate() && ($user = $this->getUser())) {
+                return Yii::$app->user->login($user, $this->rememberMe ? 3600*24*30 : 0);
         }
         return false;
     }
