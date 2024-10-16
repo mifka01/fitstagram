@@ -5,9 +5,9 @@ namespace app\migrations;
 use yii\db\Migration;
 
 /**
- * Class m241016_163039_create_table_post
+ * Class m241016_163039_create_post_table
  */
-class m241016_163039_create_table_post extends Migration
+class m241016_163039_create_post_table extends Migration
 {
     /**
      * {@inheritDoc}

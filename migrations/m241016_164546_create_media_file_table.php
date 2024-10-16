@@ -5,9 +5,9 @@ namespace app\migrations;
 use yii\db\Migration;
 
 /**
- * Class m241016_164546_create_table_media_file
+ * Class m241016_164546_create_media_file_table
  */
-class m241016_164546_create_table_media_file extends Migration
+class m241016_164546_create_media_file_table extends Migration
 {
     /**
      * {@inheritDoc}

@@ -5,9 +5,9 @@ namespace app\migrations;
 use yii\db\Migration;
 
 /**
- * Class m241016_172609_create_table_group_post
+ * Class m241016_172609_create_group_post_table
  */
-class m241016_172609_create_table_group_post extends Migration
+class m241016_172609_create_group_post_table extends Migration
 {
     /**
      * {@inheritDoc}

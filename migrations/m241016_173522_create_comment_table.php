@@ -5,9 +5,9 @@ namespace app\migrations;
 use yii\db\Migration;
 
 /**
- * Class m241016_173522_create_table_comment
+ * Class m241016_173522_create_comment_table
  */
-class m241016_173522_create_table_comment extends Migration
+class m241016_173522_create_comment_table extends Migration
 {
     /**
      * {@inheritDoc}

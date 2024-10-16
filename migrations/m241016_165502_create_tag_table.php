@@ -5,9 +5,9 @@ namespace app\migrations;
 use yii\db\Migration;
 
 /**
- * Class m241016_165502_create_table_tag
+ * Class m241016_165502_create_tag_table
  */
-class m241016_165502_create_table_tag extends Migration
+class m241016_165502_create_tag_table extends Migration
 {
     /**
      * {@inheritDoc}

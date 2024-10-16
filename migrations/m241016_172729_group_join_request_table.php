@@ -5,9 +5,9 @@ namespace app\migrations;
 use yii\db\Migration;
 
 /**
- * Class m241016_172729_group_join_request
+ * Class m241016_172729_group_join_request_table
  */
-class m241016_172729_group_join_request extends Migration
+class m241016_172729_group_join_request_table extends Migration
 {
     /**
      * {@inheritDoc}

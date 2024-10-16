@@ -5,9 +5,9 @@ namespace app\migrations;
 use yii\db\Migration;
 
 /**
- * Class m241016_173407_create_table_post_vote
+ * Class m241016_173216_create_post_tag_table
  */
-class m241016_173407_create_table_post_vote extends Migration
+class m241016_173216_create_post_tag_table extends Migration
 {
     /**
      * {@inheritDoc}
@@ -19,31 +19,30 @@ class m241016_173407_create_table_post_vote extends Migration
             $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE=InnoDB';
         }
 
-        $this->createTable('{{%post_vote}}', [
-            'up' => $this->boolean()->notNull(),
-            'voted_by' => $this->integer()->notNull(),
+        $this->createTable('{{%post_tag}}', [
             'post_id' => $this->integer()->notNull(),
+            'tag_id' => $this->integer()->notNull(),
             'created_at' => $this->timestamp()->defaultExpression('CURRENT_TIMESTAMP')->notNull(),
             'updated_at' => $this->timestamp()->defaultExpression('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')->notNull(),
         ], $tableOptions);
 
-        // Create a unique primary key for (post_id, voted_by)
-        $this->addPrimaryKey('{{%pk-post_vote}}', '{{%post_vote}}', ['post_id', 'voted_by']);
+        // Create a unique primary key for (post_id, tag_id)
+        $this->addPrimaryKey('{{%pk-post_tag}}', '{{%post_tag}}', ['post_id', 'tag_id']);
 
         $this->addForeignKey(
-            '{{%fk-post_vote-voted_by}}',
-            '{{%post_vote}}',
-            'voted_by',
-            '{{%user}}',
+            '{{%fk-post_tag-post_id}}',
+            '{{%post_tag}}',
+            'post_id',
+            '{{%post}}',
             'id',
             'CASCADE'
         );
 
         $this->addForeignKey(
-            '{{%fk-post_vote-post_id}}',
-            '{{%post_vote}}',
-            'post_id',
-            '{{%post}}',
+            '{{%fk-post_tag-tag_id}}',
+            '{{%post_tag}}',
+            'tag_id',
+            '{{%tag}}',
             'id',
             'CASCADE'
         );
@@ -54,8 +53,8 @@ class m241016_173407_create_table_post_vote extends Migration
      */
     public function safeDown()
     {
-        $this->dropForeignKey('{{%fk-post_vote-post_id}}', '{{%post_vote}}');
-        $this->dropForeignKey('{{%fk-post_vote-voted_by}}', '{{%post_vote}}');
-        $this->dropTable('{{%post_vote}}');
+        $this->dropForeignKey('{{%fk-post_tag-tag_id}}', '{{%post_tag}}');
+        $this->dropForeignKey('{{%fk-post_tag-post_id}}', '{{%post_tag}}');
+        $this->dropTable('{{%post_tag}}');
     }
 }
