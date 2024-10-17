@@ -13,8 +13,10 @@ class GroupSearch extends Group
 {
     /**
      * {@inheritDoc}
+     *
+     * @return array<int, array<int|string, array<int|string, string>|bool|int|string>>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['id', 'owner_id', 'active', 'deleted', 'banned'], 'integer'],
@@ -27,7 +29,7 @@ class GroupSearch extends Group
      *
      * @return array<string,string>
      */
-    public function scenarios()
+    public function scenarios(): array
     {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
@@ -39,7 +41,7 @@ class GroupSearch extends Group
      * @param array<string,string> $params
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params): ActiveDataProvider
     {
         $query = Group::find();
 

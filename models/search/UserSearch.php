@@ -13,8 +13,10 @@ class UserSearch extends User
 {
     /**
      * {@inheritDoc}
+     *
+     * @return array<int, array<int|string, array<int|string, string>|bool|int|string>>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['id', 'active', 'deleted', 'banned'], 'integer'],
@@ -27,7 +29,7 @@ class UserSearch extends User
      *
      * @return array<string,string>
      */
-    public function scenarios()
+    public function scenarios(): array
     {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();

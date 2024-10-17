@@ -13,8 +13,10 @@ class PostVoteSearch extends PostVote
 {
     /**
      * {@inheritDoc}
+     *
+     * @return array<int, array<int|string, array<int|string, string>|bool|int|string>>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['up', 'voted_by', 'post_id'], 'integer'],
@@ -27,7 +29,7 @@ class PostVoteSearch extends PostVote
      *
      * @return array<string,string>
      */
-    public function scenarios()
+    public function scenarios(): array
     {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
@@ -39,7 +41,7 @@ class PostVoteSearch extends PostVote
      * @param array<string,string> $params
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params): ActiveDataProvider
     {
         $query = PostVote::find();
 
