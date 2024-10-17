@@ -15,6 +15,8 @@ $this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, 
 $this->registerMetaTag(['name' => 'description', 'content' => $this->params['meta_description'] ?? '']);
 $this->registerMetaTag(['name' => 'keywords', 'content' => $this->params['meta_keywords'] ?? '']);
 $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii::getAlias('@web/favicon.ico')]);
+$this->registerLinkTag(['rel' => 'stylesheet', 'href' => 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css', 'integrity' => 'sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==', 'crossorigin' => 'anonymous', 'referrerpolicy' => 'no-referrer']);
+
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -29,12 +31,44 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             <?=
             NavWidget::widget([
                 'items' => [
-                    Yii::t('app', 'Home') => ['site/index'],
-                    Yii::t('app', 'Groups') => ['groups/index'],
-                    Yii::t('app', 'Create') => ['post/create'],
-                    Yii::t('app', 'Search') => ['search/index'],
+                    [
+                        'label'=> Yii::t('app', 'Home'),
+                        'route' => ['site/index'],
+                        'icon'=> 'fas fa-home'
+                    ],
+                    [
+                        'label'=> Yii::t('app', 'Groups'),
+                        'route' => ['groups/index'],
+                        'icon'=> 'fas fa-users'
+                    ],
+                    [
+                        'label'=> Yii::t('app', 'Create'),
+                        'route' => ['post/create'],
+                        'icon'=> 'fas fa-plus'
+                    ],
+                    [
+                        'label'=> Yii::t('app', 'Search'),
+                        'route' => ['search/index'],
+                        'icon' => 'fas fa-search'
+                    ],
                 ],
-                'brandLabel' => 'Fitstagram',
+                'actionButton' => [
+                    [
+                        'label' => Yii::t('app', 'Profile'),
+                        'route' => ['user/profile'],
+                        'icon' => 'fas fa-user',
+                        'visible'=> !Yii::$app->user->isGuest
+                    ],
+                    [
+                        'label' => Yii::t('app', 'Login'),
+                        'route' => ['auth/login'],
+                        'icon' => 'fas fa-sign-in-alt',
+                        'visible' => Yii::$app->user->isGuest
+                    ]
+                ],
+                'brandLabel' => 'FITstagram',
+                'brandUrl' => ['site/index'],
+                'brandImage' => Yii::getAlias('@web/images/logo.png'),
             ]);?>
 </header>
 
