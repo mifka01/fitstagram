@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
 
 /**
  * This is the model class for table "post_vote".
@@ -18,10 +19,7 @@ use Yii;
  */
 class PostVote extends \yii\db\ActiveRecord
 {
-    /**
-     * {@inheritDoc}
-     */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'post_vote';
     }
@@ -31,7 +29,7 @@ class PostVote extends \yii\db\ActiveRecord
      *
      * @return array<int, array<int|string, array<int|string, string>|bool|int|string>>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['up', 'voted_by', 'post_id'], 'required'],
@@ -48,7 +46,7 @@ class PostVote extends \yii\db\ActiveRecord
      *
      * @return array<string,string>
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'up' => Yii::t('app', 'Up'),
@@ -64,7 +62,7 @@ class PostVote extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getPost()
+    public function getPost(): ActiveQuery
     {
         return $this->hasOne(Post::class, ['id' => 'post_id']);
     }
@@ -74,7 +72,7 @@ class PostVote extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getVotedBy()
+    public function getVotedBy(): ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'voted_by']);
     }

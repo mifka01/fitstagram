@@ -5,7 +5,9 @@ namespace app\models;
 use app\models\TimestampRecord;
 use Yii;
 use yii\base\NotSupportedException;
+use yii\db\ActiveQuery;
 use yii\web\IdentityInterface;
+use yii\web\Session;
 
 /**
  * This is the model class for table "user".
@@ -25,20 +27,13 @@ use yii\web\IdentityInterface;
  *
  * @property Comment[] $comments
  * @property GroupJoinRequest[] $groupJoinRequests
- * @property GroupUser[] $groupUsers
- * @property Group[] $groups
- * @property Group[] $groups0
- * @property Group[] $groups1
- * @property PermittedUser[] $permittedUsers
- * @property PermittedUser[] $permittedUsers0
- * @property User[] $permittedUsers1
- * @property PostVote[] $postVotes
+ * @property Group[] $createdGroups
+ * @property Group[] $joinedGroups
+ * @property User[] $permittedUsers
+ * @property PostVote[] $votes
  * @property Post[] $posts
- * @property Post[] $posts0
- * @property Post[] $posts1
  * @property Session[] $sessions
  * @property Tag[] $tags
- * @property User[] $users
  */
 class User extends TimestampRecord implements IdentityInterface
 {
@@ -52,7 +47,7 @@ class User extends TimestampRecord implements IdentityInterface
      *
      * @return array<int, array<int|string, array<int|string, string>|bool|int|string>>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['username', 'email', 'password_hash', 'verification_token', 'auth_key'], 'required'],
@@ -67,7 +62,7 @@ class User extends TimestampRecord implements IdentityInterface
      *
      * @return array<string,string>
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => Yii::t('app', 'ID'),
@@ -230,5 +225,85 @@ class User extends TimestampRecord implements IdentityInterface
     public function removePasswordResetToken(): void
     {
         $this->password_reset_token = null;
+    }
+
+    /**
+     * Gets query for [[Comments]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getComments(): ActiveQuery
+    {
+        return $this->hasMany(Comment::class, ['created_by' => 'id']);
+    }
+
+    /**
+     * Gets query for [[CreatedGroups]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getJoinedGroups(): ActiveQuery
+    {
+        return $this->hasMany(Group::class, ['id' => 'group_id'])->viaTable('group_user', ['user_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[CreatedGroups]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCreatedGroups(): ActiveQuery
+    {
+        return $this->hasMany(Group::class, ['owner_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[PermittedUsers]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPermittedUsers(): ActiveQuery
+    {
+        return $this->hasMany(User::class, ['id' => 'permitted_user_id'])->viaTable('permitted_user', ['user_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[PostVotes]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPostVotes(): ActiveQuery
+    {
+        return $this->hasMany(PostVote::class, ['voted_by' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Posts]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPosts(): ActiveQuery
+    {
+        return $this->hasMany(Post::class, ['created_by' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Sessions]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSessions(): ActiveQuery
+    {
+        return $this->hasMany(Session::class, ['user_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Tags]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTags(): ActiveQuery
+    {
+        return $this->hasMany(Tag::class, ['created_by' => 'id']);
     }
 }

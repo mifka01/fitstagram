@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
 
 /**
  * This is the model class for table "comment".
@@ -20,10 +21,7 @@ use Yii;
  */
 class Comment extends \yii\db\ActiveRecord
 {
-    /**
-     * {@inheritDoc}
-     */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'comment';
     }
@@ -33,7 +31,7 @@ class Comment extends \yii\db\ActiveRecord
      *
      * @return array<int, array<int|string, array<int|string, string>|bool|int|string>>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['content', 'created_by', 'post_id'], 'required'],
@@ -51,7 +49,7 @@ class Comment extends \yii\db\ActiveRecord
      *
      * @return array<string,string>
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => Yii::t('app', 'ID'),
@@ -69,7 +67,7 @@ class Comment extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getCreatedBy()
+    public function getCreatedBy(): ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'created_by']);
     }
@@ -79,7 +77,7 @@ class Comment extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getPost()
+    public function getPost(): ActiveQuery
     {
         return $this->hasOne(Post::class, ['id' => 'post_id']);
     }

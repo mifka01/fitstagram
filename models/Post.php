@@ -2,6 +2,8 @@
 
 namespace app\models;
 
+use yii\db\ActiveQuery;
+
 /**
  * This is the model class for table "post".
  *
@@ -16,22 +18,17 @@ namespace app\models;
  * @property string $updated_at
  *
  * @property Comment[] $comments
- * @property User[] $createdBies
+ * @property User[] $commenters
  * @property User $createdBy
- * @property GroupPost[] $groupPosts
  * @property Group[] $groups
  * @property MediaFile[] $mediaFiles
- * @property PostTag[] $postTags
- * @property PostVote[] $postVotes
+ * @property PostVote[] $votes
  * @property Tag[] $tags
- * @property User[] $votedBies
+ * @property User[] $voters
  */
 class Post extends \yii\db\ActiveRecord
 {
-    /**
-     * {@inheritDoc}
-     */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'post';
     }
@@ -41,7 +38,7 @@ class Post extends \yii\db\ActiveRecord
      *
      * @return array<int, array<int|string, array<int|string, string>|bool|int|string>>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['created_by', 'visibility'], 'required'],
@@ -77,17 +74,17 @@ class Post extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getComments()
+    public function getComments(): ActiveQuery
     {
         return $this->hasMany(Comment::class, ['post_id' => 'id']);
     }
 
     /**
-     * Gets query for [[CreatedBies]].
+     * Gets query for [[User]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getCreatedBies()
+    public function getCommenters(): ActiveQuery
     {
         return $this->hasMany(User::class, ['id' => 'created_by'])->viaTable('comment', ['post_id' => 'id']);
     }
@@ -97,19 +94,9 @@ class Post extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getCreatedBy()
+    public function getCreatedBy(): ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'created_by']);
-    }
-
-    /**
-     * Gets query for [[GroupPosts]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getGroupPosts()
-    {
-        return $this->hasMany(GroupPost::class, ['post_id' => 'id']);
     }
 
     /**
@@ -117,7 +104,7 @@ class Post extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getGroups()
+    public function getGroups(): ActiveQuery
     {
         return $this->hasMany(Group::class, ['id' => 'group_id'])->viaTable('group_post', ['post_id' => 'id']);
     }
@@ -127,19 +114,9 @@ class Post extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getMediaFiles()
+    public function getMediaFiles(): ActiveQuery
     {
         return $this->hasMany(MediaFile::class, ['post_id' => 'id']);
-    }
-
-    /**
-     * Gets query for [[PostTags]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getPostTags()
-    {
-        return $this->hasMany(PostTag::class, ['post_id' => 'id']);
     }
 
     /**
@@ -147,7 +124,7 @@ class Post extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getPostVotes()
+    public function getVotes(): ActiveQuery
     {
         return $this->hasMany(PostVote::class, ['post_id' => 'id']);
     }
@@ -157,17 +134,17 @@ class Post extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getTags()
+    public function getTags(): ActiveQuery
     {
         return $this->hasMany(Tag::class, ['id' => 'tag_id'])->viaTable('post_tag', ['post_id' => 'id']);
     }
 
     /**
-     * Gets query for [[VotedBies]].
+     * Gets query for [[Users]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getVotedBies()
+    public function getVoters(): ActiveQuery
     {
         return $this->hasMany(User::class, ['id' => 'voted_by'])->viaTable('post_vote', ['post_id' => 'id']);
     }

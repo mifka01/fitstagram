@@ -2,7 +2,9 @@
 
 namespace app\models;
 
+use app\models\Post;
 use Yii;
+use yii\db\ActiveQuery;
 
 /**
  * This is the model class for table "tag".
@@ -13,15 +15,11 @@ use Yii;
  * @property string $created_at
  *
  * @property User $createdBy
- * @property PostTag[] $postTags
  * @property Post[] $posts
  */
 class Tag extends \yii\db\ActiveRecord
 {
-    /**
-     * {@inheritDoc}
-     */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'tag';
     }
@@ -31,7 +29,7 @@ class Tag extends \yii\db\ActiveRecord
      *
      * @return array<int, array<int|string, array<int|string, string>|bool|int|string>>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['created_by', 'name'], 'required'],
@@ -48,7 +46,7 @@ class Tag extends \yii\db\ActiveRecord
      *
      * @return array<string,string>
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => Yii::t('app', 'ID'),
@@ -63,19 +61,9 @@ class Tag extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getCreatedBy()
+    public function getCreatedBy(): ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'created_by']);
-    }
-
-    /**
-     * Gets query for [[PostTags]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getPostTags()
-    {
-        return $this->hasMany(PostTag::class, ['tag_id' => 'id']);
     }
 
     /**
@@ -83,7 +71,7 @@ class Tag extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getPosts()
+    public function getPosts(): ActiveQuery
     {
         return $this->hasMany(Post::class, ['id' => 'post_id'])->viaTable('post_tag', ['tag_id' => 'id']);
     }

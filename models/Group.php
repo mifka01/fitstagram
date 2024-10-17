@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
 
 /**
  * This is the model class for table "group".
@@ -16,7 +17,7 @@ use Yii;
  * @property string $created_at
  * @property string|null $updated_at
  *
- * @property User[] $createdBies
+ * @property User[] $joinRequestUsers
  * @property GroupJoinRequest[] $groupJoinRequests
  * @property GroupPost[] $groupPosts
  * @property GroupUsers[] $groupUsers
@@ -26,10 +27,7 @@ use Yii;
  */
 class Group extends \yii\db\ActiveRecord
 {
-    /**
-     * {@inheritDoc}
-     */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'group';
     }
@@ -39,7 +37,7 @@ class Group extends \yii\db\ActiveRecord
      *
      * @return array<int, array<int|string, array<int|string, string>|bool|int|string>>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['name', 'owner_id'], 'required'],
@@ -55,7 +53,7 @@ class Group extends \yii\db\ActiveRecord
      *
      * @return array<string,string>
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => Yii::t('app', 'ID'),
@@ -70,11 +68,11 @@ class Group extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[CreatedBies]].
+     * Gets query for [[JoinRequestUsers]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getCreatedBies()
+    public function getJoinRequestUsers(): ActiveQuery
     {
         return $this->hasMany(User::class, ['id' => 'created_by'])->viaTable('group_join_request', ['group_id' => 'id']);
     }
@@ -84,29 +82,9 @@ class Group extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getGroupJoinRequests()
+    public function getGroupJoinRequests(): ActiveQuery
     {
         return $this->hasMany(GroupJoinRequest::class, ['group_id' => 'id']);
-    }
-
-    /**
-     * Gets query for [[GroupPosts]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getGroupPosts()
-    {
-        return $this->hasMany(GroupPost::class, ['group_id' => 'id']);
-    }
-
-    /**
-     * Gets query for [[GroupUsers]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getGroupUsers()
-    {
-        return $this->hasMany(GroupUsers::class, ['group_id' => 'id']);
     }
 
     /**
@@ -114,7 +92,7 @@ class Group extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getOwner()
+    public function getOwner(): ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'owner_id']);
     }
@@ -124,7 +102,7 @@ class Group extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getPosts()
+    public function getPosts(): ActiveQuery
     {
         return $this->hasMany(Post::class, ['id' => 'post_id'])->viaTable('group_post', ['group_id' => 'id']);
     }
@@ -134,8 +112,8 @@ class Group extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getUsers()
+    public function getMembers(): ActiveQuery
     {
-        return $this->hasMany(User::class, ['id' => 'user_id'])->viaTable('group_users', ['group_id' => 'id']);
+        return $this->hasMany(User::class, ['id' => 'user_id'])->viaTable('group_member', ['group_id' => 'id']);
     }
 }

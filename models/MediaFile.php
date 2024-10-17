@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
 
 /**
  * This is the model class for table "media_file".
@@ -17,10 +18,7 @@ use Yii;
  */
 class MediaFile extends \yii\db\ActiveRecord
 {
-    /**
-     * {@inheritDoc}
-     */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'media_file';
     }
@@ -30,7 +28,7 @@ class MediaFile extends \yii\db\ActiveRecord
      *
      * @return array<int, array<int|string, array<int|string, string>|bool|int|string>>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['name', 'post_id'], 'required'],
@@ -45,7 +43,7 @@ class MediaFile extends \yii\db\ActiveRecord
      *
      * @return array<string,string>
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => Yii::t('app', 'ID'),
@@ -61,7 +59,7 @@ class MediaFile extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getPost()
+    public function getPost(): ActiveQuery
     {
         return $this->hasOne(Post::class, ['id' => 'post_id']);
     }

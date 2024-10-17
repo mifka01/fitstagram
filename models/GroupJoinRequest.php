@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
 
 /**
  * This is the model class for table "group_join_request".
@@ -21,10 +22,7 @@ use Yii;
  */
 class GroupJoinRequest extends \yii\db\ActiveRecord
 {
-    /**
-     * {@inheritDoc}
-     */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'group_join_request';
     }
@@ -34,7 +32,7 @@ class GroupJoinRequest extends \yii\db\ActiveRecord
      *
      * @return array<int, array<int|string, array<int|string, string>|bool|int|string>>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['group_id', 'created_by'], 'required'],
@@ -51,7 +49,7 @@ class GroupJoinRequest extends \yii\db\ActiveRecord
      *
      * @return array<string,string>
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => Yii::t('app', 'ID'),
@@ -70,7 +68,7 @@ class GroupJoinRequest extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getCreatedBy()
+    public function getCreatedBy(): ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'created_by']);
     }
@@ -80,7 +78,7 @@ class GroupJoinRequest extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getGroup()
+    public function getGroup(): ActiveQuery
     {
         return $this->hasOne(Group::class, ['id' => 'group_id']);
     }
