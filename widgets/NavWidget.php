@@ -12,9 +12,9 @@ class NavWidget extends Widget
     public array $items = [];
 
     /**
-     * @var array<int, array{label: string, route: string|array<string|array<string, string>>, visible?:bool, icon?: string}>|false $actionButton
+     * @var array<int, array{label: string, route: string|array<string|array<string, string>>, visible?: bool, icon?: string}>|false $actionButton
      */
-    public array $actionButton;
+    public array|false $actionButton;
 
     public string|false $brandLabel = false;
 
