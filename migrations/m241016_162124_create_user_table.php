@@ -28,6 +28,7 @@ class m241016_162124_create_user_table extends Migration
             'verification_token' => $this->string()->notNull(),
             'auth_key' => $this->string()->notNull(),
             'active' => $this->boolean(),
+            'inactive' => $this->boolean(),
             'deleted' => $this->boolean(),
             'banned' => $this->boolean(),
             'created_at' => $this->timestamp()->defaultExpression('CURRENT_TIMESTAMP'),

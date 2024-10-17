@@ -50,6 +50,7 @@ Table User {
     password_reset_token varchar
     verification_token varchar [not null]
     auth_key varchar [not null]
+    inactive boolean
     active boolean 
     deleted boolean 
     banned boolean 

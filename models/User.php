@@ -8,26 +8,40 @@ use yii\base\NotSupportedException;
 use yii\web\IdentityInterface;
 
 /**
- * User model
+ * This is the model class for table "user".
  *
- * @property integer $id
+ * @property int $id
  * @property string $username
+ * @property string $email
  * @property string $password_hash
  * @property string|null $password_reset_token
  * @property string $verification_token
- * @property string $email
  * @property string $auth_key
- * @property integer $status
- * @property integer $created_at
- * @property integer $updated_at
- * @property string $password write-only password
+ * @property int|null $active
+ * @property int|null $deleted
+ * @property int|null $banned
+ * @property string|null $created_at
+ * @property string|null $updated_at
+ *
+ * @property Comment[] $comments
+ * @property GroupJoinRequest[] $groupJoinRequests
+ * @property GroupUser[] $groupUsers
+ * @property Group[] $groups
+ * @property Group[] $groups0
+ * @property Group[] $groups1
+ * @property PermittedUser[] $permittedUsers
+ * @property PermittedUser[] $permittedUsers0
+ * @property User[] $permittedUsers1
+ * @property PostVote[] $postVotes
+ * @property Post[] $posts
+ * @property Post[] $posts0
+ * @property Post[] $posts1
+ * @property Session[] $sessions
+ * @property Tag[] $tags
+ * @property User[] $users
  */
 class User extends TimestampRecord implements IdentityInterface
 {
-    const STATUS_DELETED = 0;
-    const STATUS_INACTIVE = 9;
-    const STATUS_ACTIVE = 10;
-
     public static function tableName(): string
     {
         return '{{%user}}';
@@ -36,13 +50,38 @@ class User extends TimestampRecord implements IdentityInterface
     /**
      * {@inheritDoc}
      *
-     * @return array<int, mixed>
+     * @return array<int, array<int|string, array<int|string, string>|bool|int|string>>
      */
-    public function rules(): array
+    public function rules()
     {
         return [
-            ['status', 'default', 'value' => self::STATUS_INACTIVE],
-            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
+            [['username', 'email', 'password_hash', 'verification_token', 'auth_key'], 'required'],
+            [['active', 'deleted', 'banned'], 'integer'],
+            [['created_at', 'updated_at'], 'safe'],
+            [['username', 'email', 'password_hash', 'password_reset_token', 'verification_token', 'auth_key'], 'string', 'max' => 255],
+        ];
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return array<string,string>
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => Yii::t('app', 'ID'),
+            'username' => Yii::t('app', 'Username'),
+            'email' => Yii::t('app', 'Email'),
+            'password_hash' => Yii::t('app', 'Password Hash'),
+            'password_reset_token' => Yii::t('app', 'Password Reset Token'),
+            'verification_token' => Yii::t('app', 'Verification Token'),
+            'auth_key' => Yii::t('app', 'Auth Key'),
+            'active' => Yii::t('app', 'Active'),
+            'deleted' => Yii::t('app', 'Deleted'),
+            'banned' => Yii::t('app', 'Banned'),
+            'created_at' => Yii::t('app', 'Created At'),
+            'updated_at' => Yii::t('app', 'Updated At'),
         ];
     }
 
@@ -51,7 +90,7 @@ class User extends TimestampRecord implements IdentityInterface
      */
     public static function findIdentity($id): ?User
     {
-        return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne(['id' => $id, 'active' => true]);
     }
 
     /**
@@ -70,7 +109,7 @@ class User extends TimestampRecord implements IdentityInterface
      */
     public static function findByUsername($username): ?User
     {
-        return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne(['username' => $username, 'active' => true]);
     }
 
     /**
@@ -87,7 +126,7 @@ class User extends TimestampRecord implements IdentityInterface
 
         return static::findOne([
             'password_reset_token' => $token,
-            'status' => self::STATUS_ACTIVE,
+            'active' => true,
         ]);
     }
 
@@ -101,7 +140,7 @@ class User extends TimestampRecord implements IdentityInterface
     {
         return static::findOne([
             'verification_token' => $token,
-            'status' => self::STATUS_INACTIVE
+            'active' => true,
         ]);
     }
 
