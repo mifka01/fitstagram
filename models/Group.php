@@ -19,11 +19,9 @@ use yii\db\ActiveQuery;
  *
  * @property User[] $joinRequestUsers
  * @property GroupJoinRequest[] $groupJoinRequests
- * @property GroupPost[] $groupPosts
- * @property GroupUsers[] $groupUsers
  * @property User $owner
  * @property Post[] $posts
- * @property User[] $users
+ * @property User[] $members
  */
 class Group extends \yii\db\ActiveRecord
 {

@@ -5,9 +5,9 @@ namespace app\migrations;
 use yii\db\Migration;
 
 /**
- * Class m241016_172257_create_group_user_table
+ * Class m241016_172257_create_group_member_table
  */
-class m241016_172257_create_group_user_table extends Migration
+class m241016_172257_create_group_member_table extends Migration
 {
     /**
      * {@inheritDoc}
@@ -19,20 +19,20 @@ class m241016_172257_create_group_user_table extends Migration
             $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE=InnoDB';
         }
 
-        $this->createTable('{{%group_user}}', [
+        $this->createTable('{{%group_member}}', [
             'group_id' => $this->integer()->notNull(),
             'user_id' => $this->integer()->notNull(),
             'created_at' => $this->timestamp()->defaultExpression('CURRENT_TIMESTAMP')->notNull(),
         ], $tableOptions);
 
         // Create a composite primary key for (user_id, group_id)
-        $this->addPrimaryKey('{{%pk-group_user}}', '{{%group_user}}', ['user_id', 'group_id']);
+        $this->addPrimaryKey('{{%pk-group_member}}', '{{%group_member}}', ['user_id', 'group_id']);
 
-        $this->createIndex('{{%idx-group_user-group_id}}', '{{%group_user}}', 'group_id');
+        $this->createIndex('{{%idx-group_member-group_id}}', '{{%group_member}}', 'group_id');
 
         $this->addForeignKey(
-            '{{%fk-group_user-group_id}}',
-            '{{%group_user}}',
+            '{{%fk-group_member-group_id}}',
+            '{{%group_member}}',
             'group_id',
             '{{%group}}',
             'id',
@@ -40,8 +40,8 @@ class m241016_172257_create_group_user_table extends Migration
         );
 
         $this->addForeignKey(
-            '{{%fk-group_user-user_id}}',
-            '{{%group_user}}',
+            '{{%fk-group_member-user_id}}',
+            '{{%group_member}}',
             'user_id',
             '{{%user}}',
             'id',
@@ -54,9 +54,9 @@ class m241016_172257_create_group_user_table extends Migration
      */
     public function safeDown()
     {
-        $this->dropForeignKey('{{%fk-group_user-user_id}}', '{{%group_user}}');
-        $this->dropForeignKey('{{%fk-group_user-group_id}}', '{{%group_user}}');
-        $this->dropIndex('{{%idx-group_user-group_id}}', '{{%group_user}}');
-        $this->dropTable('{{%group_user}}');
+        $this->dropForeignKey('{{%fk-group_member-user_id}}', '{{%group_member}}');
+        $this->dropForeignKey('{{%fk-group_member-group_id}}', '{{%group_member}}');
+        $this->dropIndex('{{%idx-group_member-group_id}}', '{{%group_member}}');
+        $this->dropTable('{{%group_member}}');
     }
 }
