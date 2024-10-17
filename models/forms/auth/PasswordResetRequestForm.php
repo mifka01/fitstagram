@@ -11,7 +11,7 @@ use yii\base\Model;
  */
 class PasswordResetRequestForm extends Model
 {
-    public string $email;
+    public string $email = '';
 
     /**
      * {@inheritDoc}
