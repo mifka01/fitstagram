@@ -41,7 +41,7 @@ class Post extends \yii\db\ActiveRecord
      *
      * @return array<int, array<int|string, array<int|string, string>|bool|int|string>>
      */
-    public function rules(): array
+    public function rules()
     {
         return [
             [['created_by', 'visibility'], 'required'],
