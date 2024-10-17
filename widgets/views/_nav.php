@@ -12,7 +12,6 @@
 use yii\helpers\Url;
 
 $currentActionButton = false;
-
 if ($actionButton) {
     foreach ($actionButton as $button) {
         if (!isset($button['visible']) || $button['visible']) {
@@ -51,10 +50,8 @@ if ($actionButton) {
             <?php endforeach; ?>
             <?php if ($currentActionButton): ?>
                 <a href="<?= Url::to($currentActionButton['route']) ?>" class="
-                    w-full text-center
-                    <?php if (isset($currentActionButton['icon'])): ?>
-                        <?= $currentActionButton['icon'] ?>
-                    <?php endif; ?>
+                w-full text-center
+                <?= $currentActionButton['icon'] ?? '' ?>
                 ">
                     <?php if (!isset($currentActionButton['icon'])): ?>
                         <?=Yii::t('app/user', $currentActionButton['label'])?>
