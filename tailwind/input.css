@@ -10,8 +10,4 @@
     .error-message {
         @apply text-red-500 text-sm;
     }
-
-    .success-input {
-        @apply !border !border-green-500;
-    }
 }

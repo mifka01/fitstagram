@@ -78,7 +78,6 @@ $config = [
         'definitions' => [
             \yii\widgets\ActiveForm::class => [
                 'errorCssClass' => 'error-input',
-                'successCssClass' => 'success-input',
                 'validationStateOn' => \yii\widgets\ActiveForm::VALIDATION_STATE_ON_INPUT,
             ],
             \yii\widgets\ActiveField::class => [
