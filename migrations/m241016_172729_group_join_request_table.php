@@ -31,7 +31,7 @@ class m241016_172729_group_join_request_table extends Migration
         ], $tableOptions);
 
         // Create a unique index for (created_by, group_id)
-        $this->createIndex('{{%idx-group_join_request-created_by-group_id}}', '{{%group_join_request}}', ['created_by', 'group_id'], true);
+        $this->createIndex('{{%idx-group_join_request-created_by-group_id}}', '{{%group_join_request}}', ['created_by', 'group_id']);
 
         $this->addForeignKey(
             '{{%fk-group_join_request-group_id}}',

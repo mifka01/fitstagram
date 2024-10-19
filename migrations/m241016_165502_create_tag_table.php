@@ -27,6 +27,7 @@ class m241016_165502_create_tag_table extends Migration
         ], $tableOptions);
 
         $this->createIndex('{{%idx-tag-created_by}}', '{{%tag}}', 'created_by');
+        $this->createIndex('{{%idx-tag-name}}', '{{%tag}}', 'name');
 
         $this->addForeignKey(
             '{{%fk-tag-created_by}}',
@@ -45,6 +46,7 @@ class m241016_165502_create_tag_table extends Migration
     {
         $this->dropForeignKey('{{%fk-tag-created_by}}', '{{%tag}}');
         $this->dropIndex('{{%idx-tag-created_by}}', '{{%tag}}');
+        $this->dropIndex('{{%idx-tag-name}}', '{{%tag}}');
         $this->dropTable('{{%tag}}');
     }
 }

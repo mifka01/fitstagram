@@ -33,7 +33,8 @@ Table Post_Tag {
 Table Post {
   id integer [pk, increment]
   created_by integer [not null, ref: > User.id]
-  visibility integer [not null]
+  is_private boolean [not null]
+  is_group_post boolean [not null]
   upvote_count integer [default: 0]
   downvote_count integer [default: 0]
   description varchar
@@ -77,9 +78,6 @@ Table Comment {
   deleted boolean 
   created_at timestamp
   updated_at timestamp [default: `CURRENT_TIMESTAMP`]
-  Indexes {
-    (post_id, created_by) [unique]
-  }
 }
 
 Table Group {
@@ -111,9 +109,6 @@ Table Group_Join_Request {
   accepted boolean
   created_at timestamp
   updated_at timestamp [default: `CURRENT_TIMESTAMP`]
-  Indexes {
-    (created_by, group_id) [unique]
-  }
 }
 
 Table Group_Post {

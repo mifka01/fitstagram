@@ -29,9 +29,6 @@ class m241016_173522_create_comment_table extends Migration
             'updated_at' => $this->timestamp()->defaultExpression('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')->notNull(),
         ], $tableOptions);
 
-        // Create a unique index for (post_id, created_by)
-        $this->createIndex('{{%idx-comment-post_id-created_by}}', '{{%comment}}', ['post_id', 'created_by'], true);
-
         $this->addForeignKey(
             '{{%fk-comment-created_by}}',
             '{{%comment}}',
@@ -58,7 +55,6 @@ class m241016_173522_create_comment_table extends Migration
     {
         $this->dropForeignKey('{{%fk-comment-post_id}}', '{{%comment}}');
         $this->dropForeignKey('{{%fk-comment-created_by}}', '{{%comment}}');
-        $this->dropIndex('{{%idx-comment-post_id-created_by}}', '{{%comment}}');
         $this->dropTable('{{%comment}}');
     }
 }

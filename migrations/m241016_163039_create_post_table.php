@@ -23,7 +23,8 @@ class m241016_163039_create_post_table extends Migration
         $this->createTable('{{%post}}', [
             'id' => $this->primaryKey(),
             'created_by' => $this->integer()->notNull(),
-            'visibility' => $this->integer()->notNull(),
+            'is_private' => $this->boolean()->notNull(),
+            'is_group_post' => $this->boolean()->notNull(),
             'upvote_count' => $this->integer()->defaultValue(0),
             'downvote_count' => $this->integer()->defaultValue(0),
             // Use text for larger descriptions

@@ -23,7 +23,6 @@ class m241016_173216_create_post_tag_table extends Migration
             'post_id' => $this->integer()->notNull(),
             'tag_id' => $this->integer()->notNull(),
             'created_at' => $this->timestamp()->defaultExpression('CURRENT_TIMESTAMP')->notNull(),
-            'updated_at' => $this->timestamp()->defaultExpression('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')->notNull(),
         ], $tableOptions);
 
         // Create a unique primary key for (post_id, tag_id)

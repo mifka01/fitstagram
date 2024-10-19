@@ -10,7 +10,8 @@ use yii\db\ActiveQuery;
  *
  * @property int $id
  * @property int $created_by
- * @property int $visibility
+ * @property int $is_group_post
+ * @property int $is_private
  * @property int|null $upvote_count
  * @property int|null $downvote_count
  * @property string|null $description
@@ -42,8 +43,8 @@ class Post extends \yii\db\ActiveRecord
     public function rules(): array
     {
         return [
-            [['created_by', 'visibility'], 'required'],
-            [['created_by', 'visibility', 'upvote_count', 'downvote_count', 'deleted'], 'integer'],
+            [['created_by', 'is_private', 'is_group_post'], 'required'],
+            [['created_by', 'is_private', 'is_group_post', 'upvote_count', 'downvote_count', 'deleted'], 'integer'],
             [['description'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
@@ -60,7 +61,8 @@ class Post extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'created_by' => Yii::t('app/model', 'Created By'),
-            'visibility' => 'Visibility',
+            'is_private' => 'Is Private',
+            'is_group_post' => 'Is Group Post',
             'upvote_count' => 'Upvote Count',
             'downvote_count' => 'Downvote Count',
             'description' => 'Description',

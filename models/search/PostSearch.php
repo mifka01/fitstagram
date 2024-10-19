@@ -19,7 +19,7 @@ class PostSearch extends Post
     public function rules(): array
     {
         return [
-            [['id', 'created_by', 'visibility', 'upvote_count', 'downvote_count', 'deleted'], 'integer'],
+            [['id', 'created_by', 'is_private', 'is_group_post', 'upvote_count', 'downvote_count', 'deleted'], 'integer'],
             [['description', 'created_at', 'updated_at'], 'safe'],
         ];
     }
@@ -63,7 +63,8 @@ class PostSearch extends Post
         $query->andFilterWhere([
             'id' => $this->id,
             'created_by' => $this->created_by,
-            'visibility' => $this->visibility,
+            'is_group_post' => $this->is_group_post,
+            'is_private' => $this->is_private,
             'upvote_count' => $this->upvote_count,
             'downvote_count' => $this->downvote_count,
             'deleted' => $this->deleted,
