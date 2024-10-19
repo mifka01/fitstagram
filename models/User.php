@@ -19,6 +19,7 @@ use yii\web\Session;
  * @property string|null $password_reset_token
  * @property string $verification_token
  * @property string $auth_key
+ * @property int|null $inactive
  * @property int|null $active
  * @property int|null $deleted
  * @property int|null $banned
