@@ -17,6 +17,18 @@ class ResetPasswordForm extends Model
     private User $user;
 
     /**
+     * {@inheritDoc}
+     *
+     * @return array<string,string>
+     */
+    public function attributeLabels(): array
+    {
+        return [
+            'password' => Yii::t('app/model', 'Password'),
+        ];
+    }
+
+    /**
      * Creates a form model given a token.
      *
      * @param string $token

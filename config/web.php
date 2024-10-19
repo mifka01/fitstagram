@@ -66,6 +66,8 @@ $config = [
                     'fileMap' => [
                         'app' => 'app.php',
                         'app/user' => 'user.php',
+                        'app/model' => 'model.php',
+                        'app/auth' => 'auth.php',
                     ],
                 ],
             ],

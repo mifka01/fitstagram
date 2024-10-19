@@ -52,13 +52,13 @@ class Comment extends \yii\db\ActiveRecord
     public function attributeLabels(): array
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'content' => Yii::t('app', 'Content'),
-            'created_by' => Yii::t('app', 'Created By'),
-            'post_id' => Yii::t('app', 'Post ID'),
-            'deleted' => Yii::t('app', 'Deleted'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'updated_at' => Yii::t('app', 'Updated At'),
+            'id' => Yii::t('app/model', 'ID'),
+            'content' => Yii::t('app/model', 'Content'),
+            'created_by' => Yii::t('app/model', 'Created By'),
+            'post_id' => Yii::t('app/model', 'Post ID'),
+            'deleted' => Yii::t('app/model', 'Deleted'),
+            'created_at' => Yii::t('app/model', 'Created At'),
+            'updated_at' => Yii::t('app/model', 'Updated At'),
         ];
     }
 

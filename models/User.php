@@ -65,18 +65,18 @@ class User extends TimestampRecord implements IdentityInterface
     public function attributeLabels(): array
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'username' => Yii::t('app', 'Username'),
-            'email' => Yii::t('app', 'Email'),
-            'password_hash' => Yii::t('app', 'Password Hash'),
-            'password_reset_token' => Yii::t('app', 'Password Reset Token'),
-            'verification_token' => Yii::t('app', 'Verification Token'),
-            'auth_key' => Yii::t('app', 'Auth Key'),
-            'active' => Yii::t('app', 'Active'),
-            'deleted' => Yii::t('app', 'Deleted'),
-            'banned' => Yii::t('app', 'Banned'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'updated_at' => Yii::t('app', 'Updated At'),
+            'id' => Yii::t('app/model', 'ID'),
+            'username' => Yii::t('app/model', 'Username'),
+            'email' => Yii::t('app/model', 'Email'),
+            'password_hash' => Yii::t('app/model', 'Password Hash'),
+            'password_reset_token' => Yii::t('app/model', 'Password Reset Token'),
+            'verification_token' => Yii::t('app/model', 'Verification Token'),
+            'auth_key' => Yii::t('app/model', 'Auth Key'),
+            'active' => Yii::t('app/model', 'Active'),
+            'deleted' => Yii::t('app/model', 'Deleted'),
+            'banned' => Yii::t('app/model', 'Banned'),
+            'created_at' => Yii::t('app/model', 'Created At'),
+            'updated_at' => Yii::t('app/model', 'Updated At'),
         ];
     }
 

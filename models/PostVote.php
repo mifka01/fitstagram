@@ -49,11 +49,11 @@ class PostVote extends \yii\db\ActiveRecord
     public function attributeLabels(): array
     {
         return [
-            'up' => Yii::t('app', 'Up'),
-            'voted_by' => Yii::t('app', 'Voted By'),
-            'post_id' => Yii::t('app', 'Post ID'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'updated_at' => Yii::t('app', 'Updated At'),
+            'up' => Yii::t('app/model', 'Up'),
+            'voted_by' => Yii::t('app/model', 'Voted By'),
+            'post_id' => Yii::t('app/model', 'Post ID'),
+            'created_at' => Yii::t('app/model', 'Created At'),
+            'updated_at' => Yii::t('app/model', 'Updated At'),
         ];
     }
 

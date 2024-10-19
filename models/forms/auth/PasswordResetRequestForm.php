@@ -16,6 +16,18 @@ class PasswordResetRequestForm extends Model
     /**
      * {@inheritDoc}
      *
+     * @return array<string,string>
+     */
+    public function attributeLabels(): array
+    {
+        return [
+            'email' => Yii::t('app/model', 'Email'),
+        ];
+    }
+
+    /**
+     * {@inheritDoc}
+     *
      * @return array<int, mixed>
      */
     public function rules(): array

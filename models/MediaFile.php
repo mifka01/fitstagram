@@ -46,11 +46,11 @@ class MediaFile extends \yii\db\ActiveRecord
     public function attributeLabels(): array
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'media_path' => Yii::t('app', 'Media Path'),
-            'name' => Yii::t('app', 'Name'),
-            'place' => Yii::t('app', 'Place'),
-            'post_id' => Yii::t('app', 'Post ID'),
+            'id' => Yii::t('app/model', 'ID'),
+            'media_path' => Yii::t('app/model', 'Media Path'),
+            'name' => Yii::t('app/model', 'Name'),
+            'place' => Yii::t('app/model', 'Place'),
+            'post_id' => Yii::t('app/model', 'Post ID'),
         ];
     }
 

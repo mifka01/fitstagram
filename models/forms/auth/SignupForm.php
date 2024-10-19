@@ -20,6 +20,20 @@ class SignupForm extends Model
     /**
      * {@inheritDoc}
      *
+     * @return array<string,string>
+     */
+    public function attributeLabels(): array
+    {
+        return [
+            'username' => Yii::t('app/model', 'Username'),
+            'email' => Yii::t('app/model', 'Email'),
+            'password' => Yii::t('app/model', 'Password'),
+        ];
+    }
+
+    /**
+     * {@inheritDoc}
+     *
      * @return array<int, mixed>
      */
     public function rules(): array

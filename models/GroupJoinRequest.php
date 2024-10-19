@@ -52,14 +52,14 @@ class GroupJoinRequest extends \yii\db\ActiveRecord
     public function attributeLabels(): array
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'group_id' => Yii::t('app', 'Group ID'),
-            'created_by' => Yii::t('app', 'Created By'),
-            'pending' => Yii::t('app', 'Pending'),
-            'declined' => Yii::t('app', 'Declined'),
-            'accepted' => Yii::t('app', 'Accepted'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'updated_at' => Yii::t('app', 'Updated At'),
+            'id' => Yii::t('app/model', 'ID'),
+            'group_id' => Yii::t('app/model', 'Group ID'),
+            'created_by' => Yii::t('app/model', 'Created By'),
+            'pending' => Yii::t('app/model', 'Pending'),
+            'declined' => Yii::t('app/model', 'Declined'),
+            'accepted' => Yii::t('app/model', 'Accepted'),
+            'created_at' => Yii::t('app/model', 'Created At'),
+            'updated_at' => Yii::t('app/model', 'Updated At'),
         ];
     }
 

@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use Yii;
 use yii\db\ActiveQuery;
 
 /**
@@ -58,7 +59,7 @@ class Post extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'created_by' => 'Created By',
+            'created_by' => Yii::t('app/model', 'Created By'),
             'visibility' => 'Visibility',
             'upvote_count' => 'Upvote Count',
             'downvote_count' => 'Downvote Count',

@@ -49,10 +49,10 @@ class Tag extends \yii\db\ActiveRecord
     public function attributeLabels(): array
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'created_by' => Yii::t('app', 'Created By'),
-            'name' => Yii::t('app', 'Name'),
-            'created_at' => Yii::t('app', 'Created At'),
+            'id' => Yii::t('app/model', 'ID'),
+            'created_by' => Yii::t('app/model', 'Created By'),
+            'name' => Yii::t('app/model', 'Name'),
+            'created_at' => Yii::t('app/model', 'Created At'),
         ];
     }
 

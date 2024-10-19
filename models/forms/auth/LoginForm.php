@@ -22,6 +22,20 @@ class LoginForm extends Model
     private bool $user = false;
 
     /**
+     * {@inheritDoc}
+     *
+     * @return array<string,string>
+     */
+    public function attributeLabels(): array
+    {
+        return [
+            'username' => Yii::t('app/model', 'Username'),
+            'password' => Yii::t('app/model', 'Password'),
+            'rememberMe' => Yii::t('app/auth', 'Remember Me'),
+        ];
+    }
+
+    /**
      * @return array<int, array<mixed>>
      */
     public function rules(): array
