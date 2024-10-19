@@ -42,6 +42,9 @@ $config = [
                 'app\migrations',
             ],
         ],
+        'seed' => [
+            'class' => 'app\commands\SeedController',
+        ],
         // 'fixture' => [
         //     'class' => 'yii\faker\FixtureController',
         // ],
