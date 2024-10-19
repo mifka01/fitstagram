@@ -101,12 +101,14 @@ if ($actionButton) {
               <a href="<?= Url::to($item['route']) ?>" class="
                     px-8
                     relative z-0
+                    transition-color duration-300
 
                     after:absolute
                     after:inset-0
                     after:px-8
-                
-                    after:bg-gray-200/60
+
+                    hover:text-white
+                    after:bg-orange-600
                     after:rounded-full
                     after:hover:scale-[0.9]
                     after:scale-0
@@ -126,11 +128,13 @@ if ($actionButton) {
         <?php if ($currentActionButton): ?>
         <a href="<?= Url::to($currentActionButton['route'])?>" class="
                     rounded-full
+                    border-rounded-full
                     border border-black
                     bg-black text-white
                     px-12 py-4
                     relative z-0
-                    overflow-hidden
+            overflow-hidden
+            font-semibold
 
                     transition-color duration-300
                     hover:text-black
@@ -143,7 +147,7 @@ if ($actionButton) {
                     after:left-0
                     after:w-full
                     after:h-full
-                    after:bg-orange-400
+                    after:bg-orange-600
                     after:transition-all
                     after:duration-300
 

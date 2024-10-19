@@ -44,7 +44,7 @@ jobs:
 
       - name: ⚙ Generate Tailwind CSS
         run: |
-          npm install -D tailwindcss postcss autoprefixer
+          npm install -D tailwindcss postcss autoprefixer @tailwindcss/forms
           npx tailwindcss -c ./tailwind/tailwind.config.js -i ./tailwind/input.css -o ./web/css/tailwind.css --minify
 
       - name: ⚙ Install LFTP

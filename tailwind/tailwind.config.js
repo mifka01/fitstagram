@@ -2,5 +2,5 @@
 module.exports = {
   content: ["./views/**/*.php", "./widgets/views/*.php", "./input.css"],
   theme: {},
-  plugins: [],
+  plugins: [require("@tailwindcss/forms")],
 };
