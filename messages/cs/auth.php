@@ -11,7 +11,7 @@ return [
     "Save" => "Uložit",
 
     "Please fill out the following fields to login" => "Prosím vyplňte následující pole pro přihlášení",
-    "Please fill out the following fields to signup" => "Prosím vyplňte následující pole pro přihlášení",
+    "Please fill out the following fields to signup" => "Prosím vyplňte následující pole pro registraci",
     "Please fill out your email. A link to reset your password will be sent there." => "Prosím vyplňte svůj email. Odkaz na obnovení hesla bude odeslán na tuto adresu.",
     "Please fill out your email. A verification email will be sent there." => "Prosím vyplňte svůj email. Ověřovací email bude odeslán na tuto adresu.",
 
