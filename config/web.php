@@ -1,18 +1,27 @@
 <?php
 
+use yii\helpers\ArrayHelper;
+
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 
 $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
+    'name' => 'FITstagram',
     'bootstrap' => ['log'],
-    'language' => 'en',
-    'sourceLanguage' => 'en',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
     ],
+    'on beforeRequest' => function () {
+        Yii::$app->language = Yii::$app->params['defaultLanguage'];
+        $cookies = Yii::$app->request->cookies;
+        $language = $cookies->getValue('language', Yii::$app->sourceLanguage);
+        if (ArrayHelper::isIn($language, array_keys(Yii::$app->params['languages']))) {
+            Yii::$app->language = $language;
+        }
+    },
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation

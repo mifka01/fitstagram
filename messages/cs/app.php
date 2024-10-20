@@ -5,6 +5,9 @@ return [
     'Groups' => 'Skupiny',
     'Create' => 'Přidat',
     'Search' => 'Hledat',
+    'About' => 'O nás',
+    'Contact' => 'Kontakt',
+    'Privacy' => 'Ochrana osobních údajů',
 
     'Login' => 'Přihlásit se',
     'Logout' => 'Odhlásit se',
