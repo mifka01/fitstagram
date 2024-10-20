@@ -51,6 +51,14 @@ return [
     'Passwords do not match.' => 'Hesla se neshodují.',
     'Password must contain at least one number.' => 'Heslo musí obsahovat alespoň jedno číslo.',
 
+    'Thank you for registration. Please check your inbox for verification email.' => 'Děkujeme za registraci. Prosím zkontrolujte svůj e-mail pro verifikaci.',
+    'Check your email for further instructions.' => 'Zkontrolujte svůj e-mail pro další instrukce.',
+    'Sorry, we are unable to reset password for the provided email address.' => 'Omlouváme se, ale nejsme schopni resetovat heslo pro zadanou e-mailovou adresu.',
+    'New password saved.' => 'Nové heslo uloženo.',
+    'Your email has been confirmed!' => 'Váš e-mail byl ověřen!',
+    'Sorry, we are unable to verify your account with provided token.' => 'Omlouváme se, ale nejsme schopni ověřit váš účet s poskytnutým tokenem.',
+    'Sorry, we are unable to resend verification email for the provided email address.' => 'Omlouváme se, ale nejsme schopni znovu odeslat ověřovací e-mail pro zadanou e-mailovou adresu.',
+
 # MAIL
     'Account registration at' => 'Registrace účtu na',
     'Password reset for ];' => 'Obnovení hesla pro',

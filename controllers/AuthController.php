@@ -111,7 +111,7 @@ class AuthController extends Controller
     {
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
-            Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
+            Yii::$app->session->setFlash('success', Yii::t('app/auth', 'Thank you for registration. Please check your inbox for verification email.'));
             return $this->goHome();
         }
 
@@ -130,12 +130,12 @@ class AuthController extends Controller
         $model = new PasswordResetRequestForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {
-                Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
+                Yii::$app->session->setFlash('success', Yii::t('app/auth', 'Check your email for further instructions.'));
 
                 return $this->goHome();
             }
 
-            Yii::$app->session->setFlash('error', 'Sorry, we are unable to reset password for the provided email address.');
+            Yii::$app->session->setFlash('error', Yii::t('app/auth', 'Sorry, we are unable to reset password for the provided email address.'));
         }
 
         return $this->render('requestPasswordResetToken', [
@@ -159,7 +159,7 @@ class AuthController extends Controller
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
-            Yii::$app->session->setFlash('success', 'New password saved.');
+            Yii::$app->session->setFlash('success', Yii::t('app/auth', 'New password saved.'));
 
             return $this->goHome();
         }
@@ -184,11 +184,11 @@ class AuthController extends Controller
             throw new BadRequestHttpException($e->getMessage());
         }
         if (($user = $model->verifyEmail()) && Yii::$app->user->login($user)) {
-            Yii::$app->session->setFlash('success', 'Your email has been confirmed!');
+            Yii::$app->session->setFlash('success', Yii::t('app/auth', 'Your email has been confirmed!'));
             return $this->goHome();
         }
 
-        Yii::$app->session->setFlash('error', 'Sorry, we are unable to verify your account with provided token.');
+        Yii::$app->session->setFlash('error', Yii::t('app/auth', 'Sorry, we are unable to verify your account with provided token.'));
         return $this->goHome();
     }
 
@@ -202,10 +202,10 @@ class AuthController extends Controller
         $model = new ResendVerificationEmailForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {
-                Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
+                Yii::$app->session->setFlash('success', Yii::t('app/auth', 'Check your email for further instructions.'));
                 return $this->goHome();
             }
-            Yii::$app->session->setFlash('error', 'Sorry, we are unable to resend verification email for the provided email address.');
+            Yii::$app->session->setFlash('error', Yii::t('app/auth', 'Sorry, we are unable to resend verification email for the provided email address.'));
         }
 
         return $this->render('resendVerificationEmail', [
