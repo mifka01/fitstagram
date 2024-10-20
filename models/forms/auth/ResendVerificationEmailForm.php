@@ -39,9 +39,9 @@ class ResendVerificationEmailForm extends Model
             [
                 'email',
                 'exist',
-                'targetClass' => '\common\models\User',
+                'targetClass' => '\app\models\User',
                 'filter' => ['active' => false],
-                'message' => 'There is no user with this email address.'
+                'message' => Yii::t('app/auth', 'There is no user with this email address.'),
             ],
         ];
     }
@@ -70,7 +70,7 @@ class ResendVerificationEmailForm extends Model
             )
             ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
             ->setTo($this->email)
-            ->setSubject('Account registration at ' . Yii::$app->name)
+            ->setSubject(Yii::t('app/auth', 'Account registration at ') . Yii::$app->name)
             ->send();
     }
 }

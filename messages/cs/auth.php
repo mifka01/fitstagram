@@ -38,4 +38,10 @@ return [
     "Login here" => "Přihlašte se zde",
     "Send Reset Link" => "Odeslat žádost",
     "Send Verification Email" => "Odeslat ověřovací e-mail",
+
+    'There is no user with this email address.' => 'Uživatel s touto emailovou adresou neexistuje.',
+
+# MAIL
+    'Account registration at' => 'Registrace účtu na',
+    'Password reset for ];' => 'Obnovení hesla pro',
 ];
