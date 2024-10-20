@@ -4,6 +4,7 @@
 /** @var string $content */
 
 use app\assets\AppAsset;
+use app\widgets\Alert;
 use app\widgets\NavWidget;
 use yii\helpers\Html;
 
@@ -70,21 +71,17 @@ $this->registerLinkTag(['rel' => 'stylesheet', 'href' => 'https://cdnjs.cloudfla
                 'brandUrl' => ['site/index'],
                 'brandImage' => Yii::getAlias('@web/images/logo.png'),
             ]);?>
+            <?= Alert::widget() ?>
 </header>
 
 <main id="main" class="flex-grow" role="main">
     <div class="container mx-auto px-4 py-8">
         <?= $content ?>
     </div>
-</main>
+        </main>
 
-<footer id="footer" class="mt-auto py-3 bg-white">
-    <div class="container mx-auto px-4">
-        <div class="flex justify-center text-sm text-gray-600">
-            footer
-        </div>
-    </div>
-</footer>
+<?= $this->render('_footer') ?>
+
 
 <?php $this->endBody() ?>
 </body>

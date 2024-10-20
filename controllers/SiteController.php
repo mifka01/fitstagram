@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\forms\ContactForm;
+use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -70,5 +72,28 @@ class SiteController extends Controller
     public function actionIndex(): string
     {
         return $this->render('index');
+    }
+
+    /**
+     * Displays contact page.
+     *
+     * @return mixed
+     */
+    public function actionContact()
+    {
+        $model = new ContactForm();
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
+                Yii::$app->session->setFlash('success', Yii::t('app/model', 'Thank you for contacting us. We will respond to you as soon as possible.'));
+            } else {
+                Yii::$app->session->setFlash('error', Yii::t('app/model', 'There was an error sending your message.'));
+            }
+
+            return $this->refresh();
+        }
+
+        return $this->render('contact', [
+            'model' => $model,
+        ]);
     }
 }

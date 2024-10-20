@@ -68,6 +68,7 @@ $config = [
                         'app/user' => 'user.php',
                         'app/model' => 'model.php',
                         'app/auth' => 'auth.php',
+                        'app/error' => 'error.php',
                     ],
                 ],
             ],
