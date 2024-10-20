@@ -41,6 +41,7 @@ services:
       - ./web/css:/app/output
       - ./views:/app/views
       - ./widgets:/app/widgets
+      - ./email:/app/email
       - ./enums:/app/enums
       - tailwind-node-modules:/app/node_modules
     environment:

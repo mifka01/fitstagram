@@ -38,10 +38,12 @@ $config = [
             'errorAction' => 'site/error',
         ],
         'mailer' => [
-            'class' => \yii\symfonymailer\Mailer::class,
-            'viewPath' => '@app/mail',
-            // send all mails to a file by default.
-            'useFileTransport' => true,
+            'class' => 'yii\symfonymailer\Mailer',
+            'useFileTransport' => false,
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'dsn' => 'smtp://' . env('MAIL_USERNAME') . ':' . env('MAIL_PASS') . '@' . env('MAIL_HOST') . ':' . env('MAIL_PORT'),
+            ],
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -78,6 +80,7 @@ $config = [
                         'app/model' => 'model.php',
                         'app/auth' => 'auth.php',
                         'app/error' => 'error.php',
+                        'app/mail' => 'mail.php',
                     ],
                 ],
             ],

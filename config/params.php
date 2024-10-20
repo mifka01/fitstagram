@@ -2,9 +2,10 @@
 
 return [
     'defaultLanguage' => 'en',
-    'adminEmail' => 'admin@example.com',
-    'senderEmail' => 'noreply@example.com',
-    'senderName' => 'Example.com mailer',
+    'adminEmail' => 'admin@nitte.cz',
+    'supportEmail' => 'support@nitte.cz',
+    'senderEmail' => 'support@nitte.cz',
+    'senderName' => 'FITstagram nitte.cz',
     'user.passwordResetTokenExpire' => 3600,
     'user.passwordMinLength' => 8,
 

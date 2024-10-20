@@ -5,6 +5,7 @@ module.exports = {
     "./widgets/**/views/*.php",
     "./widgets/**/tailwind/*.php",
     "./enums/**/tailwind/*.php",
+    "./email/**/*.php",
     "./input.css",
   ],
   theme: {},
