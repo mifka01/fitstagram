@@ -12,7 +12,9 @@ use yii\base\Model;
  */
 class ResetPasswordForm extends Model
 {
-    public string $password;
+    public string $password = '';
+
+    public string $password_repeat = '';
 
     private User $user;
 
@@ -25,6 +27,7 @@ class ResetPasswordForm extends Model
     {
         return [
             'password' => Yii::t('app/model', 'Password'),
+            'password_repeat' => Yii::t('app/model', 'Repeat password'),
         ];
     }
 
@@ -57,6 +60,10 @@ class ResetPasswordForm extends Model
         return [
             ['password', 'required'],
             ['password', 'string', 'min' => Yii::$app->params['user.passwordMinLength']],
+            ['password', 'match', 'pattern' => '/\d+/', 'message' => Yii::t('app/auth', 'Password must contain at least one number.')],
+
+            ['password_repeat', 'required'],
+            ['password_repeat', 'compare', 'compareAttribute' => 'password', 'message' => Yii::t('app/auth', 'Passwords do not match.')],
         ];
     }
 

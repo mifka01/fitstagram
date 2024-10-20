@@ -7,7 +7,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
-$this->title = 'Reset password';
+$this->title = Yii::t('app/auth', 'Reset password');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= Yii::t('app/auth', Html::encode($this->title)) ?>
         </h1>
         <p class="mt-2 text-center text-sm text-gray-600">
-            <?= Yii::t('app', 'Please choose your new password:') ?>
+            <?= Yii::t('app/auth', 'Please choose your new password') ?>
         </p>
     </div>
 
@@ -27,17 +27,23 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?= $form->field($model, 'password')->passwordInput([
                         'autofocus' => true,
                         'class' => 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm',
-                        'placeholder' => 'Enter your new password'
+                        'placeholder' => Yii::t('app/auth', 'Enter your new password')
+                    ]) ?>
+
+
+                    <?= $form->field($model, 'password_repeat')->passwordInput([
+                        'autofocus' => true,
+                        'class' => 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm',
+                        'placeholder' => Yii::t('app/auth', 'Repeat your new password')
                     ]) ?>
 
                     <div class="text-sm space-y-1">
                         <p class="text-gray-600">
-                            Password should:
+                        <?= Yii::t('app/auth', 'Password should:') ?>
                         </p>
                         <ul class="text-gray-500 list-disc list-inside space-y-1">
-                            <li>Be at least 8 characters long</li>
-                            <li>Include at least one number</li>
-                            <li>Include at least one special character</li>
+                        <li><?= Yii::t('app/auth', 'Be at least 8 characters long')?></li>
+                        <li><?= Yii::t('app/auth', 'Include at least one number')?></li>
                         </ul>
                     </div>
 

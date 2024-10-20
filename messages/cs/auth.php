@@ -41,6 +41,16 @@ return [
 
     'There is no user with this email address.' => 'Uživatel s touto emailovou adresou neexistuje.',
 
+    'Reset password' => 'Obnovení hesla',
+    'Please choose your new password' => 'Prosím zvolte si nové heslo',
+    'Enter your new password' => 'Zadejte své nové heslo',
+    'Repeat your new password' => 'Zopakujte své nové heslo',
+    'Password should:'=> 'Heslo by mělo:',
+    'Be at least 8 characters long' => 'Být dlouhé alespoň 8 znaků',
+    'Include at least one number' => 'obsahovat alespoň jedno číslo',
+    'Passwords do not match.' => 'Hesla se neshodují.',
+    'Password must contain at least one number.' => 'Heslo musí obsahovat alespoň jedno číslo.',
+
 # MAIL
     'Account registration at' => 'Registrace účtu na',
     'Password reset for ];' => 'Obnovení hesla pro',

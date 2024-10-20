@@ -21,11 +21,11 @@ $errorCode = $matches[2] ?? '';
             </div>
 
             <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
-                <?= Html::encode($errorMessage) ?>
+                <?= Html::encode(Yii::t('app/error', $errorMessage)) ?>
             </h1>
 
             <div class="text-lg text-gray-600">
-                <?= nl2br(Html::encode($message)) ?>
+                <?= nl2br(Html::encode(Yii::t('app/error', $message))) ?>
             </div>
 
             <div class="space-y-4">

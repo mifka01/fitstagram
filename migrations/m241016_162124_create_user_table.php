@@ -27,11 +27,11 @@ class m241016_162124_create_user_table extends Migration
             'password_reset_token' => $this->string(),
             'verification_token' => $this->string()->notNull(),
             'auth_key' => $this->string()->notNull(),
-            'active' => $this->boolean(),
-            'deleted' => $this->boolean(),
-            'banned' => $this->boolean(),
-            'created_at' => $this->timestamp()->defaultExpression('CURRENT_TIMESTAMP'),
-            'updated_at' => $this->timestamp()->defaultExpression('CURRENT_TIMESTAMP')->append('ON UPDATE CURRENT_TIMESTAMP'),
+            'active' => $this->boolean()->notNull()->defaultValue(false),
+            'deleted' => $this->boolean()->notNull()->defaultValue(false),
+            'banned' => $this->boolean()->notNull()->defaultValue(false),
+            'created_at' => $this->timestamp(),
+            'updated_at' => $this->timestamp(),
         ]);
 
 

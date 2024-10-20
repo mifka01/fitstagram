@@ -135,7 +135,7 @@ class User extends TimestampRecord implements IdentityInterface
     {
         return static::findOne([
             'verification_token' => $token,
-            'active' => true,
+            'active' => false,
         ]);
     }
 

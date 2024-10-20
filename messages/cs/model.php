@@ -21,6 +21,7 @@ return [
     'Password' => 'Heslo',
     'Password Hash' => 'Hash hesla',
     'Password Reset Token' => 'Token pro obnovení hesla',
+    'Repeat password' => 'Zopakujte heslo',
     'Verification Token' => 'Token pro ověření',
     'Auth Key' => 'Klíč autentizace',
 

@@ -7,4 +7,6 @@ return [
 
     "Return to Home" => "Zpět na úvodní stránku",
     "Contact Support" => "Kontaktovat podporu",
+
+    'Method Not Allowed. This URL can only handle the following request methods: POST.' => 'Metoda není povolena. Tato URL adresa může zpracovávat pouze následující metody požadavků: POST.',
 ];

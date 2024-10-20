@@ -40,6 +40,11 @@ $this->params['breadcrumbs'][] = $this->title;
                         'placeholder' => Yii::t('app/auth', 'Create a password')
                     ]) ?>
 
+                    <?= $form->field($model, 'password_repeat')->passwordInput([
+                        'class' => 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm',
+                        'placeholder' => Yii::t('app/auth', 'Repeat a password')
+                    ]) ?>
+
                     <div class="text-sm">
                         <p class="text-gray-600">
                             <?= Yii::t('app/auth', 'Already have an account?')?> 
