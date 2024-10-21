@@ -55,9 +55,9 @@ class LoginForm extends Model
      * This method serves as the inline validation for password.
      *
      * @param string $attribute the attribute currently being validated
-     * @param array<string, mixed> $params the additional name-value pairs given in the rule
+     * @param ?array<string, mixed> $params the additional name-value pairs given in the rule
      */
-    public function validatePassword(string $attribute, array $params): void
+    public function validatePassword(string $attribute, array|null $params): void
     {
         if (!$this->hasErrors()) {
             $user = $this->getUser();
@@ -86,9 +86,9 @@ class LoginForm extends Model
     /**
      * Finds user by [[username]]
      *
-     * @return User|null
+     * @return User|null|false
      */
-    public function getUser(): ?User
+    public function getUser(): User|false|null
     {
         if ($this->user === null) {
             $this->user = User::findByUsername($this->username);
