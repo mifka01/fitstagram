@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\models\query\GroupQuery;
 use Yii;
 use yii\db\ActiveQuery;
 
@@ -113,5 +114,15 @@ class Group extends \yii\db\ActiveRecord
     public function getMembers(): ActiveQuery
     {
         return $this->hasMany(User::class, ['id' => 'user_id'])->viaTable('group_member', ['group_id' => 'id']);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return \app\models\query\GroupQuery the active query used by this AR class.
+     */
+    public static function find(): GroupQuery
+    {
+        return new GroupQuery(get_called_class());
     }
 }

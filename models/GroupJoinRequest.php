@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\models\query\GroupJoinRequestQuery;
 use Yii;
 use yii\db\ActiveQuery;
 
@@ -81,5 +82,15 @@ class GroupJoinRequest extends \yii\db\ActiveRecord
     public function getGroup(): ActiveQuery
     {
         return $this->hasOne(Group::class, ['id' => 'group_id']);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return \app\models\query\GroupJoinRequestQuery the active query used by this AR class.
+     */
+    public static function find(): GroupJoinRequestQuery
+    {
+        return new GroupJoinRequestQuery(get_called_class());
     }
 }

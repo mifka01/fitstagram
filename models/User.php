@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\models\query\UserQuery;
 use app\models\TimestampRecord;
 use Yii;
 use yii\base\NotSupportedException;
@@ -305,5 +306,15 @@ class User extends TimestampRecord implements IdentityInterface
     public function getTags(): ActiveQuery
     {
         return $this->hasMany(Tag::class, ['created_by' => 'id']);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return \app\models\query\UserQuery the active query used by this AR class.
+     */
+    public static function find(): UserQuery
+    {
+        return new UserQuery(get_called_class());
     }
 }

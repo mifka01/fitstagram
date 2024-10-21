@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\models\query\CommentQuery;
 use Yii;
 use yii\db\ActiveQuery;
 
@@ -80,5 +81,15 @@ class Comment extends \yii\db\ActiveRecord
     public function getPost(): ActiveQuery
     {
         return $this->hasOne(Post::class, ['id' => 'post_id']);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return \app\models\query\CommentQuery the active query used by this AR class.
+     */
+    public static function find(): CommentQuery
+    {
+        return new CommentQuery(get_called_class());
     }
 }

@@ -3,6 +3,7 @@
 namespace app\models;
 
 use app\models\Post;
+use app\models\query\TagQuery;
 use Yii;
 use yii\db\ActiveQuery;
 
@@ -74,5 +75,15 @@ class Tag extends \yii\db\ActiveRecord
     public function getPosts(): ActiveQuery
     {
         return $this->hasMany(Post::class, ['id' => 'post_id'])->viaTable('post_tag', ['tag_id' => 'id']);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return \app\models\query\TagQuery the active query used by this AR class.
+     */
+    public static function find(): TagQuery
+    {
+        return new TagQuery(get_called_class());
     }
 }

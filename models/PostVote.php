@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\models\query\PostVoteQuery;
 use Yii;
 use yii\db\ActiveQuery;
 
@@ -75,5 +76,15 @@ class PostVote extends \yii\db\ActiveRecord
     public function getVotedBy(): ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'voted_by']);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return \app\models\query\PostVoteQuery the active query used by this AR class.
+     */
+    public static function find(): PostVoteQuery
+    {
+        return new PostVoteQuery(get_called_class());
     }
 }

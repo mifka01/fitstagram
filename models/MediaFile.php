@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\models\query\MediaFileQuery;
 use Yii;
 use yii\db\ActiveQuery;
 
@@ -62,5 +63,15 @@ class MediaFile extends \yii\db\ActiveRecord
     public function getPost(): ActiveQuery
     {
         return $this->hasOne(Post::class, ['id' => 'post_id']);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return \app\models\query\MediaFileQuery the active query used by this AR class.
+     */
+    public static function find(): MediaFileQuery
+    {
+        return new MediaFileQuery(get_called_class());
     }
 }

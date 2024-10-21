@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\models\query\PostQuery;
 use Yii;
 use yii\db\ActiveQuery;
 
@@ -150,5 +151,15 @@ class Post extends \yii\db\ActiveRecord
     public function getVoters(): ActiveQuery
     {
         return $this->hasMany(User::class, ['id' => 'voted_by'])->viaTable('post_vote', ['post_id' => 'id']);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return \app\models\query\PostQuery the active query used by this AR class.
+     */
+    public static function find(): PostQuery
+    {
+        return new PostQuery(get_called_class());
     }
 }
