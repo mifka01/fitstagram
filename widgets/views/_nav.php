@@ -69,37 +69,36 @@ if ($actionButton) {
         container relative
         justify-between items-center
         mx-auto px-4">
-        <div class="flex-initial">
+        <div class="w-1/4 h-16 flex flex-col text-center font-semibold text-gray-900 align-middle justify-center text-2xl">
                 <?php if ($brandUrl): ?>
-            <a href="<?= Url::to($brandUrl) ?>" class="
-                flex flex-shrink-0 items-center space-x-2
-                font-semibold text-lg text-gray-900
-                ">
+            <a href="<?= Url::to($brandUrl) ?>">
                     <?php if ($brandImage): ?>
-                <img class="h-8 w-auto" src="<?= $brandImage ?>" alt="<?= $brandLabel?>">
+                        <img class="h-16 w-auto text-center mx-auto" src="<?= $brandImage ?>" alt="<?= $brandLabel?>">
+                    <?php else: ?>
+                        <?= $brandLabel ?>
                     <?php endif; ?>
-                <span><?= $brandLabel ?></span>
             </a>
                 <?php else: ?>
-            <span class="
-                flex flex-shrink-0 items-center space-x-2
-                font-semibold text-lg text-gray-900">
+            <span>
                     <?php if ($brandImage): ?>
-                <img class="h-8 w-auto" src="<?= $brandImage ?>" alt="<?= $brandLabel?>">
+                        <img class="h-8 w-auto" src="<?= $brandImage ?>" alt="<?= $brandLabel?>">
+                    <?php else: ?>
+                        <?= $brandLabel ?>
                     <?php endif; ?>
-                    <?= $brandLabel ?>
             </span>
                 <?php endif; ?>
         </div>
         <div class="
+            flex-grow
             flex
+            justify-between items-center
+            h-16
             text-lg text-gray-700
             rounded-lg 
-            py-2
             divide-x-2 divide-gray-300">
                 <?php foreach ($items as $item): ?>
-              <a href="<?= Url::to($item['route']) ?>" class="
-                    px-8
+            <a href="<?= Url::to($item['route']) ?>" class="
+                flex-grow text-center
                     relative z-0
                     transition-color duration-300
 
@@ -126,15 +125,18 @@ if ($actionButton) {
                 <?php endforeach; ?>
         </div>
         <?php if ($currentActionButton): ?>
-        <a href="<?= Url::to($currentActionButton['route'])?>" class="
+        <div class='w-1/4 h-16 flex flex-col align-middle justify-center text-center'>
+            <div class='flex justify-center'>
+                <a href="<?= Url::to($currentActionButton['route'])?>" class="
+                    py-4
                     rounded-full
                     border-rounded-full
                     border border-black
                     bg-black text-white
-                    px-12 py-4
+                    px-12
                     relative z-0
-            overflow-hidden
-            font-semibold
+                    font-semibold
+                    overflow-hidden
 
                     transition-color duration-300
                     hover:text-black
@@ -155,9 +157,11 @@ if ($actionButton) {
                     after:border-black
 
                     hover:after:top-0
-            ">
+                ">
                 <?=Yii::t('app/user', $currentActionButton['label'])?>
             </a>
+            <div>
+        </div>
         <?php endif; ?>
     </div>
     <!-- Desktop menu -->
