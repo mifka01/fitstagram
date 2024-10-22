@@ -10,6 +10,7 @@ $config = [
     'basePath' => dirname(__DIR__),
     'name' => 'FITstagram',
     'bootstrap' => ['log'],
+    'timeZone' => 'Europe/Prague',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
@@ -95,7 +96,8 @@ $config = [
             ],
             \yii\widgets\ActiveField::class => [
                 'errorOptions' => ['class' => 'error-message']
-            ]
+            ],
+            \yii\i18n\Formatter::class => \app\components\Formatter::class,
         ]
     ],
 ];
