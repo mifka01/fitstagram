@@ -23,7 +23,6 @@ class m241016_164546_create_media_file_table extends Migration
             'id' => $this->primaryKey(),
             'media_path' => $this->string(),
             'name' => $this->string()->notNull(),
-            'place' => $this->string(),
             'post_id' => $this->integer()->notNull(),
         ], $tableOptions);
 

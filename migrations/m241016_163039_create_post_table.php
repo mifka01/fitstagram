@@ -29,6 +29,7 @@ class m241016_163039_create_post_table extends Migration
             'downvote_count' => $this->integer()->defaultValue(0),
             // Use text for larger descriptions
             'description' => $this->text(),
+            'place' => $this->string(),
             // Default to false
             'deleted' => $this->boolean()->defaultValue(false),
             'created_at' => $this->timestamp()->defaultExpression('CURRENT_TIMESTAMP')->notNull(),

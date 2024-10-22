@@ -9,7 +9,6 @@ Table Media_File {
   id integer [pk, increment]
   media_path varchar
   name varchar [not null]
-  place varchar
   post_id integer [not null, ref: > Post.id]
 }
 
@@ -38,6 +37,7 @@ Table Post {
   upvote_count integer [default: 0]
   downvote_count integer [default: 0]
   description varchar
+  place varchar
   deleted boolean 
   created_at timestamp
   updated_at timestamp [default: `CURRENT_TIMESTAMP`]

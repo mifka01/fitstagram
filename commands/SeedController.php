@@ -100,7 +100,8 @@ class SeedController extends Controller
                 'is_private' => !$isGroupPost & self::$faker->boolean(),
                 'upvote_count' => self::$faker->numberBetween(0, 100),
                 'downvote_count' => self::$faker->numberBetween(0, 100),
-                'description' => self::$faker->text(200),
+                'description' => self::$faker->paragraph(3),
+                'place' => self::$faker->city,
                 // 10% chance to be deleted
                 'deleted' => self::$faker->boolean(0),
                 'created_at' => $createdAt = self::$faker->dateTimeThisYear()->format('Y-m-d H:i:s'),
@@ -125,16 +126,15 @@ class SeedController extends Controller
         $mediaFiles = [];
         for ($i = 0; $i < $count; $i++) {
             $mediaFile = [
-                'media_path' => self::$faker->filePath(),
-                'name' => self::$faker->word() . '.' . self::$faker->fileExtension(),
-                'place' => self::$faker->city,
+                'media_path' => '/images/medium.webp',
+                'name' => self::$faker->word(),
                 'post_id' => $postId,
             ];
 
             $mediaFiles[] = $mediaFile;
         }
 
-        Yii::$app->db->createCommand()->batchInsert('media_file', ['media_path', 'name', 'place', 'post_id'], $mediaFiles)->execute();
+        Yii::$app->db->createCommand()->batchInsert('media_file', ['media_path', 'name', 'post_id'], $mediaFiles)->execute();
     }
 
     public function addPostTags(string $postId): void

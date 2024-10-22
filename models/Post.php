@@ -16,6 +16,7 @@ use yii\db\ActiveQuery;
  * @property int|null $upvote_count
  * @property int|null $downvote_count
  * @property string|null $description
+ * @property string|null $place
  * @property int|null $deleted
  * @property string $created_at
  * @property string $updated_at
@@ -46,7 +47,7 @@ class Post extends \yii\db\ActiveRecord
         return [
             [['created_by', 'is_private', 'is_group_post'], 'required'],
             [['created_by', 'is_private', 'is_group_post', 'upvote_count', 'downvote_count', 'deleted'], 'integer'],
-            [['description'], 'string'],
+            [['description', 'place'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
         ];
@@ -67,6 +68,7 @@ class Post extends \yii\db\ActiveRecord
             'upvote_count' => 'Upvote Count',
             'downvote_count' => 'Downvote Count',
             'description' => 'Description',
+            'place' => 'Place',
             'deleted' => 'Deleted',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',

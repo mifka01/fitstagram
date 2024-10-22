@@ -20,7 +20,7 @@ class MediaFileSearch extends MediaFile
     {
         return [
             [['id', 'post_id'], 'integer'],
-            [['media_path', 'name', 'place'], 'safe'],
+            [['media_path', 'name'], 'safe'],
         ];
     }
 
@@ -66,8 +66,7 @@ class MediaFileSearch extends MediaFile
         ]);
 
         $query->andFilterWhere(['like', 'media_path', $this->media_path])
-            ->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'place', $this->place]);
+            ->andFilterWhere(['like', 'name', $this->name]);
 
         return $dataProvider;
     }

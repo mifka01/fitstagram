@@ -20,7 +20,7 @@ class PostSearch extends Post
     {
         return [
             [['id', 'created_by', 'is_private', 'is_group_post', 'upvote_count', 'downvote_count', 'deleted'], 'integer'],
-            [['description', 'created_at', 'updated_at'], 'safe'],
+            [['description', 'created_at', 'updated_at', 'place'], 'safe'],
         ];
     }
 
@@ -72,7 +72,7 @@ class PostSearch extends Post
             'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'description', $this->description]);
+        $query->andFilterWhere(['like', 'description', $this->description])->andFilterWhere(['like', 'place', $this->place]);
 
         return $dataProvider;
     }
