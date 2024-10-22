@@ -60,6 +60,7 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                '' => 'post/index',
             ],
         ],
          'assetManager' => [

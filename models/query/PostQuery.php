@@ -9,8 +9,23 @@ namespace app\models\query;
  */
 class PostQuery extends \yii\db\ActiveQuery
 {
-    /*public function active()
+    /**
+     * {@inheritDoc}
+     *
+     * @return \app\models\query\PostQuery
+     */
+    public function deleted(bool $deleted = true): self
     {
-        return $this->andWhere('[[status]]=1');
-    }*/
+        return $this->andWhere(['deleted' => $deleted]);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return \app\models\query\PostQuery
+     */
+    public function public(bool $public): self
+    {
+        return $this->andWhere(['is_private' => !$public]);
+    }
 }
