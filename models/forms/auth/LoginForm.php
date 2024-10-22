@@ -19,8 +19,6 @@ class LoginForm extends Model
 
     public bool $rememberMe = true;
 
-    private bool $user = false;
-
     /**
      * {@inheritDoc}
      *
@@ -86,14 +84,10 @@ class LoginForm extends Model
     /**
      * Finds user by [[username]]
      *
-     * @return User|null|false
+     * @return User|null
      */
-    public function getUser(): User|false|null
+    public function getUser(): User|null
     {
-        if ($this->user === null) {
-            $this->user = User::findByUsername($this->username);
-        }
-
-        return $this->user;
+        return User::findByUsername($this->username);
     }
 }
