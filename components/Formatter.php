@@ -11,7 +11,7 @@ use yii\base\InvalidArgumentException;
 
 class Formatter extends \yii\i18n\Formatter
 {
-     /**
+    /**
      * @var string|null the time zone to use for formatting time and date values.
      *
      * This can be any value that may be passed to [date_default_timezone_set()](https://www.php.net/manual/en/function.date-default-timezone-set.php)
@@ -90,7 +90,7 @@ class Formatter extends \yii\i18n\Formatter
                 return Yii::t('app', 'in {delta, plural, other{# y}}', ['delta' => $interval->y], $this->language);
             }
             if ($interval->m >= 1) {
-                return Yii::t('app', 'in {delta, plural, other{# mon.}}', ['delta' => $interval->m], $this->language);
+                return Yii::t('app', 'in {delta, plural, other{# mo}}', ['delta' => $interval->m], $this->language);
             }
             if ($interval->d >= 1) {
                 return Yii::t('app', 'in {delta, plural, other{# d}}', ['delta' => $interval->d], $this->language);
@@ -109,7 +109,7 @@ class Formatter extends \yii\i18n\Formatter
             return Yii::t('app', '{delta, plural, other{# y}}', ['delta' => $interval->y], $this->language);
         }
         if ($interval->m >= 1) {
-            return Yii::t('app', '{delta, plural, other{# mon.}}', ['delta' => $interval->m], $this->language);
+            return Yii::t('app', '{delta, plural, other{# mo}}', ['delta' => $interval->m], $this->language);
         }
         if ($interval->d >= 1) {
             return Yii::t('app', '{delta, plural, other{# d}}', ['delta' => $interval->d], $this->language);

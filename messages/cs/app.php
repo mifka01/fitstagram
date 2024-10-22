@@ -8,6 +8,8 @@ return [
     'About' => 'O nás',
     'Contact' => 'Kontakt',
     'Privacy' => 'Ochrana osobních údajů',
+    'Ban' => 'Zablokovat',
+    'Hide' => 'Skrýt',
 
     'Login' => 'Přihlásit se',
     'Logout' => 'Odhlásit se',
@@ -26,7 +28,7 @@ return [
 
     # RELATIVE TIME
     '{delta, plural, other{# y}}' => '{delta, plural, other{# r}}',
-    '{delta, plural, other{# mon.}}' => '{delta, plural, other{# měs.}}',
+    '{delta, plural, other{# mo}}' => '{delta, plural, other{# měs}}',
     '{delta, plural, other{# d}}' => '{delta, plural, other{# d}}',
     '{delta, plural, other{# h}}' => '{delta, plural, other{# h}}',
     '{delta, plural, other{# min}}' => '{delta, plural, other{# min}}',
@@ -34,7 +36,7 @@ return [
 
 
     'in {delta, plural, other{# y}}' => 'za {delta, plural, other{# r}}',
-    'in {delta, plural, other{# mon.}}' => 'za {delta, plural, other{# měs.}}',
+    'in {delta, plural, other{# mo}}' => 'za {delta, plural, other{# měs}}',
     'in {delta, plural, other{# d}}' => 'za {delta, plural, other{# d}}',
     'in {delta, plural, other{# h}}' => 'za {delta, plural, other{# h}}',
     'in {delta, plural, other{# min}}' => 'za {delta, plural, other{# min}}',

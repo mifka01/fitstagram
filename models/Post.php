@@ -156,6 +156,16 @@ class Post extends \yii\db\ActiveRecord
     }
 
     /**
+     * Gets query for [[Voters]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTotalVotes(): int
+    {
+        return $this->upvote_count - $this->downvote_count;
+    }
+
+    /**
      * {@inheritDoc}
      *
      * @return \app\models\query\PostQuery the active query used by this AR class.
