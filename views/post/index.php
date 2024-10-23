@@ -21,6 +21,11 @@ $this->title = Yii::t('app', 'Posts');
 
             <?= ScrollPager::widget([
                 'pagination' => $postDataProvider->getPagination(),
+                'scrollOffset' => 1000,
+                'label' => Yii::t('app', 'Load More'),
+                'clientOptions' => [
+                    'throttleWait' => 50,
+                ],
             ]) ?>
     </div>
 </div>
