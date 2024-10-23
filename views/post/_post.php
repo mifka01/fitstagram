@@ -67,13 +67,12 @@
             </div>
             <!-- Comments -->
 
-            <div class="px-2 py-2">
+            <div class="p-2">
                 <?php foreach ($model->comments as $comment): ?>
                     <?= $this->render('_comment', ['comment' => $comment]) ?>
-                    <?php break; ?> <!-- TODO remove -->
                 <?php endforeach; ?>
             </div>
-            <div class="px-2 py-2">
+            <div class="p-2">
                 <form action="">
                     <textarea class="w-full rounded-lg border-gray-500 resize-none overflow-hidden min-h-[3rem] focus:border-gray-600 focus:ring-gray-400" type="text" name="" id="" placeholder="<?= Yii::t('app/model', 'Leave a comment...') ?>" oninput="autoExpand(this)"></textarea>
                 </form>

@@ -1,3 +1,10 @@
+<?php
+/**
+ * @var yii\web\View $this
+ * @var app\models\Comment $comment
+ */
+?>
+
 <div class="">
     <div class="flex items-center space-x-2">
         <p class="text-orange-600 text-md"><?= $comment->createdBy->username ?></p>

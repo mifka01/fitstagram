@@ -21,6 +21,8 @@ use yii\db\ActiveQuery;
  * @property string $created_at
  * @property string $updated_at
  *
+ * @property int $totalVotes
+ *
  * @property Comment[] $comments
  * @property User[] $commenters
  * @property User $createdBy
@@ -158,7 +160,7 @@ class Post extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Voters]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return int
      */
     public function getTotalVotes(): int
     {
