@@ -23,14 +23,35 @@ if ($actionButton) {
 
 ?>
 
-<nav class="bg-gray-50 py-2 
-            fixed bottom-0 left-0 right-0
-            md:static md:top-0 md:bottom-auto 
-    ">
-
+<nav class="h-32 flex">
     <!-- Mobile menu -->
-    <div class="md:hidden">
-        <div class="
+
+    <div class="fixed flex h-24 left-0 right-0 md:hidden bg-gray-50 justify-center items-center">
+            <div class="flex flex-col text-center font-semibold text-gray-900 align-justify-center text-2xl">
+                    <?php if ($brandUrl): ?>
+                <a href="<?= Url::to($brandUrl) ?>">
+                        <?php if ($brandImage): ?>
+                            <img class="h-16 w-auto text-center mx-auto" src="<?= $brandImage ?>" alt="<?= $brandLabel?>">
+                        <?php else: ?>
+                            <?= $brandLabel ?>
+                        <?php endif; ?>
+                </a>
+                    <?php else: ?>
+                <span>
+                        <?php if ($brandImage): ?>
+                            <img class="h-8 w-auto" src="<?= $brandImage ?>" alt="<?= $brandLabel?>">
+                        <?php else: ?>
+                            <?= $brandLabel ?>
+                        <?php endif; ?>
+                </span>
+                    <?php endif; ?>
+            </div>
+    </div>
+    <div class="
+            fixed
+            md:hidden
+            bottom-0 left-0 right-0
+            bg-gray-50
             flex
             justify-between items-center
             text-lg text-gray-700
@@ -58,18 +79,21 @@ if ($actionButton) {
                     <?php endif; ?>
                 </a>
             <?php endif; ?>
-        </div>
     </div>
     <!-- Mobile menu -->
 
 
     <!-- Desktop menu -->
     <div class="
+        h-24
+        bg-gray-50
+        fixed
+        right-0 left-0
         hidden md:flex
-        container relative
-        justify-between items-center
-        mx-auto px-4">
-        <div class="w-1/4 h-16 flex flex-col text-center font-semibold text-gray-900 align-middle justify-center text-2xl">
+        border-b
+        ">
+        <div class='self-center flex flex-grow'>
+        <div class="w-1/4 flex flex-col text-center font-semibold text-gray-900 align-justify-center text-2xl">
                 <?php if ($brandUrl): ?>
             <a href="<?= Url::to($brandUrl) ?>">
                     <?php if ($brandImage): ?>
@@ -89,8 +113,7 @@ if ($actionButton) {
                 <?php endif; ?>
         </div>
         <div class="
-            flex-grow
-            flex
+            flex flex-grow
             justify-between items-center
             h-16
             text-lg text-gray-700
@@ -98,7 +121,8 @@ if ($actionButton) {
             divide-x-2 divide-gray-300">
                 <?php foreach ($items as $item): ?>
             <a href="<?= Url::to($item['route']) ?>" class="
-                flex-grow text-center
+                text-center
+                flex-grow
                     relative z-0
                     transition-color duration-300
 
@@ -163,6 +187,7 @@ if ($actionButton) {
             <div>
         </div>
         <?php endif; ?>
+    </div>
     </div>
     <!-- Desktop menu -->
 </nav>

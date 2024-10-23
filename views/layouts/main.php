@@ -75,7 +75,7 @@ $this->registerLinkTag(['rel' => 'stylesheet', 'href' => 'https://cdnjs.cloudfla
 </header>
 
 <main id="main" class="flex-grow" role="main">
-    <div class="container mx-auto px-4 py-8">
+    <div class="container mx-auto">
         <?= $content ?>
     </div>
         </main>
