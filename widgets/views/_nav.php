@@ -23,7 +23,7 @@ if ($actionButton) {
 
 ?>
 
-<nav class="h-32 flex">
+<nav class="h-24 flex">
     <!-- Mobile menu -->
 
     <div class="fixed flex h-24 left-0 right-0 md:hidden bg-gray-50 justify-center items-center">
@@ -49,15 +49,16 @@ if ($actionButton) {
     </div>
     <div class="
             fixed
-            md:hidden
-            bottom-0 left-0 right-0
-            bg-gray-50
             flex
-            justify-between items-center
-            text-lg text-gray-700
-            rounded-lg 
-            py-2
-            divide-x-2 divide-gray-300">
+            md:hidden
+            h-10
+            bottom-0 left-0 right-0
+            items-center
+            bg-gray-50
+            justify-items-center
+            border-t
+            text-lg text-gray-900
+            ">
             <?php foreach ($items as $item): ?>
               <a href="<?= Url::to($item['route']) ?>" class="
                 w-full text-center
