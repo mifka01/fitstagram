@@ -3,6 +3,7 @@
 /** @var yii\web\View $this */
 /** @var yii\data\ActiveDataProvider $postDataProvider */
 
+use app\components\ScrollPager;
 use yii\widgets\ListView;
 
 $this->title = Yii::t('app', 'Posts');
@@ -13,10 +14,13 @@ $this->title = Yii::t('app', 'Posts');
         <?= ListView::widget([
             'dataProvider' => $postDataProvider,
             'itemView' => '_post',
-            'itemOptions' => ['class' => 'item'],
-            'options' => ['class' => 'space-y-16'],
+            'itemOptions' => ['class' => 'item mb-4'],
+            'layout' => "{items}",
             'summary' => '',
-            'pager' => ['class' => \kop\y2sp\ScrollPager::class]
         ]); ?>
+
+            <?= ScrollPager::widget([
+                'pagination' => $postDataProvider->getPagination(),
+            ]) ?>
     </div>
 </div>

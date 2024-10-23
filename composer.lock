@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d4d0ebdd5bcd6de31e16f0abb150b47e",
+    "content-hash": "3d484642d30dded62d9acec70ce84a36",
     "packages": [
         {
             "name": "bower-asset/inputmask",
@@ -413,59 +413,6 @@
             "time": "2024-07-20T21:45:45+00:00"
         },
         {
-            "name": "kop/yii2-scroll-pager",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/kop/yii2-scroll-pager.git",
-                "reference": "27720921e60b5df12b73c31429472fe8781e0425"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/kop/yii2-scroll-pager/zipball/27720921e60b5df12b73c31429472fe8781e0425",
-                "reference": "27720921e60b5df12b73c31429472fe8781e0425",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4.0",
-                "webcreate/jquery-ias": "^2.2.1",
-                "yiisoft/yii2": "*"
-            },
-            "default-branch": true,
-            "type": "yii2-extension",
-            "autoload": {
-                "psr-4": {
-                    "kop\\y2sp\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Ivan Koptiev",
-                    "email": "ivan.koptiev@codex.systems",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Infinite AJAX scrolling for Yii2 ListView widget",
-            "homepage": "http://kop.github.io/yii2-scroll-pager/",
-            "keywords": [
-                "pager",
-                "pagination",
-                "scroll",
-                "scrolling",
-                "yii",
-                "yii2"
-            ],
-            "support": {
-                "issues": "https://github.com/kop/yii2-scroll-pager/issues",
-                "source": "https://github.com/kop/yii2-scroll-pager"
-            },
-            "time": "2020-07-08T07:52:26+00:00"
-        },
-        {
             "name": "paragonie/random_compat",
             "version": "v9.99.100",
             "source": {
@@ -742,6 +689,56 @@
                 "source": "https://github.com/php-fig/log/tree/3.0.2"
             },
             "time": "2024-09-11T13:17:53+00:00"
+        },
+        {
+            "name": "sjaakp/yii2-loadmore",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sjaakp/yii2-loadmore.git",
+                "reference": "7900d4b59160a7a032586308dde9521959b1ee84"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sjaakp/yii2-loadmore/zipball/7900d4b59160a7a032586308dde9521959b1ee84",
+                "reference": "7900d4b59160a7a032586308dde9521959b1ee84",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "sjaakp\\loadmore\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sjaak Priester",
+                    "email": "sjaak@sjaakpriester.nl",
+                    "homepage": "https://sjaakpriester.nl"
+                }
+            ],
+            "description": "Load More button for Yii 2.0 GridView or ListView",
+            "keywords": [
+                "ListView",
+                "data",
+                "extension",
+                "gridview",
+                "pager",
+                "yii",
+                "yii2"
+            ],
+            "support": {
+                "issues": "https://github.com/sjaakp/yii2-loadmore/issues",
+                "source": "https://github.com/sjaakp/yii2-loadmore/tree/1.0.1"
+            },
+            "time": "2024-06-29T13:29:46+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",
@@ -1699,50 +1696,6 @@
                 }
             ],
             "time": "2024-07-20T21:52:34+00:00"
-        },
-        {
-            "name": "webcreate/jquery-ias",
-            "version": "v2.3.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/webcreate/infinite-ajax-scroll.git",
-                "reference": "97ba99a34e68a3fc186ceb518c9cff51370be24b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/webcreate/infinite-ajax-scroll/zipball/97ba99a34e68a3fc186ceb518c9cff51370be24b",
-                "reference": "97ba99a34e68a3fc186ceb518c9cff51370be24b",
-                "shasum": ""
-            },
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "proprietary",
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "fieg",
-                    "email": "jeroen@webcreate.nl",
-                    "homepage": "http://webcreate.nl"
-                }
-            ],
-            "description": "Infinite Ajax Scroll: A jQuery plugin that turns your server-side pagination into an infinite scrolling one using AJAX",
-            "homepage": "https://infiniteajaxscroll.com",
-            "keywords": [
-                "ajax",
-                "ias",
-                "infinite",
-                "jquery",
-                "pagination",
-                "scroll",
-                "scrolling"
-            ],
-            "support": {
-                "issues": "https://github.com/webcreate/infinite-ajax-scroll/issues",
-                "source": "https://github.com/webcreate/infinite-ajax-scroll/tree/master"
-            },
-            "time": "2018-03-21T20:14:31+00:00"
         },
         {
             "name": "yiisoft/yii2",
@@ -6092,14 +6045,12 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "kop/yii2-scroll-pager": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
         "php": "8.3.*"
     },
-    "platform-dev": {},
+    "platform-dev": [],
     "plugin-api-version": "2.6.0"
 }
