@@ -154,16 +154,17 @@ if ($actionButton) {
         <?php if ($currentActionButton): ?>
         <div class='w-1/4 h-16 flex flex-col align-middle justify-center text-center'>
             <div class='flex justify-center'>
-                <a href="<?= Url::to($currentActionButton['route'])?>" class="
-                    py-4
+                    <a href="<?= Url::to($currentActionButton['route'])?>" class="
+                    h-12
+                    w-36
                     rounded-full
                     border-rounded-full
                     border border-black
                     bg-black text-white
-                    px-12
                     relative z-0
                     font-semibold
                     overflow-hidden
+                    content-center
 
                     transition-color duration-300
                     hover:text-black
