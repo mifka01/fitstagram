@@ -130,21 +130,22 @@ if ($actionButton) {
                     relative
                     transition-color duration-300
 
-                    after:absolute
-                    after:inset-0
-                    after:px-8
-
-                    hover:text-white
-                    after:bg-orange-600
-                    after:rounded-full
-                    after:hover:scale-90
-                    after:scale-0
-                    after:transition-transform
-                    after:duration-300 
-                    after:-z-10
-                    after:shadow-md
-
                     <?php if (Yii::$app->requestedRoute === $item['route'][0]): ?>
+                        text-orange-600
+                    <?php else: ?>
+                        after:absolute
+                        after:inset-0
+                        after:px-8
+
+                        hover:text-white
+                        after:bg-orange-600
+                        after:rounded-full
+                        after:hover:scale-90
+                        after:scale-0
+                        after:transition-transform
+                        after:duration-300 
+                        after:-z-10
+                        after:shadow-md
                     <?php endif; ?>
                     ">
                     <?= $item['label'] ?>
