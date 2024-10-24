@@ -25,13 +25,17 @@ if ($actionButton) {
 
 <nav class="h-24 flex">
     <!-- Mobile menu -->
-
-    <div class="fixed flex h-24 left-0 right-0 md:hidden bg-gray-50 justify-center items-center">
+    <div class="fixed flex 
+        h-24 left-0 right-0
+        md:hidden bg-gray-50 
+        justify-center items-center 
+        border-b
+        ">
             <div class="flex flex-col text-center font-semibold text-gray-900 align-justify-center text-2xl">
                     <?php if ($brandUrl): ?>
                 <a href="<?= Url::to($brandUrl) ?>">
                         <?php if ($brandImage): ?>
-                            <img class="h-16 w-auto text-center mx-auto" src="<?= $brandImage ?>" alt="<?= $brandLabel?>">
+                            <img class="h-12 w-auto text-center mx-auto" src="<?= $brandImage ?>" alt="<?= $brandLabel?>">
                         <?php else: ?>
                             <?= $brandLabel ?>
                         <?php endif; ?>
@@ -86,7 +90,7 @@ if ($actionButton) {
 
     <!-- Desktop menu -->
     <div class="
-        h-24
+        h-20
         bg-gray-50
         fixed
         right-0 left-0
@@ -94,11 +98,11 @@ if ($actionButton) {
         border-b
         ">
         <div class='self-center flex flex-grow'>
-        <div class="w-1/4 flex flex-col text-center font-semibold text-gray-900 align-justify-center text-2xl">
+        <div class="w-1/4 flex flex-col text-center font-semibold text-gray-900 text-2xl items-center justify-center">
                 <?php if ($brandUrl): ?>
             <a href="<?= Url::to($brandUrl) ?>">
                     <?php if ($brandImage): ?>
-                        <img class="h-16 w-auto text-center mx-auto" src="<?= $brandImage ?>" alt="<?= $brandLabel?>">
+                        <img class="h-12 w-auto" src="<?= $brandImage ?>" alt="<?= $brandLabel?>">
                     <?php else: ?>
                         <?= $brandLabel ?>
                     <?php endif; ?>
@@ -119,12 +123,13 @@ if ($actionButton) {
             h-16
             text-lg text-gray-700
             rounded-lg 
-            divide-x-2 divide-gray-300">
+            divide-x-2 divide-gray-300"
+            >
                 <?php foreach ($items as $item): ?>
             <a href="<?= Url::to($item['route']) ?>" class="
-                text-center
-                flex-grow
-                    relative z-0
+                    text-center
+                    flex-grow
+                    relative
                     transition-color duration-300
 
                     after:absolute
@@ -134,7 +139,7 @@ if ($actionButton) {
                     hover:text-white
                     after:bg-orange-600
                     after:rounded-full
-                    after:hover:scale-[0.9]
+                    after:hover:scale-90
                     after:scale-0
                     after:transition-transform
                     after:duration-300 
@@ -142,7 +147,6 @@ if ($actionButton) {
                     after:shadow-md
 
                     <?php if (Yii::$app->requestedRoute === $item['route'][0]): ?>
-                        font-semibold
                     <?php endif; ?>
                     ">
                     <?= $item['label'] ?>
