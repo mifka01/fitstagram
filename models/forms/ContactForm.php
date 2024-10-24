@@ -2,8 +2,8 @@
 
 namespace app\models\forms;
 
+use app\components\ReCaptcha3Validator;
 use Yii;
-
 use yii\base\Model;
 
 /**
@@ -19,7 +19,7 @@ class ContactForm extends Model
 
     public string $body = '';
 
-    public string $verifyCode = '';
+    public string $reCaptcha;
 
     /**
      * @return array<int, array<mixed>>
@@ -31,8 +31,8 @@ class ContactForm extends Model
             [['name', 'email', 'subject', 'body'], 'required'],
             // email has to be a valid email address
             ['email', 'email'],
-            // verifyCode needs to be entered correctly
-            ['verifyCode', 'captcha'],
+
+            [['reCaptcha'], ReCaptcha3Validator::class],
         ];
     }
 
@@ -48,7 +48,6 @@ class ContactForm extends Model
             'email' => Yii::t('app/model', 'Email'),
             'subject' => Yii::t('app/model', 'Subject'),
             'body' => Yii::t('app/model', 'Body'),
-            'verifyCode' => Yii::t('app/model', 'Verification Code'),
         ];
     }
 

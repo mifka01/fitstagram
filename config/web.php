@@ -24,6 +24,11 @@ $config = [
         }
     },
     'components' => [
+        'reCaptcha' => [
+            'class' => 'himiklab\yii2\recaptcha\ReCaptchaConfig',
+            'siteKeyV3' => env('GOOGLE_RECAPTCHA_V3_SITE_KEY'),
+            'secretV3' => env('GOOGLE_RECAPTCHA_V3_SECRET_KEY'),
+        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'votnM2Cebm9UzncB43mBDgsgaS1-G-39',

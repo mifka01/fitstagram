@@ -67,6 +67,8 @@ jobs:
           echo MAIL_USERNAME=${{ secrets.MAIL_USERNAME }} >> .env
           echo MAIL_PASS=${{ secrets.MAIL_PASS }} >> .env
           echo MIGRATE_TOKEN=${{ secrets.MIGRATE_TOKEN }} >> .env
+          echo GOOGLE_RECAPTCHA_V3_SITE_KEY=${{ secrets.GOOGLE_RECAPTCHA_V3_SITE_KEY }} >> .env
+          echo GOOGLE_RECAPTCHA_V3_SECRET_KEY=${{ secrets.GOOGLE_RECAPTCHA_V3_SECRET_KEY }} >> .env
           echo "!.env" > .git-ftp-include # Add git untracked file
 
       - name: "📐 Create index file"

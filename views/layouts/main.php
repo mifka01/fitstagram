@@ -34,7 +34,7 @@ $this->registerLinkTag(['rel' => 'stylesheet', 'href' => 'https://cdnjs.cloudfla
                 'items' => [
                     [
                         'label'=> Yii::t('app', 'Home'),
-                        'route' => ['/'],
+                        'route' => ['post/index'],
                         'icon'=> 'fas fa-home'
                     ],
                     [
@@ -68,7 +68,7 @@ $this->registerLinkTag(['rel' => 'stylesheet', 'href' => 'https://cdnjs.cloudfla
                     ]
                 ],
                 'brandLabel' => 'FITstagram',
-                'brandUrl' => ['/'],
+                'brandUrl' => ['post/index'],
                 'brandImage' => Yii::getAlias('@web/images/logo.png'),
             ]);?>
             <?= Alert::widget() ?>

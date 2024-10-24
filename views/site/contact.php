@@ -3,7 +3,7 @@
 /** @var yii\widgets\ActiveForm $form */
 /** @var app\models\forms\ContactForm $model */
 
-use yii\captcha\Captcha;
+use app\components\ReCaptcha3;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -46,20 +46,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         'placeholder' => Yii::t('app/model', 'Enter your message')
                     ]) ?>
 
-                    <?= $form->field($model, 'verifyCode')->widget(Captcha::class, [
-                        'template' => '
-                            <div class="space-y-2">
-                                <div class="rounded-md border border-gray-300 p-2 inline-block">
-                                    {image}
-                                </div>
-                                <div>{input}</div>
-                            </div>
-                        ',
-                        'options' => [
-                            'class' => 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm',
-                            'placeholder' => Yii::t('app/model', 'Enter verification code')
-                        ]
-                    ]) ?>
+                    <?= $form->field($model, 'reCaptcha', [
+                        'enableAjaxValidation' => false,
+                    ])->widget(ReCaptcha3::class)->label(false) ?>
+
 
                     <?= Html::submitButton(
                         Yii::t('app/model', 'Send Message'),
