@@ -20,10 +20,10 @@ $this->params['breadcrumbs'][] = $this->title;
         </p>
     </div>
 
-    <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+    <div class="mt-6 sm:mx-auto sm:w-full sm:max-w-md">
+        <div class="bg-white py-6 px-4 shadow sm:rounded-lg sm:px-10">
             <?php $form = ActiveForm::begin(['id' => 'contact-form']); ?>
-                <div class="space-y-6">
+                <div class="space-y-4">
                     <?= $form->field($model, 'name')->textInput([
                         'autofocus' => true,
                         'class' => 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm',

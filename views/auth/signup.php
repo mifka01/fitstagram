@@ -9,7 +9,7 @@ use yii\widgets\ActiveForm;
 $this->title = Yii::t('app/auth', 'Signup');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+<div class="bg-gray-50 flex flex-col justify-center sm:px-6 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-md">
         <h1 class="text-center text-3xl font-bold tracking-tight text-gray-900">
             <?= Html::encode($this->title) ?>
@@ -19,10 +19,10 @@ $this->params['breadcrumbs'][] = $this->title;
         </p>
     </div>
 
-    <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+    <div class="mt-6 sm:mx-auto sm:w-full sm:max-w-md">
+        <div class="bg-white py-6 px-4 shadow sm:rounded-lg sm:px-10">
             <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
-                <div class="space-y-6">
+                <div class="space-y-4">
                     <?= $form->field($model, 'username')->textInput([
                         'autofocus' => true,
                         'class' => 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm',
