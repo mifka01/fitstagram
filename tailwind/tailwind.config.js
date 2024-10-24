@@ -7,6 +7,7 @@ module.exports = {
     "./enums/**/tailwind/*.php",
     "./email/**/*.php",
     "./input.css",
+    "./tailwind/input.css", // for deploy
   ],
   theme: {},
   plugins: [require("@tailwindcss/forms")],
