@@ -23,13 +23,12 @@ if ($actionButton) {
 
 ?>
 
-<nav class="h-24 flex">
+<nav class="h-20 flex">
     <!-- Mobile menu -->
     <div class="fixed flex 
-        h-24 left-0 right-0
+        h-16 left-0 right-0
         md:hidden bg-gray-50 
         justify-center items-center 
-        border-b
         ">
             <div class="flex flex-col text-center font-semibold text-gray-900 align-justify-center text-2xl">
                     <?php if ($brandUrl): ?>
@@ -90,12 +89,11 @@ if ($actionButton) {
 
     <!-- Desktop menu -->
     <div class="
-        h-20
+        h-16
         bg-gray-50
         fixed
         right-0 left-0
         hidden md:flex
-        border-b
         ">
         <div class='self-center flex flex-grow'>
         <div class="w-1/4 flex flex-col text-center font-semibold text-gray-900 text-2xl items-center justify-center">
