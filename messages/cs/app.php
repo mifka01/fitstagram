@@ -2,6 +2,7 @@
 
 return [
     'Home' => 'Domů',
+    'Posts' => 'Příspěvky',
     'Groups' => 'Skupiny',
     'Create' => 'Přidat',
     'Search' => 'Hledat',

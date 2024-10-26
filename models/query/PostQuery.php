@@ -24,7 +24,7 @@ class PostQuery extends \yii\db\ActiveQuery
      *
      * @return \app\models\query\PostQuery
      */
-    public function public(bool $public): self
+    public function public(bool $public = true): self
     {
         return $this->andWhere(['is_private' => !$public]);
     }

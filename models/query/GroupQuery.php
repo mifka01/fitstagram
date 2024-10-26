@@ -9,8 +9,33 @@ namespace app\models\query;
  */
 class GroupQuery extends \yii\db\ActiveQuery
 {
-    /*public function active()
+    /**
+     * {@inheritDoc}
+     *
+     * @return \app\models\query\GroupQuery
+     */
+    public function active(bool $active = true): self
     {
-        return $this->andWhere('[[status]]=1');
-    }*/
+        return $this->andWhere(['active' => $active]);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return \app\models\query\GroupQuery
+     */
+    public function deleted(bool $deleted = true): self
+    {
+        return $this->andWhere(['deleted' => $deleted]);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return \app\models\query\GroupQuery
+     */
+    public function banned(bool $banned = true): self
+    {
+        return $this->andWhere(['banned' => $banned]);
+    }
 }

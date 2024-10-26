@@ -239,13 +239,13 @@ class User extends TimestampRecord implements IdentityInterface
     }
 
     /**
-     * Gets query for [[CreatedGroups]].
+     * Gets query for [[JoinedGroups]].
      *
      * @return \yii\db\ActiveQuery
      */
     public function getJoinedGroups(): ActiveQuery
     {
-        return $this->hasMany(Group::class, ['id' => 'group_id'])->viaTable('group_user', ['user_id' => 'id']);
+        return $this->hasMany(Group::class, ['id' => 'group_id'])->viaTable('group_member', ['user_id' => 'id']);
     }
 
     /**

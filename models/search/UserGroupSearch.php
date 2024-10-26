@@ -2,25 +2,22 @@
 
 namespace app\models\search;
 
-use app\models\Post;
+use app\models\Group;
 use app\models\User;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use yii\db\ActiveQuery;
 use yii\web\NotFoundHttpException;
 
 /**
- * UserPostSearch represents the model behind the search form of `app\models\Post`.
+ * UserGroupSearch represents the model behind the search form of `app\models\Group`.
  */
-class UserPostSearch extends Model
+class UserGroupSearch extends Model
 {
     public bool $newest = true;
 
     public bool $oldest = false;
-
-    public bool $best = false;
-
-    public bool $worst = false;
 
     /**
      * {@inheritDoc}
@@ -30,7 +27,7 @@ class UserPostSearch extends Model
     public function rules(): array
     {
         return [
-            [['newest', 'best', 'oldest', 'worst'], 'boolean'],
+            [['newest', 'oldest'], 'boolean'],
         ];
     }
 
@@ -42,10 +39,18 @@ class UserPostSearch extends Model
      */
     public function search($params): ActiveDataProvider
     {
-        $query = Post::find()->public(true);
+        $user = $this->getCurrentUser();
 
-        $permittedUserIds = $this->getPermittedUserIds();
-        $query->orWhere(['created_by' => $permittedUserIds]);
+        if ($user === null) {
+            $query = Group::find()
+                ->active()
+                ->deleted(false)
+                ->banned(false)
+                ->with('owner');
+        } else {
+            $query = $this->buildUserGroupsQuery($user);
+        }
+
 
         // add conditions that should always apply here
 
@@ -62,19 +67,6 @@ class UserPostSearch extends Model
             return $dataProvider;
         }
 
-        $query->deleted(false);
-
-
-        if ($this->best) {
-            $query->orderBy(['up_votes - down_votes' => SORT_DESC]);
-            return $dataProvider;
-        }
-
-        if ($this->worst) {
-            $query->orderBy(['up_votes - down_votes' => SORT_ASC]);
-            return $dataProvider;
-        }
-
         if ($this->oldest) {
             $query->orderBy(['created_at' => SORT_ASC]);
             return $dataProvider;
@@ -85,18 +77,24 @@ class UserPostSearch extends Model
     }
 
     /**
-     * Get permitted user IDs for the current user.
+     * Builds the query for retrieving user's groups
      *
-     * @return array<int>
+     * @param User $user
+     * @return ActiveQuery
      */
-    private function getPermittedUserIds(): array
+    private function buildUserGroupsQuery(User $user): ActiveQuery
     {
-        $user = $this->getCurrentUser();
-        if ($user === null) {
-            return [];
-        }
+        $joinedGroupsQuery = $user->getJoinedGroups()->andWhere([
+            'group.active' => 1,
+            'group.deleted' => 0,
+            'group.banned' => 0,
+        ])->with('owner');
 
-        return $user->getPermittedUsers()->select('id')->column();
+        $createdGroupIds = $user->getCreatedGroups()
+            ->select('id')
+            ->column();
+
+        return $joinedGroupsQuery->orWhere(['id' => $createdGroupIds, 'group.deleted' => 0, 'group.banned' => 0]);
     }
 
     /**

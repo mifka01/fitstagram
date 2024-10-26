@@ -23,7 +23,7 @@ $this->registerLinkTag(['rel' => 'stylesheet', 'href' => 'https://cdnjs.cloudfla
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>" class="h-100">
 <head>
-    <title><?= Html::encode($this->title) ?></title>
+    <title><?= Html::encode(Yii::$app->name . ($this->title ? ' | ' . $this->title : '')) ?></title>
     <?php $this->head() ?>
 </head>
 <body class="flex flex-col h-screen bg-gray-50">
@@ -39,7 +39,7 @@ $this->registerLinkTag(['rel' => 'stylesheet', 'href' => 'https://cdnjs.cloudfla
                     ],
                     [
                         'label'=> Yii::t('app', 'Groups'),
-                        'route' => ['groups/index'],
+                        'route' => ['group/index'],
                         'icon'=> 'fas fa-users'
                     ],
                     [

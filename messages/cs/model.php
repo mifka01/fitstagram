@@ -39,7 +39,21 @@ return [
 
 # GROUP
     'Owner ID' => 'ID vlastníka',
+    '{count} members' => '{count} členů',
+    'Create New Group' => 'Vytvořit novou skupinu',
+    'Groups are a wat to connect with other people who share your interests.' => 'Skupiny jsou způsob, jak se spojit s dalšími lidmi, kteří sdílejí vaše zájmy.',
+    'View' => 'Zobrazit',
+    'Edit' => 'Upravit',
+    'Join' => 'Připojit se',
+    'Created Groups' => 'Vytvořené skupiny',
+    'Public Groups' => 'Veřejné skupiny',
+    'Joined Groups' => 'Vaše skupiny',
 
+    'No groups found.' => 'Nebyly nalezeny žádné skupiny.',
+    'No {type}' => 'Žádné {type}',
+    'You have not created any groups yet.' => 'Zatím jste nevytvořili žádné skupiny.',
+    'You have not joined any groups yet.' => 'Zatím jste se nepřipojili k žádným skupinám.',
+    'There are no public groups yet.' => 'Zatím nejsou k dispozici žádné veřejné skupiny.',
 
 # JOIN REQUEST
     'Group ID' => 'ID skupiny',
