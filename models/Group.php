@@ -11,6 +11,7 @@ use yii\db\ActiveQuery;
  *
  * @property int $id
  * @property string $name
+ * @property string $description
  * @property int $owner_id
  * @property int|null $active
  * @property int|null $deleted
@@ -43,6 +44,7 @@ class Group extends \yii\db\ActiveRecord
             [['owner_id', 'active', 'deleted', 'banned'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['name'], 'string', 'max' => 255],
+            [['description'], 'string', 'max' => 512],
             [['owner_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['owner_id' => 'id']],
         ];
     }
@@ -57,6 +59,7 @@ class Group extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app/model', 'ID'),
             'name' => Yii::t('app/model', 'Name'),
+            'description' => Yii::t('app/model', 'Description'),
             'owner_id' => Yii::t('app/model', 'Owner ID'),
             'active' => Yii::t('app/model', 'Active'),
             'deleted' => Yii::t('app/model', 'Deleted'),
