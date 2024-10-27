@@ -38,8 +38,7 @@ class CarouselWidget extends Widget
                     setupToggleButtons();
                 });
 
-                observer.observe(document.querySelector("#carousel-wrapper"), {
-                    subtree: true,
+                observer.observe(document.querySelector("#w0"), {
                     childList: true,
                 });
             });
