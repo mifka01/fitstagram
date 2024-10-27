@@ -2,7 +2,7 @@
 module.exports = {
   content: [
     "./views/**/*.php",
-    "./widgets/**/views/*.php",
+    "./widgets/**/views/**/*.php",
     "./widgets/**/tailwind/*.php",
     "./enums/**/tailwind/*.php",
     "./email/**/*.php",
