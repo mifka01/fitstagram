@@ -74,8 +74,8 @@ $this->registerLinkTag(['rel' => 'stylesheet', 'href' => 'https://cdnjs.cloudfla
             <?= Alert::widget() ?>
 </header>
 
-<main id="main" class="flex-grow mt-32" role="main">
-    <div class="container mx-auto">
+<main id="main" class="flex-grow" role="main">
+<div class="container mx-auto mt-24 mb-8">
         <?= $content ?>
     </div>
 </main>
