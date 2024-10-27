@@ -180,6 +180,7 @@ class SeedController extends Controller
             $status = self::$faker->randomElement(['active', 'deleted', 'banned']);
             $group = [
                 'name' => self::$faker->unique()->word . ' Group',
+                'description' => self::$faker->text(512),
                 'owner_id' => self::$faker->numberBetween(1, self::USER_COUNT),
                 'active' => $status === 'active' ? true : false,
                 'deleted' => $status === 'deleted' ? true : false,

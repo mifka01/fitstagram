@@ -2,7 +2,9 @@
 
 namespace app\widgets;
 
+use app\widgets\assets\GroupWidgetAsset;
 use Yii;
+use yii\base\Model;
 use yii\base\Widget;
 use yii\data\ActiveDataProvider;
 
@@ -30,10 +32,16 @@ class GroupWidget extends Widget
 
     public string $emptyMessage = 'No groups found.';
 
+    public Model|false $searchModel;
+
+    public string $searchParam = 'keyword';
+
     public function init(): void
     {
         $this->emptyMessage = Yii::t('app/model', $this->emptyMessage);
         parent::init();
+
+        GroupWidgetAsset::register($this->view);
     }
 
     public function run(): string
@@ -47,6 +55,8 @@ class GroupWidget extends Widget
             'actionButtonRoute' => $this->actionButtonRoute,
             'ajax' => $this->ajax,
             'emptyMessage' => $this->emptyMessage,
+            'searchModel' => $this->searchModel,
+            'searchParam' => $this->searchParam,
         ]);
     }
 }

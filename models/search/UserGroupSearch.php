@@ -2,6 +2,7 @@
 
 namespace app\models\search;
 
+use app\enums\GroupType;
 use app\models\Group;
 use app\models\User;
 use Yii;
@@ -15,9 +16,27 @@ use yii\web\NotFoundHttpException;
  */
 class UserGroupSearch extends Model
 {
+    private ?string $formName = null;
+
     public bool $newest = true;
 
     public bool $oldest = false;
+
+    public ?string $keyword = null;
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param string|null $formName
+     * @param array<string,mixed> $config
+     */
+    public function __construct(?string $formName = null, $config = [])
+    {
+        if ($formName !== null) {
+            $this->formName = $formName;
+        }
+        parent::__construct($config);
+    }
 
     /**
      * {@inheritDoc}
@@ -28,6 +47,22 @@ class UserGroupSearch extends Model
     {
         return [
             [['newest', 'oldest'], 'boolean'],
+            ['keyword', 'string'],
+            ['keyword', 'trim'],
+        ];
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return array<string,string>
+     */
+    public function attributeLabels(): array
+    {
+        return [
+            'keyword' => Yii::t('app/model', 'Search'),
+            'newest' => Yii::t('app/model', 'Newest'),
+            'oldest' => Yii::t('app/model', 'Oldest'),
         ];
     }
 
@@ -35,24 +70,12 @@ class UserGroupSearch extends Model
      * Creates data provider instance with search query applied
      *
      * @param array<string,string> $params
+     * @param GroupType $type
      * @return ActiveDataProvider
      */
-    public function search($params): ActiveDataProvider
+    public function search($params, GroupType $type = GroupType::PUBLIC): ActiveDataProvider
     {
-        $user = $this->getCurrentUser();
-
-        if ($user === null) {
-            $query = Group::find()
-                ->active()
-                ->deleted(false)
-                ->banned(false)
-                ->with('owner');
-        } else {
-            $query = $this->buildUserGroupsQuery($user);
-        }
-
-
-        // add conditions that should always apply here
+        $query = $this->createQueryByType($type);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -67,6 +90,13 @@ class UserGroupSearch extends Model
             return $dataProvider;
         }
 
+        if (!empty($this->keyword)) {
+            $query->andWhere(['or',
+                ['like', 'name', $this->keyword],
+                ['like', 'description', $this->keyword]
+            ]);
+        }
+
         if ($this->oldest) {
             $query->orderBy(['created_at' => SORT_ASC]);
             return $dataProvider;
@@ -77,24 +107,34 @@ class UserGroupSearch extends Model
     }
 
     /**
-     * Builds the query for retrieving user's groups
+     * Creates a query based on the group type
      *
-     * @param User $user
+     * @param GroupType $type
      * @return ActiveQuery
      */
-    private function buildUserGroupsQuery(User $user): ActiveQuery
+    private function createQueryByType(GroupType $type): ActiveQuery
     {
-        $joinedGroupsQuery = $user->getJoinedGroups()->andWhere([
-            'group.active' => 1,
-            'group.deleted' => 0,
-            'group.banned' => 0,
-        ])->with('owner');
+        $user = $this->getCurrentUser();
 
-        $createdGroupIds = $user->getCreatedGroups()
-            ->select('id')
-            ->column();
-
-        return $joinedGroupsQuery->orWhere(['id' => $createdGroupIds, 'group.deleted' => 0, 'group.banned' => 0]);
+          return match ($type) {
+              GroupType::PUBLIC => Group::find()
+                ->active()
+                ->deleted(false)
+                ->banned(false)
+                ->with('owner'),
+                
+            GroupType::OWNED => $user !== null ? $user->getCreatedGroups()
+                ->deleted(false)
+                ->banned(false)
+                ->with('owner') : Group::find()->where('1=0'),
+                
+              GroupType::JOINED => $user !== null ? $user->getJoinedGroups()
+                ->active()
+                ->deleted(false)
+                ->banned(false)
+                ->andWhere(['NOT IN', 'group.owner_id', $user->id])
+                ->with('owner') : Group::find()->where('1=0'),
+          };
     }
 
     /**
@@ -114,5 +154,10 @@ class UserGroupSearch extends Model
             throw new NotFoundHttpException(Yii::t('app/error', 'User not found.'));
         }
         return $user;
+    }
+
+    public function formName(): string
+    {
+        return $this->formName ?? parent::formName();
     }
 }

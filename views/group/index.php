@@ -1,6 +1,11 @@
 <?php
 /** @var yii\web\View $this */
-/** @var yii\data\ActiveDataProvider $groupDataProvider */
+/** @var app\models\search\UserGroupSearch $publicSearchModel */
+/** @var app\models\search\UserGroupSearch $ownedSearchModel */
+/** @var app\models\search\UserGroupSearch $joinedSearchModel */
+/** @var yii\data\ActiveDataProvider $publicGroupsProvider */
+/** @var yii\data\ActiveDataProvider $ownedGroupsProvider */
+/** @var yii\data\ActiveDataProvider $joinedGroupsProvider */
 
 use app\widgets\GroupWidget;
 use yii\helpers\Html;
@@ -28,9 +33,10 @@ $this->params['breadcrumbs'][] = $this->title;
             },
             'actionButtonLabel' => Yii::t('app/model', 'Create New Group'),
             'actionButtonRoute' => ['group/create'],
-            'provider' => $groupDataProvider,
+            'provider' => $ownedGroupsProvider,
             'ajax' => true,
             'emptyMessage' => Yii::t('app/model', 'You have not created any groups yet.'),
+            'searchModel' => $ownedSearchModel
         ]) ?>
 
         <?= GroupWidget::widget([
@@ -39,9 +45,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'itemButtonRoute' => function ($model) {
                 return ['group/view', 'id' => $model->id];
             },
-            'provider' => $groupDataProvider,
+            'provider' => $joinedGroupsProvider,
             'ajax' => true,
             'emptyMessage' => Yii::t('app/model', 'You have not joined any groups yet.'),
+            'searchModel' => $joinedSearchModel
         ]) ?>
     <?php endif; ?>
 
@@ -51,9 +58,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'itemButtonRoute' => function ($model) {
             return Yii::$app->user->isGuest ? ['auth/login'] : ['group/join', 'id' => $model->id];
         },
-        'provider' => $groupDataProvider,
+        'provider' => $publicGroupsProvider,
         'ajax' => true,
         'emptyMessage' => Yii::t('app/model', 'There are no public groups yet.'),
+        'searchModel' => $publicSearchModel
     ]) ?>
 
 </div>

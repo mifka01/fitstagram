@@ -17,12 +17,19 @@ use yii\helpers\Html;
                     <?= Yii::t('app/model', '{count} members', ['count' => $model->getMembers()->count()]) ?>
                 </span>
             </div>
-            
+
             <?php if (!empty($model->description)): ?>
-                <p class="mt-1 text-sm text-gray-600 line-clamp-2">
-                    <?= Html::encode($model->description) ?>
-                </p>
+                <div class="description-container">
+                    <p class="mt-1 text-sm text-gray-600 line-clamp-2 description">
+                            <?= Html::encode($model->description) ?>
+                    </p>
+                    <button class="hidden expand-button mt-1 text-sm text-orange-600 hover:text-orange-700 focus:outline-none focus:underline">
+                        Show more
+                    </button>
+                </div>
             <?php endif; ?>
+
+            
 
             <div class="mt-2 flex items-center space-x-2 text-sm text-gray-500">
                 <span><?= Html::encode($model->owner->username) ?></span>
@@ -41,12 +48,4 @@ use yii\helpers\Html;
             </div>
         <?php endif; ?>
     </div>
-
-    <?php if (!empty($model->description)): ?>
-        <div class="mt-2 sm:hidden">
-            <p class="text-sm text-gray-600">
-                <?= Html::encode($model->description) ?>
-            </p>
-        </div>
-    <?php endif; ?>
 </div>

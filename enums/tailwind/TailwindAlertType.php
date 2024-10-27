@@ -1,5 +1,4 @@
 <?php
-// File: app/enums/tailwind/TailwindAlertType.php
 namespace app\enums\tailwind;
 
 enum TailwindAlertType: int

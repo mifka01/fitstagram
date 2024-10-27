@@ -13,6 +13,7 @@ namespace yii\web;
  * @property-read Response $response The response component.
  * @property-read Session $session The session component.
  * @property-read User $user The user component.
+ * @property-read View|\yii\web\View $view The view application component that is used to render various view files.
  * @property-read \app\components\ActiveSession $activeSession
  * @property-read \yii\caching\DbCache $aresCache
  *

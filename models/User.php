@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\models\query\GroupQuery;
 use app\models\query\UserQuery;
 use app\models\TimestampRecord;
 use Yii;
@@ -241,21 +242,25 @@ class User extends TimestampRecord implements IdentityInterface
     /**
      * Gets query for [[JoinedGroups]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return GroupQuery
      */
-    public function getJoinedGroups(): ActiveQuery
+    public function getJoinedGroups(): GroupQuery
     {
-        return $this->hasMany(Group::class, ['id' => 'group_id'])->viaTable('group_member', ['user_id' => 'id']);
+        /** @var GroupQuery $query */
+        $query = $this->hasMany(Group::class, ['id' => 'group_id'])->viaTable('group_member', ['user_id' => 'id']);
+        return $query;
     }
 
     /**
      * Gets query for [[CreatedGroups]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return GroupQuery
      */
-    public function getCreatedGroups(): ActiveQuery
+    public function getCreatedGroups(): GroupQuery
     {
-        return $this->hasMany(Group::class, ['owner_id' => 'id']);
+        /** @var GroupQuery $query */
+        $query = $this->hasMany(Group::class, ['owner_id' => 'id']);
+        return $query;
     }
 
     /**
