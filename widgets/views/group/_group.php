@@ -19,7 +19,7 @@ use yii\widgets\Pjax;
 ?>
 
 <div class="sm:mx-auto sm:w-full sm:max-w-3xl">
-    <h1 class="text-2xl font-semibold tracking-tight text-gray-900">
+    <h1 class="px-4 text-2xl font-semibold tracking-tight text-gray-900">
         <?= Html::encode($title) ?>
     </h1>
     <?php if ($ajax): ?>
