@@ -39,6 +39,7 @@ $config = [
         'user' => [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
+            'loginUrl' => ['auth/login'],
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -88,6 +89,7 @@ $config = [
                         'app/auth' => 'auth.php',
                         'app/error' => 'error.php',
                         'app/mail' => 'mail.php',
+                        'app/group' => 'group.php',
                     ],
                 ],
             ],

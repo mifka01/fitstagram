@@ -30,8 +30,8 @@ class GroupWidgetAsset extends AssetBundle
         parent::init();
 
         $translations = [
-        'showMore' => Yii::t('app/model', 'Show more'),
-        'showLess' => Yii::t('app/model', 'Show less'),
+        'showMore' => Yii::t('app/group', 'Show more'),
+        'showLess' => Yii::t('app/group', 'Show less'),
         ];
 
         $js = "window.groupWidgetTranslations = " . Json::encode($translations) . ";";

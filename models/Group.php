@@ -57,15 +57,15 @@ class Group extends \yii\db\ActiveRecord
     public function attributeLabels(): array
     {
         return [
-            'id' => Yii::t('app/model', 'ID'),
-            'name' => Yii::t('app/model', 'Name'),
-            'description' => Yii::t('app/model', 'Description'),
-            'owner_id' => Yii::t('app/model', 'Owner ID'),
-            'active' => Yii::t('app/model', 'Active'),
-            'deleted' => Yii::t('app/model', 'Deleted'),
-            'banned' => Yii::t('app/model', 'Banned'),
-            'created_at' => Yii::t('app/model', 'Created At'),
-            'updated_at' => Yii::t('app/model', 'Updated At'),
+            'id' => Yii::t('app/group', 'ID'),
+            'name' => Yii::t('app/group', 'Name'),
+            'description' => Yii::t('app/group', 'Description'),
+            'owner_id' => Yii::t('app/group', 'Owner ID'),
+            'active' => Yii::t('app/group', 'Active'),
+            'deleted' => Yii::t('app/group', 'Deleted'),
+            'banned' => Yii::t('app/group', 'Banned'),
+            'created_at' => Yii::t('app/group', 'Created At'),
+            'updated_at' => Yii::t('app/group', 'Updated At'),
         ];
     }
 

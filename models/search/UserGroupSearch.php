@@ -60,9 +60,9 @@ class UserGroupSearch extends Model
     public function attributeLabels(): array
     {
         return [
-            'keyword' => Yii::t('app/model', 'Search'),
-            'newest' => Yii::t('app/model', 'Newest'),
-            'oldest' => Yii::t('app/model', 'Oldest'),
+            'keyword' => Yii::t('app/group', 'Search'),
+            'newest' => Yii::t('app/group', 'Newest'),
+            'oldest' => Yii::t('app/group', 'Oldest'),
         ];
     }
 
@@ -116,25 +116,22 @@ class UserGroupSearch extends Model
     {
         $user = $this->getCurrentUser();
 
-          return match ($type) {
-              GroupType::PUBLIC => Group::find()
-                ->active()
-                ->deleted(false)
-                ->banned(false)
-                ->with('owner'),
-                
-            GroupType::OWNED => $user !== null ? $user->getCreatedGroups()
-                ->deleted(false)
-                ->banned(false)
-                ->with('owner') : Group::find()->where('1=0'),
-                
-              GroupType::JOINED => $user !== null ? $user->getJoinedGroups()
-                ->active()
-                ->deleted(false)
-                ->banned(false)
-                ->andWhere(['NOT IN', 'group.owner_id', $user->id])
-                ->with('owner') : Group::find()->where('1=0'),
-          };
+        if ($user === null) {
+            if ($type === GroupType::PUBLIC) {
+                return Group::find()->active()->deleted(false)->banned(false);
+            }
+            return Group::find()->where('1=0');
+        }
+
+        $query = match ($type) {
+            GroupType::PUBLIC => Group::find()->active()->andWhere(['!=', 'owner_id', $user->id]),
+            GroupType::OWNED => $user->getCreatedGroups(),
+            GroupType::JOINED => $user->getJoinedGroups()->active(),
+        };
+
+        $query->deleted(false)->banned(false);
+
+        return $query;
     }
 
     /**

@@ -15,9 +15,9 @@ enum GroupType: string
     public function getLabel(): string
     {
         return match ($this) {
-            self::PUBLIC => Yii::t('app/model', 'Public Groups'),
-            self::OWNED => Yii::t('app/model', 'Created Groups'),
-            self::JOINED => Yii::t('app/model', 'Joined Groups'),
+            self::PUBLIC => Yii::t('app/group', 'Public Groups'),
+            self::OWNED => Yii::t('app/group', 'Created Groups'),
+            self::JOINED => Yii::t('app/group', 'Joined Groups'),
         };
     }
 

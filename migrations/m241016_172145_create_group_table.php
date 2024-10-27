@@ -23,9 +23,9 @@ class m241016_172145_create_group_table extends Migration
             'id' => $this->primaryKey(),
             'name' => $this->string()->notNull(),
             'owner_id' => $this->integer()->notNull(),
-            'active' => $this->boolean(),
-            'deleted' => $this->boolean(),
-            'banned' => $this->boolean(),
+            'active' => $this->boolean()->defaultValue(false),
+            'deleted' => $this->boolean()->defaultValue(false),
+            'banned' => $this->boolean()->defaultValue(false),
             'created_at' => $this->timestamp()->defaultExpression('CURRENT_TIMESTAMP')->notNull(),
             'updated_at' => $this->timestamp()->defaultExpression('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
         ], $tableOptions);

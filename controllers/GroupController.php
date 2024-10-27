@@ -3,15 +3,41 @@
 namespace app\controllers;
 
 use app\enums\GroupType;
+use app\models\forms\GroupForm;
 use app\models\search\UserGroupSearch;
 use Yii;
+use yii\filters\AccessControl;
 use yii\web\Controller;
+use yii\web\Response;
 
 /**
  * Group controller
  */
 class GroupController extends Controller
 {
+    /**
+     * {@inheritDoc}
+     *
+     * @return array<string, array<string, mixed>>
+     */
+
+    public function behaviors(): array
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'only' => ['create'],
+                'rules' => [
+                    [
+                        'actions' => ['create'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+        ];
+    }
+
     /**
      * Displays homepage.
      *
@@ -51,6 +77,24 @@ class GroupController extends Controller
             'publicGroupsProvider' => $publicProvider,
             'ownedGroupsProvider' => $ownedProvider,
             'joinedGroupsProvider' => $joinedProvider,
+        ]);
+    }
+
+    /**
+     * Create new group
+     *
+     * @return Response|string
+     */
+    public function actionCreate(): Response|string
+    {
+        $model = new GroupForm();
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', Yii::t('app/group', 'Group has been created.'));
+            return $this->goHome();
+        }
+
+        return $this->render('create', [
+            'model' => $model,
         ]);
     }
 }

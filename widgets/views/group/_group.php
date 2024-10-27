@@ -63,7 +63,7 @@ use yii\widgets\Pjax;
                         w-full
                         sm:w-auto
                         px-4 py-2 border border-gray-300 rounded-md focus:ring-orange-500 focus:border-orange-500',
-                        'placeholder' => Yii::t('app/model', 'Search groups...'),
+                        'placeholder' => Yii::t('app/group', 'Search groups...'),
                 ]) ?>
             </div>
             <?php ActiveForm::end(); ?>

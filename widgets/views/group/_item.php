@@ -14,7 +14,7 @@ use yii\helpers\Html;
                     <?= Html::encode($model->name) ?>
                 </h2>
                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
-                    <?= Yii::t('app/model', '{count} members', ['count' => $model->getMembers()->count()]) ?>
+                    <?= Yii::t('app/group', '{count} members', ['count' => $model->getMembers()->count()]) ?>
                 </span>
             </div>
 

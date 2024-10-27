@@ -38,7 +38,7 @@ class GroupWidget extends Widget
 
     public function init(): void
     {
-        $this->emptyMessage = Yii::t('app/model', $this->emptyMessage);
+        $this->emptyMessage = Yii::t('app/group', $this->emptyMessage);
         parent::init();
 
         GroupWidgetAsset::register($this->view);
