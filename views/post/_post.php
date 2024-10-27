@@ -3,6 +3,19 @@
 /** @var yii\web\View $this */
 /** @var app\models\Post $model */
 
+use \app\widgets\CarouselWidget;
+
+$js = <<<JS
+    $(document).ready(function() {
+        $('.toggleButton').click(function() {
+            $(this).siblings('.tags').toggleClass('hidden');   
+            $(this).siblings('.description').toggleClass('line-clamp-1');
+            $(this).text($(this).text().trim() === 'Show more' ? 'Show less' : 'Show more');
+        });
+    });
+JS;
+
+$this->registerJs($js);
 ?>
 
 <!-- Post Header -->
@@ -14,7 +27,6 @@
 
                 <p class="text-gray-500 text-sm"><?= Yii::$app->formatter->asRelativeTime($model->created_at) ?></p>
             </div>
-
         </div>
         <div class="flex items-center text-gray-500 text-sm space-x-1 me-3">
             <button><?= Yii::t('app', 'Hide') ?></button>
@@ -25,14 +37,13 @@
                 <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
             </svg>
         </div>
-
     </div>
 
     <div class="flex flex-col ">
         <!-- MediaFiles -->
-        <?php foreach ($model->mediaFiles as $mediaFile): ?>
-            <img class="rounded-lg" src="<?= $mediaFile->media_path ?>" alt="<?= $mediaFile->name ?>">
-        <?php endforeach; ?>
+        <?= CarouselWidget::widget([
+            'mediaFiles' => $model->mediaFiles,
+        ]) ?>
         <div class="divide-y-2 divide-gray-200">
             <div class="px-2 py-2">
                 <!-- Votes and Place line -->
@@ -58,30 +69,35 @@
                     </div>
                 </div>
                 <!-- Description -->
-                <p class="my-2 "><?= $model->description ?></p>
-                <!-- Tags -->
-                <?php foreach ($model->tags as $tag): ?>
-                    <span class="text-gray-500 text-xs">#<?= $tag->name ?></span>
-                <?php endforeach; ?>
-
+                <div class="my-2">
+                    <p class="line-clamp-1 overflow-hidden text-ellipsis description">
+                        <?= $model->description ?>
+                    </p>
+                    <!-- Tags -->
+                    <div class="hidden tags mb-2">
+                        <?php foreach ($model->tags as $tag): ?>
+                            <span class="text-gray-500 text-xs">#<?= $tag->name ?></span>
+                        <?php endforeach; ?>
+                    </div>
+                    <button class="toggleButton text-gray-500 text-sm">
+                        Show more
+                    </button>
+                </div>
             </div>
             <!-- Comments -->
-
-            <div class="p-2">
+            <div class="px-2 py-2">
                 <?php foreach ($model->comments as $comment): ?>
                     <?= $this->render('_comment', ['comment' => $comment]) ?>
                 <?php endforeach; ?>
-            </div>
-            <div class="p-2">
-                <form action="">
-                    <textarea class="w-full rounded-lg border-gray-500 resize-none overflow-hidden min-h-[3rem] focus:border-gray-600 focus:ring-gray-400" type="text" name="" id="" placeholder="<?= Yii::t('app/model', 'Leave a comment...') ?>" oninput="autoExpand(this)"></textarea>
-                </form>
+                <div class="my-2 border rounded-lg border-gray-200">
+                    <form action="" class="flex items-center">
+                        <textarea class="pb-0 bg-transparent w-full border-none rounded-l-lg resize-none overflow-hidden min-h-[3rem] focus:ring-0 focus:outline-none" type="text" name="" id="" placeholder="<?= Yii::t('app/model', 'Leave a comment...') ?>" oninput="autoExpand(this)"></textarea>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
-
 
 <script>
     function autoExpand(textarea) {

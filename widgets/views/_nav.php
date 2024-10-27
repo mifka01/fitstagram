@@ -23,7 +23,7 @@ if ($actionButton) {
 
 ?>
 
-<nav class="h-20 flex">
+<nav class="h-20 flex fixed z-50">
     <!-- Mobile menu -->
     <div class="fixed flex 
         h-16 left-0 right-0

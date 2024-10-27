@@ -10,7 +10,7 @@ $this->title = Yii::t('app', 'Posts');
 
 ?>
 <div class="flex items-center justify-center">
-    <div class="w-full sm:w-10/12 md:w-8/12 lg:w-5/12 flex flex-col">
+    <div id="carousel-wrapper" class="w-full sm:w-10/12 md:w-8/12 lg:w-6/12 xl:w-5/12  flex flex-col">
         <?= ListView::widget([
             'dataProvider' => $postDataProvider,
             'itemView' => '_post',
