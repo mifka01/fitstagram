@@ -16,6 +16,7 @@ namespace yii\web;
  * @property-read View|\yii\web\View $view The view application component that is used to render various view files.
  * @property-read \app\components\ActiveSession $activeSession
  * @property-read \yii\caching\DbCache $aresCache
+ * @property-read \app\components\Formatter $formatter The formatter application component.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0

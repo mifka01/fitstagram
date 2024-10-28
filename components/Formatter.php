@@ -123,4 +123,19 @@ class Formatter extends \yii\i18n\Formatter
 
         return Yii::t('yii', '{delta, plural, other{# s}}', ['delta' => $interval->s], $this->language);
     }
+
+    /**
+     * Formats the value as the count of members in human readable form.
+     *
+     * @param int|string|null $value the value to be formatted.
+     * @return string|null the formatted result.
+     */
+    public function asMemberCount($value): ?string
+    {
+        if ($value === null) {
+            return $this->nullDisplay;
+        }
+
+        return Yii::t('app', '{n, plural, one{# member} other{# members}}', ['n' => $value], $this->language);
+    }
 }

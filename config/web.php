@@ -76,6 +76,10 @@ $config = [
             'class' => 'yii\rbac\DbManager',
             'cache' => 'cache',
         ],
+        'formatter' => [
+            'class' => '\app\components\Formatter',
+        ]
+        ,
          'i18n' => [
             'translations' => [
                 'app/*' => [
@@ -105,7 +109,6 @@ $config = [
             \yii\widgets\ActiveField::class => [
                 'errorOptions' => ['class' => 'error-message']
             ],
-            \yii\i18n\Formatter::class => \app\components\Formatter::class,
         ]
     ],
 ];
