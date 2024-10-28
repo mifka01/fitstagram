@@ -9,23 +9,21 @@ use yii\widgets\ListView;
 $this->title = Yii::t('app', 'Posts');
 
 ?>
-<div class="flex items-center justify-center">
-    <div id="carousel-wrapper" class="w-full sm:w-10/12 md:w-8/12 lg:w-6/12 xl:w-5/12  flex flex-col">
-        <?= ListView::widget([
-            'dataProvider' => $postDataProvider,
-            'itemView' => '_post',
-            'itemOptions' => ['class' => 'item mb-4'],
-            'layout' => "{items}",
-            'summary' => '',
-        ]); ?>
+<div id="carousel-wrapper" class="bg-gray-50 flex flex-col justify-center sm:px-6 lg:px-8 space-y-6">
+    <?= ListView::widget([
+        'dataProvider' => $postDataProvider,
+        'itemView' => '_post',
+        'itemOptions' => ['class' => 'item mb-4'],
+        'layout' => "{items}",
+        'summary' => '',
+    ]); ?>
 
-            <?= ScrollPager::widget([
-                'pagination' => $postDataProvider->getPagination(),
-                'scrollOffset' => 1000,
-                'label' => Yii::t('app', 'Load More'),
-                'clientOptions' => [
-                    'throttleWait' => 50,
-                ],
-            ]) ?>
-    </div>
+    <?= ScrollPager::widget([
+        'pagination' => $postDataProvider->getPagination(),
+        'scrollOffset' => 1000,
+        'label' => Yii::t('app', 'Load More'),
+        'clientOptions' => [
+            'throttleWait' => 50,
+        ],
+    ]) ?>
 </div>
