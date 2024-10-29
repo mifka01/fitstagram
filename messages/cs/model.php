@@ -70,7 +70,6 @@ return [
 
     # COMMENT
     'Comment ID' => 'ID komentáře',
-    'Post ID' => 'ID příspěvku',
     'Send' => 'Zveřejnit',
     'Leave a comment...' => 'Napište komentář...',
 ];

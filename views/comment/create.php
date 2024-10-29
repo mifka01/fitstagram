@@ -22,7 +22,7 @@ function autoExpand(textarea) {
         textarea.style.height = (textarea.scrollHeight) + 'px';
 }
 JS;
-$this->registerJs($js, \yii\web\View::POS_END);
+Yii::$app->view->registerJs($js, \yii\web\View::POS_END);
 ?>
 
 <?= $form->field($model, 'postId')->hiddenInput()->label(false) ?>

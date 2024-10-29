@@ -14,8 +14,10 @@ class CommentController extends Controller
 {
     /**
      * Create new comment
+     *
+     * @return mixed
      */
-    public function actionCreate(): Response|array
+    public function actionCreate(): mixed
     {
         $model = new CommentForm();
 
