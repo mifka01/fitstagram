@@ -37,6 +37,11 @@ function setupToggleButtons() {
         });
     });
 }
+
+function autoExpand(textarea) {
+        textarea.style.height = 'auto';
+        textarea.style.height = (textarea.scrollHeight) + 'px';
+}
 JS;
 
 $this->registerJs($js);
