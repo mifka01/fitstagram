@@ -95,8 +95,9 @@ class UserPostSearch extends Model
         if ($user === null) {
             return [];
         }
-
-        return $user->getPermittedUsers()->select('id')->column();
+        $permittedUserIds = $user->getPermittedUsers()->select('id')->column();
+        $permittedUserIds[] = $user->id;
+        return $permittedUserIds;
     }
 
     /**
