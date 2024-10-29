@@ -8,6 +8,7 @@ return [
     'Created By' => 'Vytvořil',
     'Created At' => 'Vytvořeno',
     'Updated At' => 'Aktualizováno',
+    'Hidden' => 'Skryto',
     'Content' => 'Obsah',
 
     ## STATUS
@@ -24,6 +25,10 @@ return [
     'Repeat password' => 'Zopakujte heslo',
     'Verification Token' => 'Token pro ověření',
     'Auth Key' => 'Klíč autentizace',
+    'Posts' => 'Příspěvky',
+    'Only alphanumeric characters, hyphens, and underscores are allowed.' => 'Povoleny jsou pouze alfanumerické znaky, pomlčky a podtržítka.',
+    'Show Activity' => 'Zobrazovat aktivitu',
+    'Last Active At' => 'Poslední aktivita',
 
 # MEDIA FILE
     'Media Path' => 'Cesta k médiím',

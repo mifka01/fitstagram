@@ -18,6 +18,8 @@ class UserGroupSearch extends Model
 {
     private ?string $formName = null;
 
+    private ?User $user = null;
+
     public bool $newest = true;
 
     public bool $oldest = false;
@@ -30,8 +32,12 @@ class UserGroupSearch extends Model
      * @param string|null $formName
      * @param array<string,mixed> $config
      */
-    public function __construct(?string $formName = null, $config = [])
+    public function __construct(?string $formName = null, ?User $user = null, $config = [])
     {
+        if ($user !== null) {
+            $this->user = $user;
+        }
+
         if ($formName !== null) {
             $this->formName = $formName;
         }
@@ -142,6 +148,10 @@ class UserGroupSearch extends Model
      */
     private function getCurrentUser(): User|null
     {
+        if ($this->user !== null) {
+            return $this->user;
+        }
+
         if (Yii::$app->user->isGuest) {
             return null;
         }

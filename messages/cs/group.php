@@ -18,7 +18,7 @@ return [
     'Join' => 'Připojit se',
     'Created Groups' => 'Vytvořené skupiny',
     'Public Groups' => 'Veřejné skupiny',
-    'Joined Groups' => 'Vaše skupiny',
+    'Joined Groups' => 'Členství ve skupinách',
     'Show more' => 'Zobrazit více',
     'Show less' => 'Zobrazit méně',
     'Newest' => 'Nejnovější',
@@ -34,4 +34,6 @@ return [
     'You have not created any groups yet.' => 'Zatím jste nevytvořili žádné skupiny.',
     'You have not joined any groups yet.' => 'Zatím jste se nepřipojili k žádným skupinám.',
     'There are no public groups yet.' => 'Zatím nejsou k dispozici žádné veřejné skupiny.',
+    'This user has not created any groups yet.' => 'Tento uživatel zatím nevytvořil žádné skupiny.',
+    'This user has not joined any groups yet.' => 'Tento uživatel se zatím nepřipojil k žádným skupinám.',
 ];

@@ -56,7 +56,7 @@ $this->registerLinkTag(['rel' => 'stylesheet', 'href' => 'https://cdnjs.cloudfla
                 'actionButton' => [
                     [
                         'label' => Yii::t('app', 'Profile'),
-                        'route' => ['user/profile'],
+                        'route' => ['user/profile', 'username' => Yii::$app->user->identity ? Yii::$app->user->identity->username : ''],
                         'icon' => 'fas fa-user',
                         'visible'=> !Yii::$app->user->isGuest
                     ],

@@ -90,7 +90,7 @@ class GroupController extends Controller
         $model = new GroupForm();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', Yii::t('app/group', 'Group has been created.'));
-            return $this->goHome();
+            return $this->redirect(['view', 'id' => $model->getGroup()->id]);
         }
 
         return $this->render('create', [

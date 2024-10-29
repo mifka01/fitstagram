@@ -21,8 +21,8 @@ class m241016_162124_create_user_table extends Migration
 
         $this->createTable('{{%user}}', [
             'id' => $this->primaryKey(),
-            'username' => $this->string()->notNull(),
-            'email' => $this->string()->notNull(),
+            'username' => $this->string()->notNull()->unique(),
+            'email' => $this->string()->notNull()->unique(),
             'password_hash' => $this->string()->notNull(),
             'password_reset_token' => $this->string(),
             'verification_token' => $this->string()->notNull(),
@@ -36,11 +36,13 @@ class m241016_162124_create_user_table extends Migration
 
 
         $this->createTable('session', [
-            'id' => $this->primaryKey(),
+            'id' => $this->char(40)->notNull(),
             'expire' => $this->integer(),
             'data' => $this->binary(),
             'user_id' => $this->integer()
         ], $tableOptions);
+
+        $this->addPrimaryKey('session_pk', 'session', 'id');
 
 
         $this->createIndex(

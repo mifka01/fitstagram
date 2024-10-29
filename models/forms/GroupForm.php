@@ -19,6 +19,8 @@ class GroupForm extends Model
 
     public bool $active = false;
 
+    private ?Group $group = null;
+
     /**
      * @return array<int, array<mixed>>
      */
@@ -59,13 +61,21 @@ class GroupForm extends Model
             return false;
         }
 
-        $group = new Group();
-        $group->name = $this->name;
-        $group->description = $this->description;
-        $group->active = (int)$this->active;
-        $group->owner_id = $user->id;
+        $this->group = new Group();
+        $this->group->name = $this->name;
+        $this->group->description = $this->description;
+        $this->group->active = (int)$this->active;
+        $this->group->owner_id = $user->id;
 
-        return $group->save();
+        return $this->group->save();
+    }
+
+    public function getGroup(): Group
+    {
+        if ($this->group === null) {
+            throw new NotFoundHttpException(Yii::t('app/error', 'Group not found.'));
+        }
+        return $this->group;
     }
 
     /**

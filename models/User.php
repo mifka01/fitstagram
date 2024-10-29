@@ -3,6 +3,7 @@
 namespace app\models;
 
 use app\models\query\GroupQuery;
+use app\models\query\PostQuery;
 use app\models\query\UserQuery;
 use app\models\TimestampRecord;
 use Yii;
@@ -24,8 +25,10 @@ use yii\web\Session;
  * @property int|null $active
  * @property int|null $deleted
  * @property int|null $banned
+ * @property bool $show_activity
  * @property string|null $created_at
  * @property string|null $updated_at
+ * @property string|null $lastActiveAt
  *
  * @property Comment[] $comments
  * @property GroupJoinRequest[] $groupJoinRequests
@@ -53,9 +56,14 @@ class User extends TimestampRecord implements IdentityInterface
     {
         return [
             [['username', 'email', 'password_hash', 'verification_token', 'auth_key'], 'required'],
+            [['username', 'email'], 'unique'],
+            [['username'], 'match', 'pattern' => '/^[\w-]+$/', 'message' => Yii::t('app/model', 'Only alphanumeric characters, hyphens, and underscores are allowed.')],
+            [['username'], 'string', 'min' => 3, 'max' => 32],
+            [['email'], 'email'],
             [['active', 'deleted', 'banned'], 'integer'],
+            [['show_activity'], 'boolean'],
             [['created_at', 'updated_at'], 'safe'],
-            [['username', 'email', 'password_hash', 'password_reset_token', 'verification_token', 'auth_key'], 'string', 'max' => 255],
+            [['email', 'password_hash', 'password_reset_token', 'verification_token', 'auth_key'], 'string', 'max' => 255],
         ];
     }
 
@@ -77,6 +85,7 @@ class User extends TimestampRecord implements IdentityInterface
             'active' => Yii::t('app/model', 'Active'),
             'deleted' => Yii::t('app/model', 'Deleted'),
             'banned' => Yii::t('app/model', 'Banned'),
+            'show_activity' => Yii::t('app/model', 'Show Activity'),
             'created_at' => Yii::t('app/model', 'Created At'),
             'updated_at' => Yii::t('app/model', 'Updated At'),
         ];
@@ -266,11 +275,13 @@ class User extends TimestampRecord implements IdentityInterface
     /**
      * Gets query for [[PermittedUsers]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return UserQuery
      */
-    public function getPermittedUsers(): ActiveQuery
+    public function getPermittedUsers(): UserQuery
     {
-        return $this->hasMany(User::class, ['id' => 'permitted_user_id'])->viaTable('permitted_user', ['user_id' => 'id']);
+        /** @var UserQuery $query */
+        $query = $this->hasMany(User::class, ['id' => 'permitted_user_id'])->viaTable('permitted_user', ['user_id' => 'id']);
+        return $query;
     }
 
     /**
@@ -286,11 +297,13 @@ class User extends TimestampRecord implements IdentityInterface
     /**
      * Gets query for [[Posts]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return PostQuery
      */
     public function getPosts(): ActiveQuery
     {
-        return $this->hasMany(Post::class, ['created_by' => 'id']);
+        /** @var PostQuery $query */
+        $query = $this->hasMany(Post::class, ['created_by' => 'id']);
+        return $query;
     }
 
     /**
@@ -311,6 +324,16 @@ class User extends TimestampRecord implements IdentityInterface
     public function getTags(): ActiveQuery
     {
         return $this->hasMany(Tag::class, ['created_by' => 'id']);
+    }
+
+    /**
+     * Get the last active at timestamp.
+     *
+     * @return int|null
+     */
+    public function getLastActiveAt(): int|null
+    {
+        return Yii::$app->lastActiveService->getLastActiveAt($this->id);
     }
 
     /**

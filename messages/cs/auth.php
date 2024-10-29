@@ -4,6 +4,7 @@ return [
     "Login" => "Přihlášení",
     "Signup" => "Registrace",
     "Sign up" => "Registrace",
+    "Logout" => "Odhlášení",
     "Send" => "Odeslat",
     "Resend" => "Znovu odeslat",
     "Resend verification email" => "Znovu odeslat ověřovací email",
@@ -17,6 +18,18 @@ return [
 
     "Enter your username" => "Zadejte své uživatelské jméno",
     "Enter your password" => "Zadejte své heslo",
+    "Your username" => "Vaše uživatelské jméno",
+    "Your password" => "Vaše heslo",
+    "Your email address" => "Vaše emailová adresa",
+    "Current password" => "Současné heslo",
+    "New password" => "Nové heslo",
+    "Repeat New Password" => "Zopakujte nové heslo",
+    "Repeat new password" => "Zopakujte nové heslo",
+    "Leave empty to keep current" => "Nechte prázdné pro zachování stávajícího",
+
+    "Save Changes" => "Uložit změny",
+
+    "Update your profile information" => "Aktualizujte informace o svém profilu",
 
     "Choose your username" => "Zvolte si své uživatelské jméno",
     "Enter your email address" => "Zadejte svou emailovou adresu",
@@ -58,6 +71,9 @@ return [
     'Your email has been confirmed!' => 'Váš e-mail byl ověřen!',
     'Sorry, we are unable to verify your account with provided token.' => 'Omlouváme se, ale nejsme schopni ověřit váš účet s poskytnutým tokenem.',
     'Sorry, we are unable to resend verification email for the provided email address.' => 'Omlouváme se, ale nejsme schopni znovu odeslat ověřovací e-mail pro zadanou e-mailovou adresu.',
+
+    'This username is already taken.' => 'Toto uživatelské jméno je již obsazeno.',
+    'This email address is already taken.' => 'Tato emailová adresa je již obsazena.',
 
 # MAIL
     'Account registration at' => 'Registrace účtu na',
