@@ -100,16 +100,6 @@ class Group extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Posts]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getPosts(): ActiveQuery
-    {
-        return $this->hasMany(Post::class, ['id' => 'post_id'])->viaTable('group_post', ['group_id' => 'id']);
-    }
-
-    /**
      * Gets query for [[Users]].
      *
      * @return \yii\db\ActiveQuery

@@ -16,8 +16,8 @@ $groups = Group::find()
     ->select(['group.name', 'group.id'])
     ->indexBy('id')
     ->column();
-
 ?>
+
 <div class="bg-gray-50 flex flex-col justify-center sm:px-6 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-md">
         <h1 class="text-center text-3xl font-bold tracking-tight text-gray-900">

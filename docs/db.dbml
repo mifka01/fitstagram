@@ -33,7 +33,7 @@ Table Post {
   id integer [pk, increment]
   created_by integer [not null, ref: > User.id]
   is_private boolean [not null]
-  is_group_post boolean [not null]
+  group_id integer [ ref: > Group.id]
   upvote_count integer [default: 0]
   downvote_count integer [default: 0]
   description varchar
@@ -109,14 +109,6 @@ Table Group_Join_Request {
   accepted boolean
   created_at timestamp
   updated_at timestamp [default: `CURRENT_TIMESTAMP`]
-}
-
-Table Group_Post {
-    group_id integer [not null, ref: > Group.id]
-    post_id integer [not null, ref: > Post.id]
-    Indexes {
-        (group_id, post_id) [pk,unique]
-    }
 }
 
 Table Permitted_User {

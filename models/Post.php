@@ -11,7 +11,7 @@ use yii\db\ActiveQuery;
  *
  * @property int $id
  * @property int $created_by
- * @property int $is_group_post
+ * @property int|null $group_id
  * @property int $is_private
  * @property int|null $upvote_count
  * @property int|null $downvote_count
@@ -26,7 +26,7 @@ use yii\db\ActiveQuery;
  * @property Comment[] $comments
  * @property User[] $commenters
  * @property User $createdBy
- * @property Group[] $groups
+ * @property Group $group
  * @property MediaFile[] $mediaFiles
  * @property PostVote[] $votes
  * @property Tag[] $tags
@@ -47,8 +47,8 @@ class Post extends \yii\db\ActiveRecord
     public function rules(): array
     {
         return [
-            [['created_by', 'is_private', 'is_group_post'], 'required'],
-            [['created_by', 'is_private', 'is_group_post', 'upvote_count', 'downvote_count', 'deleted'], 'integer'],
+            [['created_by', 'is_private'], 'required'],
+            [['created_by', 'is_private', 'group_id', 'upvote_count', 'downvote_count', 'deleted'], 'integer'],
             [['description', 'place'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
@@ -66,7 +66,7 @@ class Post extends \yii\db\ActiveRecord
             'id' => 'ID',
             'created_by' => Yii::t('app/model', 'Created By'),
             'is_private' => 'Is Private',
-            'is_group_post' => 'Is Group Post',
+            'group_id' => 'Group ID',
             'upvote_count' => 'Upvote Count',
             'downvote_count' => 'Downvote Count',
             'description' => 'Description',
@@ -108,13 +108,13 @@ class Post extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Groups]].
+     * Gets query for [[Group]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getGroups(): ActiveQuery
+    public function getGroup(): ActiveQuery
     {
-        return $this->hasMany(Group::class, ['id' => 'group_id'])->viaTable('group_post', ['post_id' => 'id']);
+        return $this->hasOne(Group::class, ['id' => 'group_id']);
     }
 
     /**

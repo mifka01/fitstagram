@@ -2,7 +2,6 @@
 
 namespace app\models\forms;
 
-use app\models\Group;
 use app\models\MediaFile;
 use app\models\Post;
 use app\models\Tag;
@@ -72,17 +71,16 @@ class PostForm extends Model
     {
         $user = $this->getCurrentUser();
 
-        $is_group_post = (int)($this->group != '');
         $post = new Post();
         $post->description = $this->description;
-        $post->is_private = (int)$this->is_private;
-        $post->is_group_post = $is_group_post;
+        $post->is_private = intval($this->is_private);
+        $post->group_id = !empty($this->group) ? intval($this->group) : null;
         $post->place = $this->place;
         $post->deleted = 0;
         $post->created_by = $user->id;
 
         if ($post->save()) {
-            return $this->saveMediaFiles($post->id) && $this->saveTags($post) && $this->saveToGroup($post);
+            return $this->saveMediaFiles($post->id) && $this->saveTags($post);
         }
 
         return false;
@@ -142,18 +140,6 @@ class PostForm extends Model
             if (!$post->getTags()->where(['id' => $tag->id])->exists()) {
                 $post->link('tags', $tag);
             }
-        }
-        return true;
-    }
-
-    private function saveToGroup(Post $post): bool
-    {
-        if ($post->is_group_post) {
-            $group = Group::findOne(['id' => $this->group]);
-            if ($group === null) {
-                throw new NotFoundHttpException(Yii::t('app/error', 'Group not found.'));
-            }
-            $group->link('posts', $post);
         }
         return true;
     }

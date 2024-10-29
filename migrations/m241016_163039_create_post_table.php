@@ -24,7 +24,7 @@ class m241016_163039_create_post_table extends Migration
             'id' => $this->primaryKey(),
             'created_by' => $this->integer()->notNull(),
             'is_private' => $this->boolean()->notNull(),
-            'is_group_post' => $this->boolean()->notNull(),
+            'group_id' => $this->integer(),
             'upvote_count' => $this->integer()->defaultValue(0),
             'downvote_count' => $this->integer()->defaultValue(0),
             // Use text for larger descriptions
@@ -44,11 +44,28 @@ class m241016_163039_create_post_table extends Migration
             'created_by'
         );
 
+        // Create index for column `group_id`
+        $this->createIndex(
+            '{{%idx-post-group_id}}',
+            '{{%post}}',
+            'group_id'
+        );
+
         // Add foreign key for table `{{%user}}`
         $this->addForeignKey(
             '{{%fk-post-created_by}}',
             '{{%post}}',
             'created_by',
+            '{{%user}}',
+            'id',
+            'CASCADE'
+        );
+
+        // Add foreign key for table `{{%group}}`
+        $this->addForeignKey(
+            '{{%fk-post-group_id}}',
+            '{{%post}}',
+            'group_id',
             '{{%user}}',
             'id',
             'CASCADE'
@@ -63,6 +80,18 @@ class m241016_163039_create_post_table extends Migration
         // Drops foreign key for table `{{%user}}`
         $this->dropForeignKey(
             '{{%fk-post-created_by}}',
+            '{{%post}}'
+        );
+
+        // Drops foreign key for table `{{%group}}`
+        $this->dropForeignKey(
+            '{{%fk-post-group_id}}',
+            '{{%post}}'
+        );
+
+        // Drops index for column `created_by`
+        $this->dropIndex(
+            '{{%idx-post-group_id}}',
             '{{%post}}'
         );
 

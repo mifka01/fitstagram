@@ -94,9 +94,10 @@ class SeedController extends Controller
         echo "Seeding of Posts...\n";
 
         for ($i = 0; $i < $count; $i++) {
+            $isGroupPost = self::$faker->boolean(30);
             $post = [
                 'created_by' => self::$faker->numberBetween(1, self::USER_COUNT),
-                'is_group_post' => $isGroupPost = self::$faker->boolean(30),
+                'group_id' => $isGroupPost ? self::$faker->numberBetween(1, self::GROUP_COUNT) : null,
                 'is_private' => !$isGroupPost & self::$faker->boolean(),
                 'upvote_count' => self::$faker->numberBetween(0, 100),
                 'downvote_count' => self::$faker->numberBetween(0, 100),
@@ -112,9 +113,6 @@ class SeedController extends Controller
             $postId = Yii::$app->db->getLastInsertID();
             $this->addMediaFiles($postId);
             $this->addPostTags($postId);
-            if ($isGroupPost) {
-                $this->addGroupPosts($postId);
-            }
         }
     }
 
