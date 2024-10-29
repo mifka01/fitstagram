@@ -2,7 +2,7 @@
 
 return [
 
-# GENERAL
+    # GENERAL
     'ID' => 'ID',
     'Name' => 'Jméno',
     'Created By' => 'Vytvořil',
@@ -16,7 +16,7 @@ return [
     'Active' => 'Aktivní',
     'Banned' => 'Zakázaný',
 
-# USER
+    # USER
     'Username' => 'Uživatelské jméno',
     'Email' => 'Email',
     'Password' => 'Heslo',
@@ -30,22 +30,22 @@ return [
     'Show Activity' => 'Zobrazovat aktivitu',
     'Last Active At' => 'Poslední aktivita',
 
-# MEDIA FILE
+    # MEDIA FILE
     'Media Path' => 'Cesta k médiím',
     'Place' => 'Místo',
 
-# POST
+    # POST
     'Post ID' => 'ID příspěvku',
 
-# VOTE
+    # VOTE
     'Up' => 'Líbí se',
     'Down' => 'Nelíbí se',
     'Voted By' => 'Hlasoval',
 
-# GROUP
+    # GROUP
 
 
-# JOIN REQUEST
+    # JOIN REQUEST
     'Group ID' => 'ID skupiny',
 
     ## STATUS
@@ -53,7 +53,7 @@ return [
     'Declined' => 'Zamítnuto',
     'Accepted' => 'Schváleno',
 
-# CONTACT
+    # CONTACT
     'Contact' => 'Kontakt',
     'Verification Code' => 'Ověřovací kód',
     'Subject' => 'Předmět',
@@ -67,4 +67,10 @@ return [
     'Enter your message' => 'Zadejte svou zprávu',
     'Enter verification code' => 'Zadejte ověřovací kód',
     'Send Message' => 'Odeslat zprávu',
+
+    # COMMENT
+    'Comment ID' => 'ID komentáře',
+    'Post ID' => 'ID příspěvku',
+    'Send' => 'Zveřejnit',
+    'Leave a comment...' => 'Napište komentář...',
 ];

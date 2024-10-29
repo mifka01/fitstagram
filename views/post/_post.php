@@ -3,7 +3,9 @@
 /** @var yii\web\View $this */
 /** @var app\models\Post $model */
 
+use app\models\forms\CommentForm;
 use \app\widgets\CarouselWidget;
+use yii\widgets\Pjax;
 
 $js = <<<JS
 $(document).ready(function() {
@@ -44,10 +46,14 @@ $this->registerJs($js);
 <div class="sm:mx-auto sm:w-full sm:max-w-xl">
     <div class="flex flex-col space-y-4 border border-gray-200 rounded-lg p-4">
         <div class="flex justify-between">
-            <div class="flex items-center space-x-1">
-                <p class="text-orange-600 text-lg"><?= $model->createdBy->username ?></p>
-
-                <p class="text-gray-500 text-sm"><?= Yii::$app->formatter->asRelativeTime($model->created_at) ?></p>
+            <div class="">
+                <div class="flex items-center space-x-1">
+                    <p class="text-orange-600 text-lg"><?= $model->createdBy->username ?></p>
+                    <p class="text-gray-500 text-sm"><?= Yii::$app->formatter->asRelativeTime($model->created_at) ?></p>
+                </div>
+                <?php if ($model->group): ?>
+                    <p class="text-gray-500 text-sm"><?= $model->group->name ?></p>
+                <?php endif; ?>
             </div>
             <div class="flex items-center text-gray-500 text-sm space-x-1 me-3">
                 <button><?= Yii::t('app', 'Hide') ?></button>
@@ -60,8 +66,8 @@ $this->registerJs($js);
                     </svg>
                 <?php endif; ?>
             </div>
-        </div>
 
+        </div>
         <div class="flex flex-col">
             <!-- MediaFiles -->
             <?= CarouselWidget::widget([
@@ -97,30 +103,36 @@ $this->registerJs($js);
                             <?= $model->description ?>
                         </p>
                         <!-- Tags -->
-                        <div class="hidden tags mb-2">
+                        <div class="<?= empty($model->description) ? '' : 'hidden' ?> tags mb-2">
                             <?php foreach ($model->tags as $tag): ?>
                                 <span class="text-gray-500 text-xs">#<?= $tag->name ?></span>
                             <?php endforeach; ?>
                         </div>
-                        <button class="toggleButton text-gray-500 text-sm">
-                            <?= Yii::t('app/post', 'Show more') ?>
-                        </button>
-                        <button class="hidden toggleButton text-gray-500 text-sm ">
-                            <?= Yii::t('app/post', 'Show less') ?>
-                        </button>
+                        <?php if (!empty($model->description)): ?>
+                            <button class="toggleButton text-gray-500 text-sm">
+                                <?= Yii::t('app/post', 'Show more') ?>
+                            </button>
+                            <button class="hidden toggleButton text-gray-500 text-sm">
+                                <?= Yii::t('app/post', 'Show less') ?>
+                            </button>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <!-- Comments -->
+                <?php
+                Pjax::begin([
+                    'enablePushState' => false,
+                ]);
+                ?>
                 <div class="px-2 py-2">
                     <?php foreach ($model->comments as $comment): ?>
                         <?= $this->render('_comment', ['comment' => $comment]) ?>
                     <?php endforeach; ?>
-                    <div class="my-2 border rounded-lg border-gray-200">
-                        <form action="" class="flex items-center">
-                            <textarea class="pb-0 bg-transparent w-full border-none rounded-l-lg resize-none overflow-hidden min-h-[3rem] focus:ring-0 focus:outline-none" type="text" name="" id="" placeholder="<?= Yii::t('app/model', 'Leave a comment...') ?>" oninput="autoExpand(this)"></textarea>
-                        </form>
-                    </div>
+                    <?= $this->render('/comment/create', [
+                        'model' => new CommentForm(['postId' => $model->id]),
+                    ]) ?>
                 </div>
+                <?php Pjax::end(); ?>
             </div>
         </div>
     </div>

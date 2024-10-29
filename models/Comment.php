@@ -38,8 +38,7 @@ class Comment extends \yii\db\ActiveRecord
             [['content', 'created_by', 'post_id'], 'required'],
             [['created_by', 'post_id', 'deleted'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
-            [['content'], 'string', 'max' => 255],
-            [['post_id', 'created_by'], 'unique', 'targetAttribute' => ['post_id', 'created_by']],
+            [['content'], 'string', 'max' => 512],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
             [['post_id'], 'exist', 'skipOnError' => true, 'targetClass' => Post::class, 'targetAttribute' => ['post_id' => 'id']],
         ];
