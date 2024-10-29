@@ -30,27 +30,16 @@ class CarouselWidget extends Widget
         jQuery(function ($) {
             $(document).ready(function() {
                 // Initial setup for toggle buttons
-                setupToggleButtons();
                 initializeCarousel();
 
                 const observer = new MutationObserver(() => {
                     initializeCarousel();
-                    setupToggleButtons();
                 });
 
                 observer.observe(document.querySelector("#w0"), {
                     childList: true,
                 });
             });
-
-            // Function to set up toggle buttons
-            function setupToggleButtons() {
-                $('.toggleButton').off('click').on('click', function() {
-                    $(this).siblings('.tags').toggleClass('hidden');   
-                    $(this).siblings('.description').toggleClass('line-clamp-1');
-                    $(this).text($(this).text().trim() === 'Show more' ? 'Show less' : 'Show more');
-                });
-            }
 
             // Function to initialize the carousel
             function initializeCarousel() {
@@ -67,8 +56,8 @@ class CarouselWidget extends Widget
                     });
 
                     const updateControls = () => {
-                        carouselPrev.style.display = currentSlide === 0 ? 'none' : 'flex';
-                        carouselNext.style.display = currentSlide === carouselItems.length - 1 ? 'none' : 'flex';
+                        carouselPrev.classList.toggle('hidden', currentSlide === 0);
+                        carouselNext.classList.toggle('hidden', currentSlide === carouselItems.length - 1);
                     };
 
                     updateControls();

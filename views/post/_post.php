@@ -6,13 +6,35 @@
 use \app\widgets\CarouselWidget;
 
 $js = <<<JS
+$(document).ready(function() {
+    // Initial setup for toggle buttons
+    setupToggleButtons();
+
+    const observer = new MutationObserver(() => {
+        setupToggleButtons();
+    });
+
+    observer.observe(document.querySelector("#w0"), {
+        childList: true,
+    });
+});
+
+// Function to set up toggle buttons
+function setupToggleButtons() {
     $(document).ready(function() {
-        $('.toggleButton').click(function() {
-            $(this).siblings('.tags').toggleClass('hidden');   
-            $(this).siblings('.description').toggleClass('line-clamp-1');
-            $(this).text($(this).text().trim() === 'Show more' ? 'Show less' : 'Show more');
+        $('.toggleButton').each(function() {
+            if (!$(this).data('listener-added')) {
+                $(this).click(function() {
+                    $(this).siblings('.tags').toggleClass('hidden');   
+                    $(this).siblings('.description').toggleClass('line-clamp-1');
+                    $(this).toggleClass('hidden');
+                    $(this).siblings('.toggleButton').toggleClass('hidden');
+                });
+                $(this).data('listener-added', true);
+            }
         });
     });
+}
 JS;
 
 $this->registerJs($js);
@@ -31,10 +53,12 @@ $this->registerJs($js);
                 <button><?= Yii::t('app', 'Hide') ?></button>
                 <span>|</span>
                 <button><?= Yii::t('app', 'Ban') ?></button>
-                <svg class="w-4 h-4 stroke-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                </svg>
+                <?php if ($model->is_private): ?>
+                    <svg class="w-4 h-4 stroke-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                <?php endif; ?>
             </div>
         </div>
 
@@ -79,7 +103,10 @@ $this->registerJs($js);
                             <?php endforeach; ?>
                         </div>
                         <button class="toggleButton text-gray-500 text-sm">
-                            Show more
+                            <?= Yii::t('app/post', 'Show more') ?>
+                        </button>
+                        <button class="hidden toggleButton text-gray-500 text-sm ">
+                            <?= Yii::t('app/post', 'Show less') ?>
                         </button>
                     </div>
                 </div>
