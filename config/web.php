@@ -69,14 +69,14 @@ $config = [
                 '' => 'post/index',
             ],
         ],
-         'assetManager' => [
+        'assetManager' => [
             'appendTimestamp' => true,
         ],
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
             'cache' => 'cache',
         ],
-         'i18n' => [
+        'i18n' => [
             'translations' => [
                 'app/*' => [
                     'class' => 'yii\i18n\PhpMessageSource',
@@ -90,6 +90,7 @@ $config = [
                         'app/error' => 'error.php',
                         'app/mail' => 'mail.php',
                         'app/group' => 'group.php',
+                        'app/post' => 'post.php',
                     ],
                 ],
             ],
@@ -114,17 +115,17 @@ if (YII_ENV_DEV) {
     // configuration adjustments for 'dev' environment
     $config['bootstrap'][] = 'debug';
     $config['modules']['debug'] = [
-    'class' => 'yii\debug\Module',
-    // uncomment the following to add your IP if you are not connecting from localhost.
-    'allowedIPs' => ['127.0.0.1', '::1', '*'],
+        'class' => 'yii\debug\Module',
+        // uncomment the following to add your IP if you are not connecting from localhost.
+        'allowedIPs' => ['127.0.0.1', '::1', '*'],
     ];
 
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [
-    'class' => 'yii\gii\Module',
-    // uncomment the following to add your IP if you are not connecting from localhost.
-    'allowedIPs' => ['127.0.0.1', '::1', '*'],
+        'class' => 'yii\gii\Module',
+        // uncomment the following to add your IP if you are not connecting from localhost.
+        'allowedIPs' => ['127.0.0.1', '::1', '*'],
     ];
 }
 
-    return $config;
+return $config;
