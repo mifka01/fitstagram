@@ -76,6 +76,9 @@ $config = [
             'class' => 'yii\rbac\DbManager',
             'cache' => 'cache',
         ],
+        'formatter' => [
+            'class' => '\app\components\Formatter',
+        ],
         'i18n' => [
             'translations' => [
                 'app/*' => [
