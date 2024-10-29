@@ -26,7 +26,7 @@ use yii\db\ActiveQuery;
  * @property Comment[] $comments
  * @property User[] $commenters
  * @property User $createdBy
- * @property Group $group
+ * @property Group|null $group
  * @property MediaFile[] $mediaFiles
  * @property PostVote[] $votes
  * @property Tag[] $tags
