@@ -54,7 +54,7 @@ if ($actionButton) {
     </div>
     <div class="
             fixed
-            flex
+            flex z-50
             md:hidden
             h-10
             bottom-0 left-0 right-0

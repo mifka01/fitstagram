@@ -29,6 +29,9 @@ return [
     'The above error occurred while the Web server was processing your request.' => 'Výše uvedená chyba nastala při zpracování vašeho požadavku webovým serverem.',
     'Please contact us if you think this is a server error. Thank you.' => 'Pokud si myslíte, že se jedná o chybu serveru, kontaktujte nás. Děkujeme.',
 
+    # MEMBER COUNT
+    '{n, plural, one{# member} other{# members}}' => '{n, plural, one{# člen} few{# členové} other{# členů}}',
+
     # RELATIVE TIME
     '{delta, plural, other{# y}}' => '{delta, plural, other{# r}}',
     '{delta, plural, other{# mo}}' => '{delta, plural, other{# měs}}',
