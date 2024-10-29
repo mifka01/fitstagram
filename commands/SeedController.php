@@ -177,7 +177,7 @@ class SeedController extends Controller
         for ($i = 0; $i < $count; $i++) {
             $status = self::$faker->randomElement(['active', 'deleted', 'banned']);
             $group = [
-                'name' => self::$faker->unique()->word . ' Group',
+                'name' => self::$faker->text(80),
                 'description' => self::$faker->text(512),
                 'owner_id' => self::$faker->numberBetween(1, self::USER_COUNT),
                 'active' => $status === 'active' ? true : false,
