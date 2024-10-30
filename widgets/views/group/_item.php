@@ -13,7 +13,7 @@ use yii\helpers\Html;
                 <h2 class="text-lg font-medium text-gray-900 truncate">
                     <?= Html::encode($model->name) ?>
                 </h2>
-                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
+                <span class="inline-flex justify-center items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800 text-nowrap">
                     <?= Yii::$app->formatter->asMemberCount($model->getMembers()->count()) ?>
                 </span>
             </div>
