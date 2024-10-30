@@ -44,7 +44,7 @@ class UserUpdateForm extends Model
     {
         return [
             [['username', 'email'], 'required'],
-            [['username'], 'match', 'pattern' => '/^[\w-]+$/', 'message' => Yii::t('app/model', 'Only alphanumeric characters, hyphens, and underscores are allowed.')],
+            [['username'], 'match', 'pattern' => '/^[\.\w-]+$/', 'message' => Yii::t('app/model', 'Only alphanumeric characters, hyphens, dots, and underscores are allowed.')],
             [['username'], 'string', 'min' => 3, 'max' => 32],
             [['email'], 'email'],
 

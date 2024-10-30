@@ -82,7 +82,7 @@ $config = [
             'showScriptName' => false,
             'rules' => [
                 '' => 'post/index',
-                'user/profile/<username:[\w-]+>' => 'user/profile',
+                'user/profile/<username:[\.\w-]+>' => 'user/profile',
             ],
         ],
         'assetManager' => [

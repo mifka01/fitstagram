@@ -57,7 +57,7 @@ class User extends TimestampRecord implements IdentityInterface
         return [
             [['username', 'email', 'password_hash', 'verification_token', 'auth_key'], 'required'],
             [['username', 'email'], 'unique'],
-            [['username'], 'match', 'pattern' => '/^[\w-]+$/', 'message' => Yii::t('app/model', 'Only alphanumeric characters, hyphens, and underscores are allowed.')],
+            [['username'], 'match', 'pattern' => '/^[\.\w-]+$/', 'message' => Yii::t('app/model', 'Only alphanumeric characters, hyphens, dots, and underscores are allowed.')],
             [['username'], 'string', 'min' => 3, 'max' => 32],
             [['email'], 'email'],
             [['active', 'deleted', 'banned'], 'integer'],
