@@ -15,6 +15,28 @@ use yii\web\UploadedFile;
 class PostController extends Controller
 {
     /**
+     * {@inheritDoc}
+     *
+     * @return array<string, array<string, mixed>>
+     */
+    public function behaviors(): array
+    {
+        return [
+            'access' => [
+                'class' => \yii\filters\AccessControl::class,
+                'only' => ['create'],
+                'rules' => [
+                    [
+                        'actions' => ['create'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    /**
      * Displays homepage.
      *
      * @return string
@@ -39,10 +61,8 @@ class PostController extends Controller
         $model = new PostForm();
 
         if ($model->load(Yii::$app->request->post())) {
-            // Handle media files upload
             $model->mediaFiles = UploadedFile::getInstances($model, 'mediaFiles');
             if ($model->validate()) {
-                // Save the post
                 $transaction = Yii::$app->db->beginTransaction();
                 try {
                     if ($model->save()) {

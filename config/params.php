@@ -8,6 +8,7 @@ return [
     'senderName' => 'FITstagram nitte.cz',
     'user.passwordResetTokenExpire' => 3600,
     'user.passwordMinLength' => 8,
+    'bsVersion' => '5.x',
 
     'languages' => [
         'en' => 'English',

@@ -18,4 +18,7 @@ return [
     'Create new Post' => 'Vytvořit nový příspěvek',
     'Show more' => 'Zobrazit více',
     'Show less' => 'Zobrazit méně',
+
+    'Waiting for results...' => 'Čekání na výsledky...',
+    'Select a tag ...' => 'Vyberte štítek ...',
 ];

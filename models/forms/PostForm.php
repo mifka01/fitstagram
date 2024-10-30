@@ -24,7 +24,10 @@ class PostForm extends Model
 
     public string $description = '';
 
-    public string $tags = '';
+    /**
+    * @ var array<string> $tags
+    */
+    public array $tags = [];
 
     public string $place = '';
 
@@ -38,10 +41,12 @@ class PostForm extends Model
 
         return [
             [['mediaFiles'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg', 'maxFiles' => 5, 'maxSize' => 5 * 1024 * 1024],
-            [['place', 'tags'], 'string', 'max' => 255],
+            [['mediaFiles'], 'required'],
+            [['place'], 'string', 'max' => 255],
             [['description'], 'string', 'max' => 512],
             [['is_private'], 'boolean'],
-            [['group'], 'integer'],
+            ['tags', 'each', 'rule' => ['match', 'pattern' => '/^#?[a-zA-Z0-9_]+$/']],
+            [['group'], 'integer']
         ];
     }
 
@@ -122,9 +127,8 @@ class PostForm extends Model
 
     private function saveTags(Post $post): bool
     {
-        $tagNames = explode(' ', $this->tags);
-        foreach ($tagNames as $tagName) {
-            $tagName = trim($tagName);
+        foreach ($this->tags as $tagName) {
+            $tagName = trim($tagName, " \n\r\t\v\x00#");
             if ($tagName === '') {
                 continue;
             }

@@ -5,11 +5,15 @@
 /** @var \app\models\forms\PostForm $model */
 
 use app\models\Group;
+use kartik\select2\Select2;
 use yii\helpers\Html;
+use yii\helpers\Url;
+use yii\web\JsExpression;
 use yii\widgets\ActiveForm;
 
-$this->title = Yii::t('app/post', 'Create Post');
+$this->title = Yii::t('app/group', 'Create Post');
 $this->params['breadcrumbs'][] = $this->title;
+
 $groups = Group::find()
     ->joinWith('members')
     ->where(['user.id' => Yii::$app->user->id])
@@ -29,17 +33,17 @@ $groups = Group::find()
     </div>
 
     <div class="mt-6 sm:mx-auto sm:w-full sm:max-w-md">
-        <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-            <?php $form = ActiveForm::begin(['id' => 'post-form', 'options' => ['enctype' => 'multipart/form-data']]); ?>
-            <div class="space-y-6">
+        <div class="bg-white py-6 px-4 shadow sm:rounded-lg sm:px-10">
 
-                <?= $form->field($model, 'mediaFiles[]')->fileInput(
-                    [
-                        'multiple' => true,
-                        'class' => 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm',
-                        'accept' => 'image/*'
-                    ]
-                )->label(Yii::t('app/post', 'Upload Images*')) ?>
+            <?php $form = ActiveForm::begin(['id' => 'post-form', 'options' => ['enctype' => 'multipart/form-data'],
+            ]); ?>
+            <div class="space-y-4">
+
+                <?= $form->field($model, 'mediaFiles[]')->fileInput([
+                    'multiple' => true,
+                    'class' => 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm',
+                    'accept' => 'image/*'
+                ])->label(Yii::t('app/post', 'Upload Images')) ?>
 
                 <?= $form->field($model, 'description')->textarea([
                     'class' => 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm',
@@ -47,15 +51,38 @@ $groups = Group::find()
                     'rows' => 4
                 ]) ?>
 
-                <?= $form->field($model, 'tags')->textInput([
-                    'class' => 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm',
-                    'placeholder' => Yii::t('app/post', 'Enter tags (space separated)')
+                <?= $form->field($model, 'tags')->widget(Select2::class, [
+                    'maintainOrder' => true,
+                    'showToggleAll' => false,
+                    'theme' => Select2::THEME_BOOTSTRAP,
+                    'options' => [
+                    'value' => '',
+                    'placeholder' => Yii::t('app/post', 'Select a tag ...'), 'multiple' => true,
+                    'class' => 'form-control'
+                        ],
+                    'pluginOptions' => [
+                            'autocomplete' => 'off',
+                            'tags' => true,
+                            'allowClear' => true,
+                            'minimumInputLength' => 2,
+                            'maximumInputLength' => 20,
+                            'maximumSelectionLength' => 20,
+                            'maintainOrder' => true,
+                            'ajax' => [
+                                'url' => Url::to(['tag/list']),
+                                'dataType' => 'json',
+                                'data' => new JsExpression('function(params) { return {q:params.term}; }')
+                            ],
+                            'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
+                            'templateResult' => new JsExpression('function(tag) { return tag.text; }'),
+                            'templateSelection' => new JsExpression('function (tag) { return tag.text; }'),
+                    ],
                 ]) ?>
 
                 <?= $form->field($model, 'group')->dropDownList($groups, [
                     'prompt' => Yii::t('app/post', 'Select group...'),
                     'multiple' => false,
-                    'class' => 'form-control mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm',
+                    'class' => 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm',
                 ]) ?>
 
                 <?= $form->field($model, 'place')->textInput([

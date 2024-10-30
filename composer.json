@@ -19,7 +19,9 @@
         "yiisoft/yii2-symfonymailer": "~2.0.3",
         "yiithings/yii2-dotenv": "^1.0",
         "sjaakp/yii2-loadmore": "^1.0",
-        "himiklab/yii2-recaptcha-widget": "*"
+        "himiklab/yii2-recaptcha-widget": "*",
+        "kartik-v/yii2-widget-select2": "dev-master",
+        "yiisoft/yii2-bootstrap5": "@dev"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
