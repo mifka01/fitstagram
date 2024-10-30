@@ -4,6 +4,7 @@
 /** @var string $content */
 
 use app\assets\AppAsset;
+use app\models\User;
 use app\widgets\Alert;
 use app\widgets\NavWidget;
 use yii\helpers\Html;
@@ -17,7 +18,6 @@ $this->registerMetaTag(['name' => 'description', 'content' => $this->params['met
 $this->registerMetaTag(['name' => 'keywords', 'content' => $this->params['meta_keywords'] ?? '']);
 $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii::getAlias('@web/favicon.ico')]);
 $this->registerLinkTag(['rel' => 'stylesheet', 'href' => 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css', 'integrity' => 'sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==', 'crossorigin' => 'anonymous', 'referrerpolicy' => 'no-referrer']);
-
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -56,7 +56,7 @@ $this->registerLinkTag(['rel' => 'stylesheet', 'href' => 'https://cdnjs.cloudfla
                 'actionButton' => [
                     [
                         'label' => Yii::t('app', 'Profile'),
-                        'route' => ['user/profile', 'username' => Yii::$app->user->identity ? Yii::$app->user->identity->username : ''],
+                        'route' => ['user/profile', 'username' => $user = ($user = User::findOne(Yii::$app->user->id)) ? $user->username : ''],
                         'icon' => 'fas fa-user',
                         'visible'=> !Yii::$app->user->isGuest
                     ],

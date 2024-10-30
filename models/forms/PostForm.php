@@ -25,7 +25,7 @@ class PostForm extends Model
     public string $description = '';
 
     /**
-    * @ var array<string> $tags
+     * @var array<string> $tags
     */
     public array $tags = [];
 

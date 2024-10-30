@@ -12,7 +12,7 @@ class TagController extends Controller
      *
      * @param ?string $q
      * @param ?int $id
-     * @return array<string, array<string, string>>
+     * @return array<string, array<mixed>>
      */
     public function actionList($q = null, $id = null): array
     {
