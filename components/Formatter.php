@@ -121,7 +121,7 @@ class Formatter extends \yii\i18n\Formatter
             return Yii::t('app', '{delta, plural, other{# min}}', ['delta' => $interval->i], $this->language);
         }
 
-        return Yii::t('yii', '{delta, plural, other{# s}}', ['delta' => $interval->s], $this->language);
+        return Yii::t('app', 'now', [], $this->language);
     }
 
     /**

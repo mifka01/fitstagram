@@ -19,7 +19,7 @@ class LastActiveService extends Component
      */
     public function getLastActiveAt($userId): ?int
     {
-        $command = Yii::$app->db->createCommand('SELECT last_write FROM session WHERE user_id = :id', [':id' => $userId]);
+        $command = Yii::$app->db->createCommand('SELECT last_write FROM session WHERE user_id = :id ORDER BY expire DESC LIMIT 1', [':id' => $userId]);
 
         $last_write = $command->queryScalar();
 
