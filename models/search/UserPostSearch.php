@@ -45,7 +45,7 @@ class UserPostSearch extends Model
         $query = Post::find()->public(true);
 
         $permittedUserIds = $this->getPermittedUserIds();
-        $query->orWhere(['created_by' => $permittedUserIds]);
+        $query->orWhere(['created_by' => $permittedUserIds])->with(['createdBy', 'tags', 'mediaFiles']);
 
         // add conditions that should always apply here
 

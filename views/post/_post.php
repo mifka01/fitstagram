@@ -130,7 +130,7 @@ $this->registerJs($js);
                 ]);
                 ?>
                 <div class="px-2 py-2">
-                    <?php foreach ($model->comments as $comment): ?>
+                    <?php foreach ($model->getComments()->with('createdBy')->all() as $comment): ?>
                         <?= $this->render('_comment', ['comment' => $comment]) ?>
                     <?php endforeach; ?>
                     <?= $this->render('/comment/create', [
