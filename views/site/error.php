@@ -13,7 +13,7 @@ $errorMessage = $matches[1] ?? $name;
 $errorCode = $matches[2] ?? '';
 
 ?>
-<div class="bg-gray-50 flex items-center justify-center px-4 py-16 sm:px-6 lg:px-8">
+<div class="bg-gray-50 flex items-center justify-center px-4 py-8 sm:px-6 lg:px-8">
     <div class="max-w-2xl text-center">
         <div class="space-y-8">
             <div class="text-orange-600 text-8xl font-bold">
