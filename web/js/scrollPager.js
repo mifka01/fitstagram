@@ -60,13 +60,16 @@
         const $newItems = $data
           .find(`#${this.element.attr("id")}`)
           .parent()
-          .find(this.options.containerSelector);
+          .find('> ' + this.options.containerSelector);
 
         if ($newItems.length === 0) {
           throw new Error("No new items found in response");
         }
 
-        $list.find(this.options.containerSelector).last().after($newItems);
+        $list
+          .find('> ' + this.options.containerSelector)
+          .last()
+          .after($newItems);
 
         this.updateSummary($list);
 
@@ -98,7 +101,9 @@
     updateSummary($list) {
       const $summary = $list.find(this.options.summarySelector);
       if ($summary.length) {
-        const itemCount = $list.find(this.options.containerSelector).length;
+        const itemCount = $list.find(
+          '> ' + this.options.containerSelector
+        ).length;
         $summary.text(itemCount);
       }
     }

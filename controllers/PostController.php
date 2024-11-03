@@ -6,6 +6,7 @@ use app\models\forms\PostForm;
 use app\models\forms\PostVoteForm;
 use app\models\Post;
 use app\models\search\UserPostSearch;
+use app\widgets\PostCommentListView;
 use Yii;
 use yii\web\Controller;
 use yii\web\Response;
@@ -95,21 +96,23 @@ class PostController extends Controller
         ]);
     }
 
-    public function actionVote()
+    public function actionVote(): string
     {
         $model = new PostVoteForm();
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($model->vote()) {
-                $post = Post::findOne($model->id);
-                return $this->renderAjax('_vote', [
-                    'model' => $post,
-                ]);
-            }
-        } else {
-            $post = Post::findOne($model->id);
-            return $this->renderAjax('_vote', [
-                'model' => $post,
-            ]);
+        if (!($model->load(Yii::$app->request->post()) && $model->validate() &&$model->vote())) {
+            Yii::$app->session->setFlash('error', Yii::t('app/post', 'Failed to vote.'));
         }
+        $post = Post::findOne($model->id);
+        return $this->renderAjax('_vote', [
+            'model' => $post,
+        ]);
+    }
+
+    public function actionComments(int $id): string
+    {
+        return PostCommentListView::widget([
+            'post' => Post::findOne($id),
+            'page' => Yii::$app->request->getQueryParam(PostCommentListView::PAGE_PARAM, null),
+        ]);
     }
 }

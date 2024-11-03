@@ -5,6 +5,7 @@
 
 use app\models\forms\CommentForm;
 use app\widgets\CarouselWidget;
+use app\widgets\PostCommentListView;
 use yii\widgets\Pjax;
 
 $js = <<<JS
@@ -16,7 +17,7 @@ $(document).ready(function() {
         setupToggleButtons();
     });
 
-    observer.observe(document.querySelector("#w0"), {
+    observer.observe(document.querySelector("#post-scroll-pager"), {
         childList: true,
     });
 });
@@ -89,6 +90,7 @@ $this->registerJs($js);
                         <!-- Votes -->
 
                         <?php Pjax::begin([
+                            'id' => 'pjax-vote-' . $model->id,
                             'enablePushState' => false,
                         ]); ?>
                         <?= $this->render('/post/_vote', [
@@ -124,22 +126,24 @@ $this->registerJs($js);
                 </div>
                 <!-- Comments -->
                 <div class="px-2 py-2">
-
-                    <?php
-                    // TODO: predelat do ListView
-                    foreach ($model->getComments()->with('createdBy')->all() as $comment): ?>
-                        <?= $this->render('_comment', ['comment' => $comment]) ?>
-                    <?php endforeach; ?>
                     <?php Pjax::begin([
+                        'id' => 'pjax-comments-' . $model->id,
+                        'enablePushState' => false,
+                    ]); ?>
+                    <?= PostCommentListView::widget([
+                        'post' => $model,
+                    ]) ?>
+                    <?php Pjax::end(); ?>
+
+
+                    <?php Pjax::begin([
+                        'id' => 'pjax-comment-form-' . $model->id,
                         'enablePushState' => false,
                     ]); ?>
                     <?= $this->render('/comment/create', [
                         'model' => new CommentForm(['postId' => $model->id]),
                     ]) ?>
-                    <?php
-                    // TODO: pjax event listener, kterej triggne jquery.closest('pjax-container')
-                    Pjax::end(); ?>
-
+                    <?php Pjax::end(); ?>
                 </div>
             </div>
         </div>

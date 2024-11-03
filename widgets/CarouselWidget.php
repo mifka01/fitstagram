@@ -36,7 +36,7 @@ class CarouselWidget extends Widget
                     initializeCarousel();
                 });
 
-                observer.observe(document.querySelector("#w0"), {
+                observer.observe(document.querySelector("#post-scroll-pager"), {
                     childList: true,
                 });
             });
