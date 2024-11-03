@@ -4,8 +4,9 @@
 /** @var yii\widgets\ActiveForm $form */
 /** @var \app\models\forms\PostForm $model */
 
-use app\models\Group;
+use app\models\User;
 use kartik\select2\Select2;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\JsExpression;
@@ -14,12 +15,10 @@ use yii\widgets\ActiveForm;
 $this->title = Yii::t('app/post', 'Create Post');
 $this->params['breadcrumbs'][] = $this->title;
 
-$groups = Group::find()
-    ->joinWith('members')
-    ->where(['user.id' => Yii::$app->user->id])
-    ->select(['group.name', 'group.id'])
-    ->indexBy('id')
-    ->column();
+/** @var User|null $user */
+$user = Yii::$app->user->isGuest ? null : Yii::$app->user->identity;
+$groups = $user ? $user->getGroups()->active()->asArray()->all() : [];
+
 ?>
 
 <div class="bg-gray-50 flex flex-col justify-center sm:px-6 lg:px-8">
@@ -35,7 +34,9 @@ $groups = Group::find()
     <div class="mt-6 sm:mx-auto sm:w-full sm:max-w-md">
         <div class="bg-white py-6 px-4 shadow sm:rounded-lg sm:px-10">
 
-            <?php $form = ActiveForm::begin(['id' => 'post-form', 'options' => ['enctype' => 'multipart/form-data'],
+            <?php $form = ActiveForm::begin([
+                'id' => 'post-form',
+                'options' => ['enctype' => 'multipart/form-data'],
             ]); ?>
             <div class="space-y-4">
 
@@ -56,30 +57,31 @@ $groups = Group::find()
                     'showToggleAll' => false,
                     'theme' => Select2::THEME_BOOTSTRAP,
                     'options' => [
-                    'value' => '',
-                    'placeholder' => Yii::t('app/post', 'Select a tag ...'), 'multiple' => true,
-                    'class' => 'form-control'
-                        ],
+                        'value' => '',
+                        'placeholder' => Yii::t('app/post', 'Select a tag ...'),
+                        'multiple' => true,
+                        'class' => 'form-control'
+                    ],
                     'pluginOptions' => [
-                            'autocomplete' => 'off',
-                            'tags' => true,
-                            'allowClear' => true,
-                            'minimumInputLength' => 2,
-                            'maximumInputLength' => 20,
-                            'maximumSelectionLength' => 20,
-                            'maintainOrder' => true,
-                            'ajax' => [
-                                'url' => Url::to(['tag/list']),
-                                'dataType' => 'json',
-                                'data' => new JsExpression('function(params) { return {q:params.term}; }')
-                            ],
-                            'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
-                            'templateResult' => new JsExpression('function(tag) { return tag.text; }'),
-                            'templateSelection' => new JsExpression('function (tag) { return tag.text; }'),
+                        'autocomplete' => 'off',
+                        'tags' => true,
+                        'allowClear' => true,
+                        'minimumInputLength' => 2,
+                        'maximumInputLength' => 20,
+                        'maximumSelectionLength' => 20,
+                        'maintainOrder' => true,
+                        'ajax' => [
+                            'url' => Url::to(['tag/list']),
+                            'dataType' => 'json',
+                            'data' => new JsExpression('function(params) { return {q:params.term}; }')
+                        ],
+                        'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
+                        'templateResult' => new JsExpression('function(tag) { return tag.text; }'),
+                        'templateSelection' => new JsExpression('function (tag) { return tag.text; }'),
                     ],
                 ]) ?>
 
-                <?= $form->field($model, 'group')->dropDownList($groups, [
+                <?= $form->field($model, 'group')->dropDownList(ArrayHelper::map($groups, 'id', 'name'), [
                     'prompt' => Yii::t('app/post', 'Select group...'),
                     'multiple' => false,
                     'class' => 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm',

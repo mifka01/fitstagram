@@ -2,12 +2,14 @@
 
 namespace app\models\forms;
 
+use app\models\Group;
 use app\models\MediaFile;
 use app\models\Post;
 use app\models\Tag;
 use app\models\User;
 use Yii;
 use yii\base\Model;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -26,7 +28,7 @@ class PostForm extends Model
 
     /**
      * @var array<string> $tags
-    */
+     */
     public array $tags = [];
 
     public string $place = '';
@@ -79,7 +81,18 @@ class PostForm extends Model
         $post = new Post();
         $post->description = $this->description;
         $post->is_private = intval($this->is_private);
-        $post->group_id = !empty($this->group) ? intval($this->group) : null;
+        if (!empty($this->group)) {
+            $group = Group::findOne($this->group);
+            if ($group === null) {
+                throw new NotFoundHttpException(Yii::t('app/error', 'Group not found.'));
+            }
+            if (!$user->getGroups()->where(['id' => $group->id])->exists()) {
+                throw new ForbiddenHttpException(Yii::t('app/error', 'You do not have rights to post to this group.'));
+            }
+            $post->group_id = intval($this->group);
+        } else {
+            $post->group_id = null;
+        }
         $post->place = $this->place;
         $post->deleted = 0;
         $post->created_by = $user->id;

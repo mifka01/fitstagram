@@ -34,6 +34,7 @@ use yii\web\Session;
  * @property GroupJoinRequest[] $groupJoinRequests
  * @property Group[] $createdGroups
  * @property Group[] $joinedGroups
+ * @property Group[] $groups
  * @property User[] $permittedUsers
  * @property PostVote[] $votes
  * @property Post[] $posts
@@ -246,6 +247,16 @@ class User extends TimestampRecord implements IdentityInterface
     public function getComments(): ActiveQuery
     {
         return $this->hasMany(Comment::class, ['created_by' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Groups]] which includes both created and joined groups.
+     *
+     * @return GroupQuery
+     */
+    public function getGroups(): GroupQuery
+    {
+        return $this->getCreatedGroups()->union($this->getJoinedGroups());
     }
 
     /**
