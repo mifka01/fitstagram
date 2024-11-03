@@ -11,7 +11,7 @@ use yii\helpers\Url;
 use yii\web\JsExpression;
 use yii\widgets\ActiveForm;
 
-$this->title = Yii::t('app/group', 'Create Post');
+$this->title = Yii::t('app/post', 'Create Post');
 $this->params['breadcrumbs'][] = $this->title;
 
 $groups = Group::find()
