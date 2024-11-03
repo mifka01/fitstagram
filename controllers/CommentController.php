@@ -12,6 +12,28 @@ use yii\web\Controller;
 class CommentController extends Controller
 {
     /**
+     * {@inheritDoc}
+     *
+     * @return array<string, array<string, mixed>>
+     */
+    public function behaviors(): array
+    {
+        return [
+            'access' => [
+                'class' => \yii\filters\AccessControl::class,
+                'only' => ['create'],
+                'rules' => [
+                    [
+                        'actions' => ['create'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    /**
      * Create new comment
      *
      * @return mixed
