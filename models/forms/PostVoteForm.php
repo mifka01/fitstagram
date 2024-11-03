@@ -13,8 +13,11 @@ class PostVoteForm extends Model
 
     public int $id;
 
-    public int|null $type = null;
+    public int $type;
 
+    /**
+     * @return array<int, array<mixed>>
+     */
     public function rules(): array
     {
         return [
@@ -24,7 +27,7 @@ class PostVoteForm extends Model
         ];
     }
 
-    public function vote()
+    public function vote() : bool
     {
         $transaction = \Yii::$app->db->beginTransaction();
         try {

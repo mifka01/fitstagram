@@ -22,19 +22,19 @@ class PostCommentListView extends ListView
         parent::run();
     }
 
-    public function init()
+    public function init():void
     {
         $page = $this->page ?? 1;
 
-        $this->id = 'list-view-comments-' . $this->post->id;
+        $this->id = 'list-view-comments-' . $this->post?->id;
         $this->dataProvider = new ActiveDataProvider([
-            'query' => $this->post->getComments()->orderBy(['created_at' => SORT_DESC]),
+            'query' => $this->post?->getComments()->orderBy(['created_at' => SORT_DESC]),
             'pagination' => [
                 'pageSize' => 2,
                 'pageParam' => self::PAGE_PARAM,
                 'route' => '/post/comments',
                 'params' => [
-                    'id' => $this->post->id,
+                    'id' => $this->post?->id,
                     self::PAGE_PARAM => $page
                 ],
             ],

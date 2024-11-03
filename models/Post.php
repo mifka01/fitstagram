@@ -29,6 +29,7 @@ use yii\db\ActiveQuery;
  * @property Group|null $group
  * @property MediaFile[] $mediaFiles
  * @property PostVote[] $votes
+ * @property PostVote|null $currentUserVote
  * @property Tag[] $tags
  * @property User[] $voters
  */
