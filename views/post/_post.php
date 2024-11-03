@@ -53,11 +53,15 @@ $this->registerJs($js);
         <div class="flex justify-between">
             <div class="">
                 <div class="flex items-center space-x-1">
-                    <p class="text-orange-600 text-lg"><?= $model->createdBy->username ?></p>
+                    <a href="<?= Yii::$app->urlManager->createUrl(['/user/profile', 'username' => $model->createdBy->username]) ?>" class="text-orange-600 text-lg">
+                        <?= $model->createdBy->username ?>
+                    </a>
                     <p class="text-gray-500 text-sm"><?= Yii::$app->formatter->asRelativeTime($model->created_at) ?></p>
                 </div>
                 <?php if ($model->group): ?>
-                    <p class="text-gray-500 text-sm"><?= $model->group->name ?></p>
+                    <a href="<?= Yii::$app->urlManager->createUrl(['/group/view', 'id' => $model->group->id]) ?>" class="text-gray-500 text-sm line-clamp-1" title="<?= $model->group->name ?>">
+                        <?= $model->group->name ?>
+                    </a>
                 <?php endif; ?>
             </div>
             <div class="flex items-center text-gray-500 text-sm space-x-1 me-3">
