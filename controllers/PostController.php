@@ -3,6 +3,8 @@
 namespace app\controllers;
 
 use app\models\forms\PostForm;
+use app\models\forms\PostVoteForm;
+use app\models\Post;
 use app\models\search\UserPostSearch;
 use Yii;
 use yii\web\Controller;
@@ -24,10 +26,15 @@ class PostController extends Controller
         return [
             'access' => [
                 'class' => \yii\filters\AccessControl::class,
-                'only' => ['create'],
+                'only' => ['create', 'vote'],
                 'rules' => [
                     [
                         'actions' => ['create'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['vote'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -86,5 +93,23 @@ class PostController extends Controller
         return $this->render('create', [
             'model' => $model,
         ]);
+    }
+
+    public function actionVote()
+    {
+        $model = new PostVoteForm();
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            if ($model->vote()) {
+                $post = Post::findOne($model->id);
+                return $this->renderAjax('_vote', [
+                    'model' => $post,
+                ]);
+            }
+        } else {
+            $post = Post::findOne($model->id);
+            return $this->renderAjax('_vote', [
+                'model' => $post,
+            ]);
+        }
     }
 }

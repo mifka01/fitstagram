@@ -4,7 +4,7 @@
 /** @var app\models\Post $model */
 
 use app\models\forms\CommentForm;
-use \app\widgets\CarouselWidget;
+use app\widgets\CarouselWidget;
 use yii\widgets\Pjax;
 
 $js = <<<JS
@@ -83,20 +83,15 @@ $this->registerJs($js);
                     <!-- Votes and Place line -->
                     <div class="flex justify-between">
                         <!-- Votes -->
-                        <div class="flex items-center mt-2">
-                            <button class="flex items-center justify-center  ">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-6 w-6 text-orange-600">
-                                    <path d="m19.707 9.293-7-7a1 1 0 0 0-1.414 0l-7 7A1 1 0 0 0 5 11h3v10a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V11h3a1 1 0 0 0 .707-1.707z" class="fill-current stroke-black" data-name="Up" />
-                                </svg>
 
-                            </button>
-                            <p class="mx-2"><?= $model->totalVotes ?></p>
-                            <button class="flex items-center justify-center ">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-6 w-6">
-                                    <path d="M19.924 13.617A1 1 0 0 0 19 13h-3V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v10H5a1 1 0 0 0-.707 1.707l7 7a1 1 0 0 0 1.414 0l7-7a1 1 0 0 0 .217-1.09z" class="fill-none stroke-black stroke-1" />
-                                </svg>
-                            </button>
-                        </div>
+                        <?php Pjax::begin([
+                            'enablePushState' => false,
+                        ]); ?>
+                        <?= $this->render('/post/_vote', [
+                            'model' => $model
+                        ]) ?>
+                        <?php Pjax::end(); ?>
+
                         <!-- Place -->
                         <div class="div text-gray-500 text-sm mt-2 justify-center">
                             <p class="text-gray-500 text-sm"><?= $model->place ?></p>

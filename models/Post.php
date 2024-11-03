@@ -168,6 +168,17 @@ class Post extends \yii\db\ActiveRecord
     }
 
     /**
+     * Gets query for [[CurrentUserVote]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCurrentUserVote(): ActiveQuery
+    {
+        return PostVote::find()
+            ->where(['post_id' => $this->id, 'voted_by' => Yii::$app->user->id]);
+    }
+
+    /**
      * {@inheritDoc}
      *
      * @return \app\models\query\PostQuery the active query used by this AR class.
