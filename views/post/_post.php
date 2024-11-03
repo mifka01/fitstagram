@@ -124,20 +124,24 @@ $this->registerJs($js);
                     </div>
                 </div>
                 <!-- Comments -->
-                <?php
-                Pjax::begin([
-                    'enablePushState' => false,
-                ]);
-                ?>
                 <div class="px-2 py-2">
-                    <?php foreach ($model->getComments()->with('createdBy')->all() as $comment): ?>
+
+                    <?php
+                    // TODO: predelat do ListView
+                    foreach ($model->getComments()->with('createdBy')->all() as $comment): ?>
                         <?= $this->render('_comment', ['comment' => $comment]) ?>
                     <?php endforeach; ?>
+                    <?php Pjax::begin([
+                        'enablePushState' => false,
+                    ]); ?>
                     <?= $this->render('/comment/create', [
                         'model' => new CommentForm(['postId' => $model->id]),
                     ]) ?>
+                    <?php
+                    // TODO: pjax event listener, kterej triggne jquery.closest('pjax-container')
+                    Pjax::end(); ?>
+
                 </div>
-                <?php Pjax::end(); ?>
             </div>
         </div>
     </div>

@@ -5,7 +5,6 @@ namespace app\controllers;
 use app\models\forms\CommentForm;
 use Yii;
 use yii\web\Controller;
-use yii\web\Response;
 
 /**
  * Comment controller
@@ -21,14 +20,13 @@ class CommentController extends Controller
     {
         $model = new CommentForm();
 
-        Yii::$app->response->format = Response::FORMAT_JSON;
         if ($model->load(Yii::$app->request->post()) && Yii::$app->request->getIsAjax()) {
-            if (!$model->validate() || !$model->save()) {
-                return \yii\widgets\ActiveForm::validate($model);
+            if ($model->validate() && $model->save()) {
+                $model = new CommentForm(['postId' => $model->postId]);
             }
         }
 
-        return $this->render('create', [
+        return $this->renderPartial('create', [
             'model' => $model,
         ]);
     }
