@@ -22,6 +22,7 @@ class SeedController extends Controller
     {
         parent::init();
         self::$faker = Factory::create('cs_CZ');
+        self::$faker->seed(1234);
     }
 
     public function actionIndex(): void
