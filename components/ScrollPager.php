@@ -156,7 +156,7 @@ class ScrollPager extends \sjaakp\loadmore\LoadMorePager
                 const loadMoreButton = document.getElementById('$id');
                 
                 if (loadMoreButton && 
-                    scrollBottom >= docHeight - window.scrollPagerOptions.scrollOffset) {
+                    scrollBottom >= docHeight - window?.scrollPagerOptions?.scrollOffset) {
                     state.loadStarted = true;
                     state.isListening = false;
                     loadMoreButton.click();
