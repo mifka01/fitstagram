@@ -4,6 +4,8 @@
 /** @var yii\data\ActiveDataProvider $provider */
 /** @var string|false $itemButtonLabel */
 /** @var string|array<mixed> $itemButtonRoute */
+/** @var string|false $updateButtonLabel */
+/** @var string|array<mixed> $updateButtonRoute */
 /** @var string|false $actionButtonLabel */
 /** @var string|array<mixed> $actionButtonRoute */
 /** @var bool $ajax */
@@ -74,15 +76,21 @@ use yii\widgets\Pjax;
 
         <?= ListView::widget([
         'dataProvider' => $provider,
-        'itemView' => function ($model, $key, $index, $widget) use ($itemButtonLabel, $itemButtonRoute) {
+        'itemView' => function ($model, $key, $index, $widget) use ($itemButtonLabel, $itemButtonRoute, $updateButtonLabel, $updateButtonRoute) {
             $route = is_callable($itemButtonRoute)
-                ? call_user_func($itemButtonRoute, $model)
-                : $itemButtonRoute;
+            ? call_user_func($itemButtonRoute, $model)
+            : $itemButtonRoute;
+
+            $updateRoute = is_callable($updateButtonRoute)
+            ? call_user_func($updateButtonRoute, $model)
+            : $updateButtonRoute;
 
             return $this->render('_item', [
-                'model' => $model,
-                'itemButtonLabel' => $itemButtonLabel,
-                'itemButtonRoute' => $route,
+            'model' => $model,
+            'itemButtonLabel' => $itemButtonLabel,
+            'itemButtonRoute' => $route,
+            'updateButtonLabel' => $updateButtonLabel,
+            'updateButtonRoute' => $updateRoute,
             ]);
         },
             'itemOptions' => ['class' => 'border-b border-gray-200 last:border-b-0'],

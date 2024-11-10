@@ -28,6 +28,13 @@ class GroupWidget extends Widget
      */
     public $actionButtonRoute = '';
 
+    public string|false $updateButtonLabel = false;
+
+    /**
+     * @var string|array<mixed> $updateButtonRoute
+     */
+    public $updateButtonRoute = '';
+
     public bool $ajax = false;
 
     public string $emptyMessage = 'No groups found.';
@@ -51,6 +58,8 @@ class GroupWidget extends Widget
             'provider' => $this->provider,
             'itemButtonLabel' => $this->itemButtonLabel,
             'itemButtonRoute' => $this->itemButtonRoute,
+            'updateButtonLabel' =>$this->updateButtonLabel,
+            'updateButtonRoute' => $this->updateButtonRoute,
             'actionButtonLabel' => $this->actionButtonLabel,
             'actionButtonRoute' => $this->actionButtonRoute,
             'ajax' => $this->ajax,

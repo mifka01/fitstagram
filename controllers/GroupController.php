@@ -4,10 +4,14 @@ namespace app\controllers;
 
 use app\enums\GroupType;
 use app\models\forms\GroupForm;
+use app\models\Group;
 use app\models\search\UserGroupSearch;
+use app\models\User;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
+use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 /**
@@ -26,10 +30,10 @@ class GroupController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['create'],
+                'only' => ['create', 'update'],
                 'rules' => [
                     [
-                        'actions' => ['create'],
+                        'actions' => ['create', 'update'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -94,6 +98,36 @@ class GroupController extends Controller
         }
 
         return $this->render('create', [
+            'model' => $model,
+        ]);
+    }
+
+    public function actionUpdate(int $id): Response|string
+    {
+        $group = Group::findOne($id);
+        if (!$group) {
+            throw new NotFoundHttpException('The requested group does not exist.');
+        }
+
+     
+        /** @var User|null $currentUser */
+        $currentUser = Yii::$app->user->identity;
+      
+        if ($currentUser === null || $group->owner_id !== $currentUser->id) {
+            throw new ForbiddenHttpException('You are not allowed to edit this group.');
+        }
+
+        $model = new GroupForm();
+        $model->setAttributes($group->attributes);
+        // Set the existing group object in the form
+        $model->group = $group;
+    
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', Yii::t('app/group', 'Group has been updated.'));
+            return $this->redirect(['view', 'id' => $group->id]);
+        }
+    
+        return $this->render('update', [
             'model' => $model,
         ]);
     }

@@ -19,7 +19,7 @@ class GroupForm extends Model
 
     public bool $active = false;
 
-    private ?Group $group = null;
+    public ?Group $group = null;
 
     /**
      * @return array<int, array<mixed>>
@@ -61,11 +61,17 @@ class GroupForm extends Model
             return false;
         }
 
-        $this->group = new Group();
+        // Use the existing group if available, otherwise create a new one
+        $this->group = $this->group ?? new Group();
+    
         $this->group->name = $this->name;
         $this->group->description = $this->description;
         $this->group->active = (int)$this->active;
-        $this->group->owner_id = $user->id;
+
+        // Only set the owner_id if it's a new group
+        if ($this->group->isNewRecord) {
+            $this->group->owner_id = $user->id;
+        }
 
         return $this->group->save();
     }

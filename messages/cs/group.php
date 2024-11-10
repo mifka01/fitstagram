@@ -15,6 +15,8 @@ return [
     'View' => 'Zobrazit',
     'Description' => 'Popis',
     'Edit' => 'Upravit',
+    'Edit Group' => 'Upravit skupinu',
+    'Edit the following fields to update the group' => 'Upravte následující pole pro aktualizaci skupiny',
     'Join' => 'Připojit se',
     'Created Groups' => 'Vytvořené skupiny',
     'Public Groups' => 'Veřejné skupiny',
