@@ -4,9 +4,11 @@
 /** @var yii\data\ActiveDataProvider $postDataProvider */
 
 use app\components\ScrollPager;
+use yii\helpers\Url;
 use yii\widgets\ListView;
 
 $this->title = Yii::t('app', 'Posts');
+$loginUrl = Url::to(['auth/login']);
 
 $js = <<<JS
 document.getElementById("list-view-posts").addEventListener('click',  async (event) => {
@@ -24,14 +26,14 @@ document.getElementById("list-view-posts").addEventListener('click',  async (eve
                 comments.html(response);
             },
             error: function() {
-                console.log('An unexpected error occurred.');
+                console.log('Error loading page');
             }
         });
-
+        return;
     }
 
-    event.preventDefault();
     if (target.hasClass('vote-button') && event.target.type == "submit") {
+        event.preventDefault();
         const form = $(event.target.closest("form"));
         const postId = form.find('#postvoteform-postid').val();
         const type= target.val();
@@ -60,11 +62,12 @@ document.getElementById("list-view-posts").addEventListener('click',  async (eve
                 }
             },
             error: function() {
-                alert('An unexpected error occurred.');
+                window.location.href = "$loginUrl";
             }
         });
-
+        return;
     }
+
   if (target.hasClass('comment-submit') && event.target.type == "submit") {
         event.preventDefault();
         const form = $(event.target.closest("form"));
@@ -100,9 +103,10 @@ document.getElementById("list-view-posts").addEventListener('click',  async (eve
                 }
             },
             error: function() {
-                alert('An unexpected error occurred.');
+                window.location.href = "$loginUrl";
             }
         });
+        return;
   }
 });
 JS;
