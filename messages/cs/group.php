@@ -30,6 +30,9 @@ return [
 
     'Group has been created.' => 'Skupina byla vytvořena.',
 
+    'Request to join group has been sent.' => 'Žádost o připojení k skupině byla odeslána.',
+    'Failed to send request to join group.' => 'Nepodařilo se odeslat žádost o připojení k skupině.',
+
 
     'No groups found.' => 'Nebyly nalezeny žádné skupiny.',
     'No {type}' => 'Žádné {type}',

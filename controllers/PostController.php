@@ -99,7 +99,7 @@ class PostController extends Controller
     public function actionVote(): string
     {
         $model = new PostVoteForm();
-        if (!($model->load(Yii::$app->request->post()) && $model->validate() &&$model->vote())) {
+        if (!($model->load(Yii::$app->request->post()) && $model->validate() && $model->vote())) {
             Yii::$app->session->setFlash('error', Yii::t('app/post', 'Failed to vote.'));
         }
         $post = Post::findOne($model->id);

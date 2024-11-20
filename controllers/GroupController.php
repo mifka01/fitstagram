@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\enums\GroupType;
 use app\models\forms\GroupForm;
+use app\models\forms\GroupJoinRequestForm;
 use app\models\Group;
 use app\models\search\UserGroupSearch;
 use app\models\User;
@@ -130,5 +131,18 @@ class GroupController extends Controller
         return $this->render('update', [
             'model' => $model,
         ]);
+    }
+
+    public function actionJoin(): Response|string
+    {
+        $model = new GroupJoinRequestForm(['group_id' => Yii::$app->request->get('id')]);
+    
+        if ($model->save()) {
+            Yii::$app->session->setFlash('success', Yii::t('app/group', 'Request to join group has been sent.'));
+        } else {
+            Yii::$app->session->setFlash('error', Yii::t('app/group', 'Failed to send request to join group.'));
+        }
+    
+        return $this->redirect(['group/index']);
     }
 }
