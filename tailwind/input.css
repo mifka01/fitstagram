@@ -46,6 +46,14 @@
         -webkit-box-shadow: none;
     }
 
+    button svg {
+        pointer-events: none;
+    }
+
+    button svg path {
+        pointer-events: none;
+    }
+
     /* Override select2 */
 
     div.required label:after {

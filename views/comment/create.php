@@ -14,11 +14,10 @@ $form = ActiveForm::begin([
     'action' => ['comment/create'],
     'options' => [
         'data-pjax' => true,
-        'class' => 'border rounded-lg border-gray-200 flex mt-2',
+        'class' => 'comment-form border rounded-lg border-gray-200 flex mt-2',
     ],
     'errorCssClass' => '',
 ]);
-
 $js = <<<JS
 function autoExpand(textarea) {
         textarea.style.height = 'auto';
@@ -42,7 +41,7 @@ Yii::$app->view->registerJs($js, \yii\web\View::POS_END);
 ])->label(false) ?>
 
 <?= Html::submitButton(Yii::t('app/model', 'Send'), [
-    'class' => ' text-orange-600 right-0 pb-1 mx-4 text-sm',
+    'class' => 'comment-submit text-orange-600 right-0 pb-1 mx-4 text-sm',
     'options' => [
         'data-pjax' => true,
     ],

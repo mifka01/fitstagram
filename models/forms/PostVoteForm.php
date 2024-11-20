@@ -11,9 +11,9 @@ class PostVoteForm extends Model
     private const int TYPE_UP = 1;
     private const int TYPE_DOWN = 0;
 
-    public int $id;
+    public int $postId = -1;
 
-    public int $type;
+    public int $type = -1;
 
     /**
      * @return array<int, array<mixed>>
@@ -21,8 +21,8 @@ class PostVoteForm extends Model
     public function rules(): array
     {
         return [
-            [['id', 'type'], 'required'],
-            [['id', 'type'], 'integer'],
+            [['postId', 'type'], 'required'],
+            [['postId', 'type'], 'integer'],
             ['type', 'in', 'range' => [$this::TYPE_DOWN, $this::TYPE_UP]],
         ];
     }
@@ -31,7 +31,7 @@ class PostVoteForm extends Model
     {
         $transaction = \Yii::$app->db->beginTransaction();
         try {
-            $post = Post::findOne($this->id);
+            $post = Post::findOne($this->postId);
             if (!$post) {
                 return false;
             }
