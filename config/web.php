@@ -125,6 +125,12 @@ $config = [
             \yii\widgets\ActiveField::class => [
                 'errorOptions' => ['class' => 'error-message']
             ],
+            \himiklab\yii2\recaptcha\ReCaptchaValidator3::class => \app\components\ReCaptcha3Validator::class,
+            \app\components\ReCaptcha3Validator::class => [
+                'message' => 'Ověření reCAPTCHA selhalo. Prosím zkuste to znovu. Pokud se problém opakuje, kontaktujte nás.',
+                'threshold' => 1.2,
+            ],
+            \himiklab\yii2\recaptcha\ReCaptcha3::class => \app\components\ReCaptcha3::class,
         ]
     ],
 ];
