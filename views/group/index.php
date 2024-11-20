@@ -7,6 +7,7 @@
 /** @var yii\data\ActiveDataProvider $ownedGroupsProvider */
 /** @var yii\data\ActiveDataProvider $joinedGroupsProvider */
 
+use app\models\GroupJoinRequest;
 use app\widgets\GroupWidget;
 use yii\helpers\Html;
 
@@ -58,10 +59,20 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= GroupWidget::widget([
         'title' => Yii::t('app/group', 'Public Groups'),
-        'itemButtonLabel' => Yii::t('app/group', 'Join'),
-        'itemButtonRoute' => function ($model) {
-            return Yii::$app->user->isGuest ? ['auth/login'] : ['group/join', 'id' => $model->id];
+        'itemButtonLabel' => function ($model) {
+            return
+            GroupJoinRequest::find()->pending()->forGroup($model->id)->byCurrentUser()->exists()
+                ? Yii::t('app/group', 'Request Pending')
+                : Yii::t('app/group', 'Join');
         },
+    'itemButtonRoute' => function ($model) {
+        if (Yii::$app->user->isGuest) {
+            return ['auth/login'];
+        } elseif (GroupJoinRequest::find()->pending()->forGroup($model->id)->byCurrentUser()->exists()) {
+            return ['group/join', 'id' => $model->id, 'cancel' => true];
+        }
+            return ['group/join', 'id' => $model->id];
+    },
         'provider' => $publicGroupsProvider,
         'ajax' => true,
         'emptyMessage' => Yii::t('app/group', 'There are no public groups yet.'),

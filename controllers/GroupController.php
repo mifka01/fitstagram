@@ -6,6 +6,7 @@ use app\enums\GroupType;
 use app\models\forms\GroupForm;
 use app\models\forms\GroupJoinRequestForm;
 use app\models\Group;
+use app\models\GroupJoinRequest;
 use app\models\search\UserGroupSearch;
 use app\models\User;
 use Yii;
@@ -133,9 +134,20 @@ class GroupController extends Controller
         ]);
     }
 
-    public function actionJoin(): Response|string
+    public function actionJoin(int $id, bool $cancel = false): Response
     {
-        $model = new GroupJoinRequestForm(['group_id' => Yii::$app->request->get('id')]);
+        if ($cancel) {
+            $model = GroupJoinRequest::find()->pending()->forGroup($id)->byCurrentUser()->one();
+
+            if ($model && !is_array($model)) {
+                $model->delete();
+                Yii::$app->session->setFlash('success', Yii::t('app/group', 'Request to join group has been cancelled.'));
+            } else {
+                Yii::$app->session->setFlash('error', Yii::t('app/group', 'Failed to cancel request to join group.'));
+            }
+            return $this->redirect(['group/index']);
+        }
+        $model = new GroupJoinRequestForm(['group_id' => $id]);
     
         if ($model->save()) {
             Yii::$app->session->setFlash('success', Yii::t('app/group', 'Request to join group has been sent.'));
