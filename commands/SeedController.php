@@ -180,7 +180,7 @@ class SeedController extends Controller
             $group = [
                 'name' => self::$faker->text(80),
                 'description' => self::$faker->text(512),
-                'owner_id' => self::$faker->numberBetween(1, self::USER_COUNT),
+                'owner_id' => $ownerId = self::$faker->numberBetween(1, self::USER_COUNT),
                 'active' => $status === 'active' ? true : false,
                 'deleted' => $status === 'deleted' ? true : false,
                 'banned' => $status === 'banned' ? true : false,
@@ -189,17 +189,24 @@ class SeedController extends Controller
             ];
             Yii::$app->db->createCommand()->insert('group', $group)->execute();
             $groupId = Yii::$app->db->getLastInsertID();
-            $this->addGroupMembers($groupId);
+            $this->addGroupMembers($groupId, $ownerId);
             $this->addGroupJoinRequests((int)$groupId);
         }
     }
 
-    public function addGroupMembers(string $groupId): void
+    public function addGroupMembers(string $groupId, int $ownerId): void
     {
 
         $groupMembers = [];
+        $groupMember = [
+            'group_id' => $groupId,
+            'user_id' => $ownerId,
+            'created_at' =>  self::$faker->dateTimeThisYear()->format('Y-m-d H:i:s'),
+        ];
+        Yii::$app->db->createCommand()->insert('group_member', $groupMember)->execute();
+        $groupMembers[] = $ownerId;
+        
         $count = self::$faker->numberBetween(0, self::USER_COUNT / 2);
-
         for ($i = 0; $i < $count; $i++) {
             $userId = self::$faker->numberBetween(1, self::USER_COUNT);
             if (!in_array($userId, $groupMembers)) {

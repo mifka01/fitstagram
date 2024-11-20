@@ -91,7 +91,7 @@ Table Group {
   updated_at timestamp [default: `CURRENT_TIMESTAMP`]
 }
 
-Table Group_Users {
+Table Group_Member {
   group_id integer [not null, ref: > Group.id]
   user_id integer [not null, ref: > User.id]
   created_at timestamp 
