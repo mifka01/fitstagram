@@ -12,7 +12,9 @@ $timeout = $options['timeout'];
 $js = <<<JS
     $(document).ready(function() {
         setTimeout(function() {
-            $('#alert-$id').fadeOut('slow');
+            $('#alert-$id').fadeOut('slow', function() {
+                $(this).remove();
+            });
         }, $timeout);
     });
 JS;
