@@ -15,9 +15,9 @@ class GroupWidget extends Widget
     public ActiveDataProvider $provider;
 
     /**
-     * @var string|array<mixed> $itemButtonLabel
+     * @var string|array<mixed>|false $itemButtonLabel
      */
-    public $itemButtonLabel = '';
+    public $itemButtonLabel = false;
 
     /**
      * @var string|array<mixed> $itemButtonRoute
