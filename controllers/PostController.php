@@ -113,12 +113,11 @@ class PostController extends Controller
             ];
         }
 
+        Yii::$app->session->setFlash('error', Yii::t('app/post', 'Failed to vote.'));
         return [
             'success' => false,
             'errors' => $model->errors,
         ];
-
-        Yii::$app->session->setFlash('error', Yii::t('app/post', 'Failed to vote.'));
     }
 
     public function actionComments(int $id): string
