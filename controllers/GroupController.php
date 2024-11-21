@@ -6,8 +6,8 @@ use app\enums\GroupType;
 use app\models\forms\GroupForm;
 use app\models\forms\GroupJoinRequestForm;
 use app\models\Group;
-use app\models\search\GroupPostSearch;
 use app\models\GroupJoinRequest;
+use app\models\search\GroupPostSearch;
 use app\models\search\UserGroupSearch;
 use app\models\User;
 use Yii;
@@ -57,7 +57,7 @@ class GroupController extends Controller
         $joinedSearchModel = new UserGroupSearch('joinedGroupSearch');
 
 
-        $publicProvider = $publicSearchModel ->search(
+        $publicProvider = $publicSearchModel->search(
             Yii::$app->request->queryParams,
             GroupType::PUBLIC
         );
@@ -70,7 +70,7 @@ class GroupController extends Controller
                 Yii::$app->request->queryParams,
                 GroupType::OWNED
             );
-            
+
             $joinedProvider = $joinedSearchModel->search(
                 Yii::$app->request->queryParams,
                 GroupType::JOINED
@@ -112,10 +112,10 @@ class GroupController extends Controller
             throw new NotFoundHttpException('The requested group does not exist.');
         }
 
-     
+
         /** @var User|null $currentUser */
         $currentUser = Yii::$app->user->identity;
-      
+
         if ($currentUser === null || $group->owner_id !== $currentUser->id) {
             throw new ForbiddenHttpException('You are not allowed to edit this group.');
         }
@@ -124,12 +124,12 @@ class GroupController extends Controller
         $model->setAttributes($group->attributes);
         // Set the existing group object in the form
         $model->group = $group;
-    
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', Yii::t('app/group', 'Group has been updated.'));
             return $this->redirect(['view', 'id' => $group->id]);
         }
-    
+
         return $this->render('update', [
             'model' => $model,
         ]);
@@ -149,13 +149,13 @@ class GroupController extends Controller
             return $this->redirect(['group/index']);
         }
         $model = new GroupJoinRequestForm(['group_id' => $id]);
-    
+
         if ($model->save()) {
             Yii::$app->session->setFlash('success', Yii::t('app/group', 'Request to join group has been sent.'));
         } else {
             Yii::$app->session->setFlash('error', Yii::t('app/group', 'Failed to send request to join group.'));
         }
-    
+
         return $this->redirect(['group/index']);
     }
 
@@ -176,7 +176,7 @@ class GroupController extends Controller
         if ($model === null || $model->active == false) {
             throw new NotFoundHttpException('Group not found');
         }
-       
+
         $isGroupOwner = false;
 
         $joinedAt = null;
@@ -193,12 +193,12 @@ class GroupController extends Controller
             $joinedAt = $user->getGroupJoinedAt($model->id);
             $isMember = $user->isGroupMember($model->id);
         }
-        
+
         //TODO check if user is member
         if (!$isMember) {
             return $this->redirect(['group/index']);
         }
-    
+
 
         return $this->render('view', [
             'model' => $model,
