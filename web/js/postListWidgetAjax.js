@@ -49,7 +49,7 @@ document.body.addEventListener("click", async (event) => {
         }
       },
       error: function () {
-        window.location.href = "$loginUrl";
+        window.location.href = "/auth/login";
       },
     });
     return;
@@ -59,10 +59,6 @@ document.body.addEventListener("click", async (event) => {
     event.preventDefault();
     const form = $(event.target.closest("form"));
     const contentField = form.find("#commentform-content");
-
-    if (contentField.val().length === 0) {
-      return;
-    }
 
     const postId = form.find("#commentform-postid").val();
     const csrfToken = $('meta[name="csrf-token"]').attr("content");
@@ -90,7 +86,7 @@ document.body.addEventListener("click", async (event) => {
         }
       },
       error: function () {
-        window.location.href = "$loginUrl";
+        window.location.href = "/auth/login";
       },
     });
     return;
