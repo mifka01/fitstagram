@@ -6,6 +6,7 @@ use app\enums\GroupType;
 use app\models\forms\GroupForm;
 use app\models\forms\GroupJoinRequestForm;
 use app\models\Group;
+use app\models\search\GroupPostSearch;
 use app\models\search\UserGroupSearch;
 use app\models\User;
 use Yii;
@@ -31,10 +32,10 @@ class GroupController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['create', 'update'],
+                'only' => ['create', 'update', 'join', 'view'],
                 'rules' => [
                     [
-                        'actions' => ['create', 'update'],
+                        'actions' => ['create', 'update', 'join', 'view'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -144,5 +145,58 @@ class GroupController extends Controller
         }
     
         return $this->redirect(['group/index']);
+    }
+
+    /**
+     * Profile action
+     *
+     * @param int $id
+     * @return string
+     */
+    public function actionView(int $id): string|Response
+    {
+        $model = Group::findOne($id);
+        $user = User::findOne(Yii::$app->user->id);
+
+        $searchModel = new GroupPostSearch();
+        $provider = $searchModel->search(Yii::$app->request->queryParams);
+
+        if ($model === null || $model->active == false) {
+            throw new NotFoundHttpException('Group not found');
+        }
+       
+        $isGroupOwner = false;
+
+        $joinedAt = null;
+
+        $isMember = false;
+
+        $posts = $model->getPosts()->deleted(false);
+
+        $users = $model->getMembers()->active(true);
+
+
+        if ($user !== null) {
+            $isGroupOwner = $model->owner_id === $user->id;
+            $joinedAt = $user->getGroupJoinedAt($model->id);
+            $isMember = $user->isGroupMember($model->id);
+        }
+        
+        //TODO check if user is member
+        if (!$isMember) {
+            return $this->redirect(['group/index']);
+        }
+    
+
+        return $this->render('view', [
+            'model' => $model,
+            'joinedAt' => $joinedAt,
+            'ownerUsername' => $model->owner->username,
+            'isGroupOwner' => $isGroupOwner,
+            'postDataProvider' => $provider,
+            'isMember' => $isMember,
+            'countUsers' => $users->count(),
+            'countPosts' => $posts->count(),
+        ]);
     }
 }

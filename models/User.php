@@ -239,6 +239,27 @@ class User extends TimestampRecord implements IdentityInterface
         $this->password_reset_token = null;
     }
 
+    public function getGroupJoinedAt(int $groupId): string|null
+    {
+        $groupMemberRecord = (new \yii\db\Query())
+            ->select(['created_at'])
+            ->from('group_member')
+            ->where(['group_id' => $groupId, 'user_id' => $this->id])
+            ->one();
+
+        return $groupMemberRecord['created_at'] ?? null;
+    }
+
+    public function isGroupMember(int $groupId): bool
+    {
+         $groupMemberRecord = (new \yii\db\Query())
+        ->from('group_member')
+        ->where(['group_id' => $groupId, 'user_id' => $this->id])
+        ->one();
+
+        return $groupMemberRecord !== false;
+    }
+
     /**
      * Gets query for [[Comments]].
      *

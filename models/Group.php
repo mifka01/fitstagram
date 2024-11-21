@@ -3,6 +3,8 @@
 namespace app\models;
 
 use app\models\query\GroupQuery;
+use app\models\query\PostQuery;
+use app\models\query\UserQuery;
 use Yii;
 use yii\db\ActiveQuery;
 
@@ -102,11 +104,25 @@ class Group extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Users]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return UserQuery
      */
     public function getMembers(): ActiveQuery
     {
-        return $this->hasMany(User::class, ['id' => 'user_id'])->viaTable('group_member', ['group_id' => 'id']);
+        /** @var UserQuery $query */
+        $query = $this->hasMany(User::class, ['id' => 'user_id'])->viaTable('group_member', ['group_id' => 'id']);
+        return $query;
+    }
+
+    /**
+     * Gets query for [[Posts]].
+     *
+     * @return PostQuery
+     */
+    public function getPosts(): ActiveQuery
+    {
+        /** @var PostQuery $query */
+        $query = $this->hasMany(Post::class, ['group_id' => 'id']);
+        return $query;
     }
 
     /**
