@@ -8,6 +8,7 @@
 /** @var yii\data\ActiveDataProvider $joinedGroupsProvider */
 
 use app\models\GroupJoinRequest;
+use app\models\GroupMember;
 use app\widgets\GroupWidget;
 use yii\helpers\Html;
 
@@ -60,18 +61,24 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GroupWidget::widget([
         'title' => Yii::t('app/group', 'Public Groups'),
         'itemButtonLabel' => function ($model) {
-            return
-            GroupJoinRequest::find()->pending()->forGroup($model->id)->byCurrentUser()->exists()
-                ? Yii::t('app/group', 'Request Pending')
-                : Yii::t('app/group', 'Join');
+            if (GroupJoinRequest::find()->pending()->forGroup($model->id)->byCurrentUser()->exists()) {
+                return Yii::t('app/group', 'Request Pending');
+            } elseif (GroupMember::find()->byGroup($model->id)->byCurrentUser()->exists()) {
+                return Yii::t('app/group', 'View');
+            } else {
+                return Yii::t('app/group', 'Join');
+            }
         },
     'itemButtonRoute' => function ($model) {
         if (Yii::$app->user->isGuest) {
             return ['auth/login'];
         } elseif (GroupJoinRequest::find()->pending()->forGroup($model->id)->byCurrentUser()->exists()) {
             return ['group-membership/request-cancel', 'id' => $model->id];
-        }
+        } elseif (GroupMember::find()->byGroup($model->id)->byCurrentUser()->exists()) {
+            return ['group/view', 'id' => $model->id];
+        } else {
             return ['group-membership/request-join', 'id' => $model->id];
+        }
     },
         'provider' => $publicGroupsProvider,
         'ajax' => true,

@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\models\query\GroupMemberQuery;
 use Yii;
 
 /**
@@ -73,5 +74,15 @@ class GroupMember extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return \app\models\query\GroupMemberQuery the active query used by this AR class.
+     */
+    public static function find(): GroupMemberQuery
+    {
+        return new GroupMemberQuery(get_called_class());
     }
 }
