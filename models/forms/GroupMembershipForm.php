@@ -1,4 +1,5 @@
 <?php
+
 namespace app\models\forms;
 
 use app\models\Group;
@@ -15,7 +16,11 @@ class GroupMembershipForm extends Model
 
     public ?bool $approved = null;
 
+    public ?int $group_request_id = null;
+
     // Scenario constants
+    public const SCENARIO_REQUEST_JOIN = 'request_join';
+    public const SCENARIO_REQUEST_CANCEL = 'request_cancel';
     public const SCENARIO_APPROVE_MEMBER = 'approve_member';
     public const SCENARIO_REJECT_MEMBER = 'reject_member';
     public const SCENARIO_LEAVE_GROUP = 'leave_group';
@@ -27,12 +32,10 @@ class GroupMembershipForm extends Model
     {
         return [
             // Common rules for all scenarios
-            [['group_id', 'user_id'], 'required'],
-            [['group_id', 'user_id'], 'integer'],
+            [['group_id', 'user_id'], 'required', 'on' => [self::SCENARIO_REQUEST_JOIN, self::SCENARIO_LEAVE_GROUP, self::SCENARIO_REQUEST_CANCEL]],
+            [['group_request_id'], 'required', 'on' => [self::SCENARIO_APPROVE_MEMBER, self::SCENARIO_REJECT_MEMBER]],
+            [['group_id', 'user_id', 'group_request_id'], 'integer'],
             [['group_id'], 'exist', 'skipOnError' => true, 'targetClass' => Group::class, 'targetAttribute' => ['group_id' => 'id']],
-            
-            // Rules specific to approval/rejection scenarios
-            [['approved'], 'required', 'on' => [self::SCENARIO_APPROVE_MEMBER, self::SCENARIO_REJECT_MEMBER]],
 
             // Additional validation for leaving group
             [['group_id'], 'validateGroupOwnership', 'on' => self::SCENARIO_LEAVE_GROUP],
@@ -101,7 +104,7 @@ class GroupMembershipForm extends Model
             $groupJoinRequest->group_id = $this->group_id;
             $groupJoinRequest->created_by = $this->user_id;
             $groupJoinRequest->pending = (int)true;
-            
+
             if (!$groupJoinRequest->save()) {
                 $this->addErrors($groupJoinRequest->errors);
                 return false;
@@ -117,7 +120,7 @@ class GroupMembershipForm extends Model
         }
     }
 
-        /**
+    /**
      * Request to join a group
      *
      * @return bool
@@ -170,7 +173,8 @@ class GroupMembershipForm extends Model
      */
     public function approveMembershipRequest(): bool
     {
-        return $this->processMembershipRequest(true);
+        $this->approved = true;
+        return $this->processMembershipRequest();
     }
 
     /**
@@ -180,7 +184,8 @@ class GroupMembershipForm extends Model
      */
     public function rejectMembershipRequest(): bool
     {
-        return $this->processMembershipRequest(false);
+        $this->approved = false;
+        return $this->processMembershipRequest();
     }
 
     /**
@@ -224,24 +229,15 @@ class GroupMembershipForm extends Model
     /**
      * Process membership request (accept or decline)
      *
-     * @param bool $accepted
      * @return bool
      */
-    private function processMembershipRequest(bool $accepted): bool
+    private function processMembershipRequest(): bool
     {
-        if (!$this->validate()) {
-            return false;
-        }
 
         $transaction = Yii::$app->db->beginTransaction();
         try {
             // Find the existing membership request
-            $groupJoinRequest = GroupJoinRequest::findOne([
-                'group_id' => $this->group_id,
-                'user_id' => $this->user_id,
-                'pending' => true,
-            ]);
-
+            $groupJoinRequest = GroupJoinRequest::findOne($this->group_request_id);
             if (!$groupJoinRequest) {
                 $this->addError('user_id', 'Membership request not found.');
                 return false;
@@ -249,16 +245,29 @@ class GroupMembershipForm extends Model
 
             $groupJoinRequest->pending = (int)false;
             // Update the status
-            if ($accepted) {
+            if ($this->approved) {
                 $groupJoinRequest->accepted = (int)true;
+
+                if (!$groupJoinRequest->save()) {
+                    $this->addErrors($groupJoinRequest->errors);
+                    return false;
+                }
+                // Add user to group
+                $groupMember = new GroupMember();
+                $groupMember->group_id = $groupJoinRequest->group_id;
+                $groupMember->user_id = $groupJoinRequest->created_by;
+
+                if (!$groupMember->save()) {
+                    $this->addErrors($groupMember->errors);
+                    $transaction->rollBack();
+                    return false;
+                }
             } else {
-                $groupJoinRequest->declined = (int)true;
-            }
- 
-            
-            if (!$groupJoinRequest->save()) {
-                $this->addErrors($groupJoinRequest->errors);
-                return false;
+                if (!$groupJoinRequest->delete()) {
+                    $this->addErrors($groupJoinRequest->errors);
+                    $transaction->rollBack();
+                    return false;
+                }
             }
 
             $transaction->commit();

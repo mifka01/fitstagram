@@ -1,4 +1,5 @@
 <?php
+
 /** @var yii\web\View $this */
 /** @var app\models\search\UserGroupSearch $publicSearchModel */
 /** @var app\models\search\UserGroupSearch $ownedSearchModel */
@@ -31,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'title' => Yii::t('app/group', 'Created Groups'),
             'itemButtonLabel' => Yii::t('app/group', 'View'),
             'itemButtonRoute' => function ($model) {
-                    return ['group/view', 'id' => $model->id];
+                return ['group/view', 'id' => $model->id];
             },
             'actionButtonLabel' => Yii::t('app/group', 'Create New Group'),
             'actionButtonRoute' => ['group/create'],
@@ -65,17 +66,17 @@ $this->params['breadcrumbs'][] = $this->title;
                 return Yii::t('app/group', 'Join');
             }
         },
-    'itemButtonRoute' => function ($model) {
-        if (Yii::$app->user->isGuest) {
-            return ['auth/login'];
-        } elseif (GroupJoinRequest::find()->pending()->forGroup($model->id)->byCurrentUser()->exists()) {
-            return ['group-membership/request-cancel', 'id' => $model->id];
-        } elseif (GroupMember::find()->byGroup($model->id)->byCurrentUser()->exists()) {
-            return ['group/view', 'id' => $model->id];
-        } else {
-            return ['group-membership/request-join', 'id' => $model->id];
-        }
-    },
+        'itemButtonRoute' => function ($model) {
+            if (Yii::$app->user->isGuest) {
+                return ['auth/login'];
+            } elseif (GroupJoinRequest::find()->pending()->forGroup($model->id)->byCurrentUser()->exists()) {
+                return ['group-membership/request-cancel', 'id' => $model->id];
+            } elseif (GroupMember::find()->byGroup($model->id)->byCurrentUser()->exists()) {
+                return ['group/view', 'id' => $model->id];
+            } else {
+                return ['group-membership/request-join', 'id' => $model->id];
+            }
+        },
         'provider' => $publicGroupsProvider,
         'ajax' => true,
         'emptyMessage' => Yii::t('app/group', 'There are no public groups yet.'),

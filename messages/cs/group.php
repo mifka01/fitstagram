@@ -56,7 +56,11 @@ return [
     'This user has not created any groups yet.' => 'Tento uživatel zatím nevytvořil žádné skupiny.',
     'This user has not joined any groups yet.' => 'Tento uživatel se zatím nepřipojil k žádným skupinám.',
     'You are not allowed to update this group.' => 'Nemáte povolení aktualizovat tuto skupinu.',
-    'Group has been updated.'=> 'Skupina byla aktualizována.',
+    'Group has been updated.' => 'Skupina byla aktualizována.',
     'Group not found.' => 'Skupina nebyla nalezena.',
     'You are not allowed to view this page.' => 'Nemáte povolení zobrazit tuto stránku.',
+    'Membership request not found.' => 'Žádost o členství nebyla nalezena.',
+    'Membership request decllined.' => 'Žádost o členství byla zamítnuta.',
+    'Error declining membership request.' => 'Při zamítnutí žádosti o členství došlo k chybě.',
+    'Error approving membership request.' => 'Při schvalování žádosti o členství došlo k chybě.',
 ];
