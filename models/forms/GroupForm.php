@@ -18,7 +18,7 @@ class GroupForm extends Model
 
     public string $description = '';
 
-    public bool $active = false;
+    public bool $active = true;
 
     public ?Group $group = null;
 

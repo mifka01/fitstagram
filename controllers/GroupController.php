@@ -93,12 +93,15 @@ class GroupController extends Controller
     public function actionCreate(): Response|string
     {
         $model = new GroupForm();
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', Yii::t('app/group', 'Group has been created.'));
-            return $this->redirect(['view', 'id' => $model->getGroup()->id]);
+        if (Yii::$app->request->isPost) {
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                Yii::$app->session->setFlash('success', Yii::t('app/group', 'Group has been created.'));
+                return $this->redirect(['view', 'id' => $model->getGroup()->id]);
+            } else {
+                Yii::$app->session->setFlash('error', Yii::t('app/group', 'Failed to create group.'));
+            }
         }
 
-        Yii::$app->session->setFlash('error', Yii::t('app/group', 'Failed to create group.'));
         return $this->render('create', [
             'model' => $model,
         ]);
