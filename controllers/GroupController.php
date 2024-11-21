@@ -7,6 +7,7 @@ use app\models\forms\GroupForm;
 use app\models\Group;
 use app\models\search\GroupPostSearch;
 use app\models\search\UserGroupSearch;
+use app\models\sort\PostSort;
 use app\models\User;
 use Yii;
 use yii\filters\AccessControl;
@@ -145,11 +146,14 @@ class GroupController extends Controller
      */
     public function actionView(int $id): string|Response
     {
+        $sort = new PostSort();
+
         $model = Group::findOne($id);
         $user = User::findOne(Yii::$app->user->id);
 
         $searchModel = new GroupPostSearch();
         $provider = $searchModel->search(Yii::$app->request->queryParams);
+        $provider->setSort($sort);
 
         if ($model === null || $model->active == false) {
             throw new NotFoundHttpException('Group not found');

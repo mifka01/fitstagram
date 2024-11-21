@@ -9,9 +9,8 @@
 /** @var bool $isMember */
 /** @var yii\data\ActiveDataProvider $postDataProvider */
 
-use app\components\ScrollPager;
+use app\widgets\PostListWidget;
 use yii\helpers\Html;
-use yii\widgets\ListView;
 
 $this->title = Yii::t('app/group', 'Group {name}', ['name' => $model->name]);
 $this->params['breadcrumbs'][] = $this->title;
@@ -81,23 +80,8 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 
+<?= PostListWidget::widget([
+    'dataProvider' => $postDataProvider,
+]) ?>
 
-    <?= ListView::widget([
-        'id' => 'list-view-posts',
-        'dataProvider' => $postDataProvider,
-        'itemView' => '/post/_post',
-        'itemOptions' => ['class' => 'item mb-4'],
-        'layout' => "{items}\n{pager}",
-        'summary' => '',
-        'pager' => [
-            'class' => ScrollPager::class,
-            'pagination' => $postDataProvider->getPagination(),
-            'scrollOffset' => 1000,
-            'id' => 'post-scroll-pager',
-            'clientOptions' => [
-                'throttleWait' => 50,
-            ],
-            'label' => Yii::t('app', 'Load More'),
-        ],
-    ]); ?>
 </div>

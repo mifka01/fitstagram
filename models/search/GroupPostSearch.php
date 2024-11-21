@@ -11,26 +11,6 @@ use yii\data\ActiveDataProvider;
  */
 class GroupPostSearch extends Model
 {
-    public bool $newest = true;
-
-    public bool $oldest = false;
-
-    public bool $best = false;
-
-    public bool $worst = false;
-
-    /**
-     * {@inheritDoc}
-     *
-     * @return array<int, array<int|string, array<int|string, string>|bool|int|string>>
-     */
-    public function rules(): array
-    {
-        return [
-            [['newest', 'best', 'oldest', 'worst'], 'boolean'],
-        ];
-    }
-
     /**
      * Creates data provider instance with search query applied
      *
@@ -59,22 +39,6 @@ class GroupPostSearch extends Model
         $query->deleted(false);
 
 
-        if ($this->best) {
-            $query->orderBy(['up_votes - down_votes' => SORT_DESC]);
-            return $dataProvider;
-        }
-
-        if ($this->worst) {
-            $query->orderBy(['up_votes - down_votes' => SORT_ASC]);
-            return $dataProvider;
-        }
-
-        if ($this->oldest) {
-            $query->orderBy(['created_at' => SORT_ASC]);
-            return $dataProvider;
-        }
-
-        $query->orderBy(['created_at' => SORT_DESC]);
         return $dataProvider;
     }
 }
