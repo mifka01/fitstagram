@@ -4,14 +4,16 @@
 /** @var yii\data\ActiveDataProvider $postDataProvider */
 
 use app\components\ScrollPager;
+use app\widgets\SortWidget;
 use yii\helpers\Url;
 use yii\widgets\ListView;
+use yii\widgets\Pjax;
 
 $this->title = Yii::t('app', 'Posts');
 $loginUrl = Url::to(['auth/login']);
 
 $js = <<<JS
-document.getElementById("list-view-posts").addEventListener('click',  async (event) => {
+document.body.addEventListener('click',  async (event) => {
     let target = $(event.target);
 
     if(target.hasClass('page-link') && target.data('page') !== undefined){
@@ -114,6 +116,17 @@ JS;
 Yii::$app->view->registerJs($js, \yii\web\View::POS_END);
 ?>
 
+
+
+<?php Pjax::begin([
+]); ?>
+<?= SortWidget::widget([
+    'sort' => $postDataProvider->sort,
+    'containerOptions' => ['class' => 'flex justify-center space-x-4 mb-2'],
+    'allowBothWays' => false,
+    'defaultSort' => 'new'
+]) ?>
+
 <div id="carousel-wrapper" class="bg-gray-50 flex flex-col justify-center sm:px-6 lg:px-8 space-y-6">
     <?= ListView::widget([
         'id' => 'list-view-posts',
@@ -135,3 +148,4 @@ Yii::$app->view->registerJs($js, \yii\web\View::POS_END);
     ]); ?>
 
 </div>
+<?php Pjax::end(); ?>
