@@ -73,7 +73,34 @@ class GroupForm extends Model
             $this->group->owner_id = $user->id;
         }
 
-        return $this->group->save();
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+            // Save the group first
+            if (!$this->group->save()) {
+                $transaction->rollBack();
+                return false;
+            }
+            $insertResult = Yii::$app->db->createCommand()
+            ->insert('group_member', [
+                'group_id' => $this->group->id,
+                'user_id' => Yii::$app->user->id,
+            ])
+            ->execute();
+
+            if (!$insertResult) {
+                $transaction->rollBack();
+                return false;
+            }
+
+            $transaction->commit();
+            return true;
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+            throw $e;
+        } catch (\Throwable $e) {
+            $transaction->rollBack();
+            throw $e;
+        }
     }
 
     public function getGroup(): Group
