@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\models\query\GroupJoinRequestQuery;
 use app\models\query\GroupQuery;
 use app\models\query\PostQuery;
 use app\models\query\UserQuery;
@@ -84,11 +85,13 @@ class Group extends \yii\db\ActiveRecord
     /**
      * Gets query for [[GroupJoinRequests]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return GroupJoinRequestQuery
      */
     public function getGroupJoinRequests(): ActiveQuery
     {
-        return $this->hasMany(GroupJoinRequest::class, ['group_id' => 'id']);
+        /** @var GroupJoinRequestQuery $query */
+        $query = $this->hasMany(GroupJoinRequest::class, ['group_id' => 'id']);
+        return $query;
     }
 
     /**

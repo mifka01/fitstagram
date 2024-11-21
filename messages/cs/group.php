@@ -29,6 +29,7 @@ return [
     'Search groups...' => 'Hledat skupiny...',
 
     'Group has been created.' => 'Skupina byla vytvořena.',
+    'Failed to create group.' => 'Vytvoření skupiny se nezdařilo.',
 
     'Request to join group submitted.' => 'Žádost o připojení k skupině byla odeslána.',
     'Error requesting to join group.' => 'Při žádosti o připojení k skupině došlo k chybě.',
@@ -40,6 +41,13 @@ return [
     'Error leaving group.' => 'Při opouštění skupiny došlo k chybě.',
     'Request Pending' => 'Čeká na schválení',
 
+    'Pending Requests' => 'Čekající žádosti',
+    'Posts' => 'Příspěvky',
+    'Join Requests' => 'Žádosti',
+    'Members' => 'Členové',
+    'Owner' => 'Vlastník',
+    'Manage' => 'Spravovat',
+
     'No groups found.' => 'Nebyly nalezeny žádné skupiny.',
     'No {type}' => 'Žádné {type}',
     'You have not created any groups yet.' => 'Zatím jste nevytvořili žádné skupiny.',
@@ -47,4 +55,8 @@ return [
     'There are no public groups yet.' => 'Zatím nejsou k dispozici žádné veřejné skupiny.',
     'This user has not created any groups yet.' => 'Tento uživatel zatím nevytvořil žádné skupiny.',
     'This user has not joined any groups yet.' => 'Tento uživatel se zatím nepřipojil k žádným skupinám.',
+    'You are not allowed to update this group.' => 'Nemáte povolení aktualizovat tuto skupinu.',
+    'Group has been updated.'=> 'Skupina byla aktualizována.',
+    'Group not found.' => 'Skupina nebyla nalezena.',
+    'You are not allowed to view this page.' => 'Nemáte povolení zobrazit tuto stránku.',
 ];

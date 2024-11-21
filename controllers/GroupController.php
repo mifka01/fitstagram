@@ -10,6 +10,7 @@ use app\models\search\UserGroupSearch;
 use app\models\sort\PostSort;
 use app\models\User;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
@@ -112,7 +113,7 @@ class GroupController extends Controller
     {
         $group = Group::findOne($id);
         if (!$group) {
-            throw new NotFoundHttpException('The requested group does not exist.');
+            throw new NotFoundHttpException(Yii::t('app/group', 'Failed to create group.'));
         }
 
 
@@ -120,7 +121,7 @@ class GroupController extends Controller
         $currentUser = Yii::$app->user->identity;
 
         if ($currentUser === null || $group->owner_id !== $currentUser->id) {
-            throw new ForbiddenHttpException('You are not allowed to edit this group.');
+            throw new ForbiddenHttpException(Yii::t('app/group', 'You are not allowed to update this group.'));
         }
 
         $model = new GroupForm();
@@ -156,7 +157,7 @@ class GroupController extends Controller
         $provider->setSort($sort);
 
         if ($model === null || $model->active == false) {
-            throw new NotFoundHttpException('Group not found');
+            throw new NotFoundHttpException(Yii::t('app/group', 'Group not found.'));
         }
 
         $isGroupOwner = false;
@@ -191,6 +192,36 @@ class GroupController extends Controller
             'isMember' => $isMember,
             'countUsers' => $users->count(),
             'countPosts' => $posts->count(),
+            'countPendingRequests' => $model->getGroupJoinRequests()->pending()->count(),
+        ]);
+    }
+
+    public function actionJoinRequests(int $id): string
+    {
+        $model = Group::findOne($id);
+        $user = User::findOne(Yii::$app->user->id);
+ 
+        if ($model === null || $model->active == false) {
+            throw new NotFoundHttpException(Yii::t('app/group', 'Group not found.'));
+        }
+
+        if ($user === null) {
+            throw new ForbiddenHttpException(Yii::t('app/group', 'You are not allowed to view this page.'));
+        }
+        if ($model->owner_id !== $user->id) {
+            throw new ForbiddenHttpException(Yii::t('app/group', 'You are not allowed to view this page.'));
+        }
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $model->getGroupJoinRequests()->pending(),
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+        ]);
+
+        return $this->render('joinRequests', [
+            'dataProvider' => $dataProvider,
+            'model' => $model,
         ]);
     }
 }

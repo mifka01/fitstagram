@@ -45,13 +45,6 @@ class PostCommentListView extends ListView
             ]);
         };
         $this->layout = "{items}\n{pager}";
-        $this->pager = [
-            'options' => ['class' => 'flex justify-center gap-2 my-4'],
-            'linkOptions' => ['class' => 'page-link px-3 py-1 border border-gray-300 rounded-md text-sm text-gray-700 hover:bg-gray-50'],
-            'activePageCssClass' => 'border-orange-500 bg-orange-50 text-orange-600',
-            'disabledPageCssClass' => 'border-gray-200 text-gray-400 cursor-not-allowed',
-            'maxButtonCount' => 5,
-        ];
 
         parent::init();
     }

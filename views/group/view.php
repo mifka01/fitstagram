@@ -4,6 +4,7 @@
 /** @var bool $isGroupOwner */
 /** @var int $countUsers */
 /** @var int $countPosts */
+/** @var int $countPendingRequests */
 /** @var string $joinedAt */
 /** @var string $ownerUsername */
 /** @var bool $isMember */
@@ -39,7 +40,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     </div>
 
                     <?php if ($isMember && !$isGroupOwner): ?>
-                        <div class="flex flex-wrap justify-end self-stretch -m-2">
+                        <div class="flex flex-col justify-end self-stretch -m-2 my-0">
+                        <?= Html::a(
+                            Yii::t('app/group', 'Members'),
+                            ['group/members', 'id' => $model->id],
+                            ['class' => 'm-1 w-32 py-2 self-center text-center border border-red-300 text-sm font-medium rounded-md text-red-700 bg-white hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500',
+                                'data' => ['method' => 'post']
+                                ]
+                        ) ?>
                             <?= Html::a(
                                 Yii::t('app/group', 'Leave group'),
                                 ['group-membership/leave-group', 'id' => $model->id],
@@ -49,14 +57,31 @@ $this->params['breadcrumbs'][] = $this->title;
                             ) ?>
                     </div>
                     <?php endif; ?>
+                    <?php if ($isGroupOwner): ?>
+                        <div class="flex flex-col justify-end self-stretch -m-2 my-0">
+                        <?= Html::a(
+                            Yii::t('app/group', 'Members'),
+                            ['group/members', 'id' => $model->id],
+                            ['class' => 'm-1 w-32 py-2 self-center text-center border border-red-300 text-sm font-medium rounded-md text-red-700 bg-white hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500',
+                                'data' => ['method' => 'post']
+                                ]
+                        ) ?>
+                            <?= Html::a(
+                                Yii::t('app/group', 'Manage'),
+                                ['group/join-requests', 'id' => $model->id],
+                                ['class' => 'm-1 w-32 py-2 self-center text-center border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500']
+                            ) ?>
+                    </div>
+                    <?php endif; ?>
                 </div>
-                <div class="mt-6 grid grid-cols-3 gap-3 border-t border-gray-200 pt-4">
+               
+                <div class="mt-2 grid <?= $isGroupOwner ? 'grid-cols-4 gap-4' : 'grid-cols-3 gap-3'?>  border-t border-gray-200 pt-4">
                     <div class="text-center">
                         <span class="text-xl font-bold text-gray-900">
                             <?= Yii::$app->formatter->asInteger($countUsers) ?>
                         </span>
                         <span class="block text-sm text-gray-500">
-                            <?= Yii::t('app/group', 'Users') ?>
+                            <?= Yii::t('app/group', 'Members') ?>
                         </span>
                     </div>
                     <div class="text-center">
@@ -67,6 +92,16 @@ $this->params['breadcrumbs'][] = $this->title;
                             <?= Yii::t('app/group', 'Posts') ?>
                         </span>
                     </div>
+                    <?php if ($isGroupOwner): ?>
+                    <div class="text-center">
+                        <span class="text-xl font-bold text-gray-900">
+                            <?= Yii::$app->formatter->asInteger($countPendingRequests) ?>
+                        </span>
+                        <span class="block text-sm text-gray-500">
+                            <?= Yii::t('app/group', 'Pending Requests') ?>
+                        </span>
+                    </div>
+                    <?php endif; ?>
                     <div class="text-center">
                         <a href="<?= Yii::$app->urlManager->createUrl(['/user/profile', 'username' => $ownerUsername]) ?>" class="text-xl font-bold text-gray-900">
                             <?= $ownerUsername ?>
