@@ -38,6 +38,7 @@ return [
     'Membership request rejected.' => 'Žádost o členství byla zamítnuta.',
     'You have left the group.' => 'Opustili jste skupinu.',
     'Error leaving group.' => 'Při opouštění skupiny došlo k chybě.',
+    'Request Pending' => 'Čeká na schválení',
 
     'No groups found.' => 'Nebyly nalezeny žádné skupiny.',
     'No {type}' => 'Žádné {type}',
