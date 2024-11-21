@@ -23,7 +23,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/svg+xml', 'href' => Yi
 $this->registerLinkTag(['rel' => 'shortcut icon', 'href' => Yii::getAlias('@web/favicon/favicon.ico')]);
 $this->registerLinkTag(['rel' => 'apple-touch-icon', 'sizes' => '180x180', 'href' => Yii::getAlias('@web/favicon/apple-touch-icon.png')]);
 $this->registerMetaTag(['name' => 'apple-mobile-web-app-title', 'content' => 'FITstagram']);
-$this->registerLinkTag(['rel' => 'manifest', 'href' => Yii::getAlias('@web/favicon/manifest.webmanifest')]);
+$this->registerLinkTag(['rel' => 'manifest', 'href' => Yii::getAlias('@web/favicon/site.webmanifest')]);
 
 ?>
 <?php $this->beginPage() ?>
