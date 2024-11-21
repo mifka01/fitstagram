@@ -29,7 +29,7 @@ class PostForm extends Model
     /**
      * @var array<string> $tags
      */
-    public array $tags = [];
+    private array $tags = [];
 
     public string $place = '';
 
@@ -47,6 +47,10 @@ class PostForm extends Model
             [['place'], 'string', 'max' => 255],
             [['description'], 'string', 'max' => 512],
             [['is_private'], 'boolean'],
+            [['is_private'], 'required', 'requiredValue' => 0, 'when' => function ($model) {
+                return !empty($model->group);
+            }, 'whenClient' => 'function (attribute, value) { return $("#postform-group").val() !== ""; }',
+                'message' => Yii::t('app/post', 'You cannot make a private post in a group.')],
             ['tags', 'each', 'rule' => ['match', 'pattern' => '/^#?[a-zA-Z0-9_]+$/']],
             [['group'], 'integer']
         ];
@@ -159,5 +163,21 @@ class PostForm extends Model
             }
         }
         return true;
+    }
+
+    /**
+     * @param array<string>|string $tags
+     */
+    public function setTags($tags): void
+    {
+        $this->tags = is_array($tags) ? $tags : [];
+    }
+
+    /**
+     * @return array<string>
+     */
+    public function getTags(): array
+    {
+        return $this->tags;
     }
 }

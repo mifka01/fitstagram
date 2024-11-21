@@ -77,5 +77,6 @@ return [
 
 # MAIL
     'Account registration at' => 'Registrace účtu na',
-    'Password reset for ];' => 'Obnovení hesla pro',
+    'Password reset for' => 'Obnovení hesla pro',
+    'Failed to send email.' => 'Nepodařilo se odeslat e-mail.',
 ];

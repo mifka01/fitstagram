@@ -12,7 +12,7 @@ use yii\helpers\Html;
         <!-- Items -->
         <?php foreach ($mediaFiles as $index => $mediaFile): ?>
             <div class="<?= $index === 0 ? 'relative w-full h-full flex items-center justify-center' : 'hidden relative w-full h-full flex items-center justify-center' ?>" data-carousel-item>
-                <img src="<?= Html::encode($mediaFile->media_path ?? '') ?>"
+                <img src="/<?= Html::encode($mediaFile->media_path ?? '') ?>"
                     class="rounded-lg w-full h-full object-cover"
                     alt="<?= Html::encode($mediaFile->name ?? '') ?>">
             </div>

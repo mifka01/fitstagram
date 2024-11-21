@@ -117,6 +117,17 @@ class Group extends \yii\db\ActiveRecord
     }
 
     /**
+     * Checks if the user is a member of the group.
+     *
+     * @param int $userId
+     * @return bool
+     */
+    public function isMember(int $userId): bool
+    {
+        return $this->getMembers()->andWhere(['id' => $userId])->exists();
+    }
+
+    /**
      * Gets query for [[Posts]].
      *
      * @return PostQuery

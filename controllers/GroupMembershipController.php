@@ -20,26 +20,40 @@ class GroupMembershipController extends Controller
     public function behaviors(): array
     {
         return [
-            'access' => [
-                'class' => AccessControl::class,
-                'rules' => [
-                    [
-                        'actions' => ['request-join', 'request-cancel', 'leave-group'],
-                        'allow' => true,
-                        // Only authenticated users
+           'access' => [
+               'class' => AccessControl::class,
+               'rules' => [
+                   [
+                       'actions' => ['request-join', 'request-cancel'],
+                       'allow' => true,
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['approve-request', 'reject-request'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                        'matchCallback' => static function (): bool {
-                            // Use RBAC rule to check group ownership
-                            return true;
-                        }
+                        'actions' => ['request-join', 'request-cancel'],
+                        'allow' => false,
+                        'roles' => ['participateInGroup'],
+                        'roleParams' => [
+                            'groupId' => Yii::$app->request->get('id'),
+                        ],
                     ],
-                ],
-            ],
+                    [
+                       'actions' => ['approve-request', 'reject-request'],
+                       'allow' => true,
+                        'roles' => ['manageGroup'],
+                        'roleParams' => [
+                            'groupId' => GroupJoinRequest::findOne(Yii::$app->request->get('id'))?->group_id,
+                        ],
+                    ],
+                    [
+                        'actions' => ['leave-group'],
+                        'allow' => true,
+                        'roles' => ['participateInGroup'],
+                        'roleParams' => [
+                            'groupId' => Yii::$app->request->get('id'),
+                        ],
+                    ],
+               ],
+           ],
         ];
     }
 
@@ -91,6 +105,8 @@ class GroupMembershipController extends Controller
 
     /**
      * Action to approve membership request
+     *
+     * @param int $id GroupJoinRequest ID
      */
     public function actionApproveRequest(int $id): Response|string
     {
@@ -154,7 +170,7 @@ class GroupMembershipController extends Controller
             return $this->redirect(['site/login']);
         }
 
-
+       
         $model->load(Yii::$app->request->post());
         // Set current user
         $model->user_id = (int)$user_id;
@@ -166,7 +182,7 @@ class GroupMembershipController extends Controller
 
         Yii::$app->session->setFlash('error', Yii::t('app/group', 'Error leaving group.'));
         return $this->render('group/view', [
-            'id' => $id,
+        'id' => $id,
         ]);
     }
 }

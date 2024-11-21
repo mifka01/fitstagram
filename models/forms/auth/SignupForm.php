@@ -65,13 +65,15 @@ class SignupForm extends Model
     /**
      * Signs user up.
      *
-     * @return bool|null whether the creating new account was successful and email was sent
+     * @return bool whether the creating new account was successful and email was sent
      */
-    public function signup(): ?bool
+    public function signup(): bool
     {
         if (!$this->validate()) {
-            return null;
+            return false;
         }
+
+        $transaction = Yii::$app->db->beginTransaction();
         
         $user = new User();
         $user->username = $this->username;
@@ -80,7 +82,26 @@ class SignupForm extends Model
         $user->generateAuthKey();
         $user->generateEmailVerificationToken();
 
-        return $user->save() && $this->sendEmail($user);
+        $auth = Yii::$app->authManager;
+
+        if ($auth && ($role = $auth->getRole('user'))) {
+            $auth->assign($role, $user->id);
+        } else {
+            $transaction->rollBack();
+            return false;
+        }
+
+        if ($user->save()) {
+            if ($this->sendEmail($user)) {
+                $transaction->commit();
+                return true;
+            }
+            $this->addError('email', Yii::t('app/auth', 'Failed to send email.'));
+        }
+
+        $transaction->rollBack();
+
+        return false;
     }
 
     /**

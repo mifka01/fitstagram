@@ -4,7 +4,10 @@ namespace app\models\forms;
 
 use app\models\Post;
 use app\models\PostVote;
+use app\services\PostPermissionService;
+use Yii;
 use yii\base\Model;
+use yii\web\NotFoundHttpException;
 
 class PostVoteForm extends Model
 {
@@ -29,6 +32,10 @@ class PostVoteForm extends Model
 
     public function vote() : bool
     {
+        if (!PostPermissionService::checkPostPermission((int) Yii::$app->user->id, $this->postId)) {
+            throw new NotFoundHttpException(Yii::t('app/error', 'Post not found.'));
+        }
+
         $transaction = \Yii::$app->db->beginTransaction();
         try {
             $post = Post::findOne($this->postId);

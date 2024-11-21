@@ -24,7 +24,6 @@ class CommentController extends Controller
         return [
             'access' => [
                 'class' => \yii\filters\AccessControl::class,
-                'only' => ['create'],
                 'rules' => [
                     [
                         'actions' => ['create'],

@@ -7,9 +7,11 @@ use app\models\forms\PostVoteForm;
 use app\models\Post;
 use app\models\search\UserPostSearch;
 use app\models\sort\PostSort;
+use app\services\PostPermissionService;
 use app\widgets\PostCommentListView;
 use Yii;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use yii\web\UploadedFile;
 
@@ -31,14 +33,21 @@ class PostController extends Controller
                 'only' => ['create', 'vote'],
                 'rules' => [
                     [
-                        'actions' => ['create'],
+                        'actions' => ['create', 'index', 'vote'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['vote'],
+                        'actions' => ['update'],
                         'allow' => true,
-                        'roles' => ['@'],
+                        'roles' => ['managePost'],
+                        'roleParams' => [
+                            'postId' => Yii::$app->request->get('id'),
+                        ],
+                    ],
+                    [
+                        'actions' => ['comments'],
+                        'allow' => true,
                     ],
                 ],
             ],
@@ -100,6 +109,11 @@ class PostController extends Controller
         ]);
     }
 
+    public function actionUpdate(int $id): string
+    {
+        return '';
+    }
+
     public function actionVote(): mixed
     {
         \Yii::$app->response->format = Response::FORMAT_JSON;
@@ -126,9 +140,13 @@ class PostController extends Controller
 
     public function actionComments(int $id): string
     {
+        if (!PostPermissionService::checkPostPermission((int)Yii::$app->user->id, $id)) {
+            throw new NotFoundHttpException(Yii::t('app/error', 'Post not found.'));
+        }
+
         return PostCommentListView::widget([
-        'post' => Post::findOne($id),
-        'page' => Yii::$app->request->getQueryParam(PostCommentListView::PAGE_PARAM, null),
+            'post' => Post::findOne($id),
+            'page' => Yii::$app->request->getQueryParam(PostCommentListView::PAGE_PARAM, null),
         ]);
     }
 }

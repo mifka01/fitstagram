@@ -314,8 +314,20 @@ class User extends TimestampRecord implements IdentityInterface
     public function getPermittedUsers(): UserQuery
     {
         /** @var UserQuery $query */
-        $query = $this->hasMany(User::class, ['id' => 'permitted_user_id'])->viaTable('permitted_user', ['user_id' => 'id']);
+        $query = $this->hasMany(User::class, ['id' => 'permitted_user_id'])
+            ->viaTable('permitted_user', ['user_id' => 'id']);
         return $query;
+    }
+
+    /**
+     * Checks if the user is permitted to view the user profile.
+     *
+     * @param int $userId
+     * @return bool
+     */
+    public function isPermittedUser(int $userId): bool
+    {
+        return $this->getPermittedUsers()->andWhere(['permitted_user_id' => $userId])->exists();
     }
 
     /**

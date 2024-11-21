@@ -36,7 +36,6 @@ class UserController extends Controller
                     [
                         'allow' => true,
                         'actions' => ['profile'],
-                        'roles' => ['?', '@'],
                     ],
                 ],
             ],

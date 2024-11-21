@@ -33,12 +33,27 @@ class GroupController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['create', 'update', 'join', 'view'],
                 'rules' => [
                     [
-                        'actions' => ['create', 'update', 'join', 'view'],
+                        'actions' => ['create', 'index'],
                         'allow' => true,
                         'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['view'],
+                        'allow' => true,
+                        'roles' => ['participateInGroup'],
+                        'roleParams' => [
+                            'groupId' => Yii::$app->request->get('id'),
+                        ],
+                    ],
+                    [
+                        'actions' => ['join-requests', 'update'],
+                        'allow' => true,
+                        'roles' => ['manageGroup'],
+                        'roleParams' => [
+                            'groupId' => Yii::$app->request->get('id'),
+                        ],
                     ],
                 ],
             ],

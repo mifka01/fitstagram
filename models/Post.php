@@ -188,4 +188,24 @@ class Post extends \yii\db\ActiveRecord
     {
         return new PostQuery(get_called_class());
     }
+
+    /**
+     * Checks if the post is public.
+     *
+     * @return bool
+     */
+    public function isPublic(): bool
+    {
+        return !$this->is_private;
+    }
+
+    /**
+     * Checks if the post is private.
+     *
+     * @return bool
+     */
+    public function isPrivate(): bool
+    {
+        return $this->is_private == 1;
+    }
 }

@@ -26,4 +26,6 @@ return [
 
     'Waiting for results...' => 'Čekání na výsledky...',
     'Select a tag ...' => 'Vyberte štítek ...',
+
+'You cannot make a private post in a group.' => 'Nemůžete vytvořit soukromý příspěvek ve skupině.',
 ];

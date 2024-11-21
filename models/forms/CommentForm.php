@@ -4,6 +4,7 @@ namespace app\models\forms;
 
 use app\models\Comment;
 use app\models\User;
+use app\services\PostPermissionService;
 use Yii;
 use yii\base\Model;
 use yii\web\NotFoundHttpException;
@@ -39,12 +40,16 @@ class CommentForm extends Model
      */
     public function save(): bool
     {
-        $user_id = $this->getCurrentUser()->id;
+        $userId = $this->getCurrentUser()->id;
+
+        if (!PostPermissionService::checkPostPermission($userId, $this->postId)) {
+            throw new NotFoundHttpException(Yii::t('app/error', 'Post not found.'));
+        }
 
         $comment = new Comment();
         $comment->content = $this->content;
         $comment->post_id = $this->postId;
-        $comment->created_by = $user_id;
+        $comment->created_by = $userId;
 
         if ($comment->save()) {
             $this->comment = $comment;
