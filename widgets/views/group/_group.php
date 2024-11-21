@@ -77,6 +77,11 @@ use yii\widgets\Pjax;
         <?= ListView::widget([
         'dataProvider' => $provider,
         'itemView' => function ($model, $key, $index, $widget) use ($itemButtonLabel, $itemButtonRoute, $updateButtonLabel, $updateButtonRoute) {
+
+            $label = is_callable($itemButtonLabel)
+            ? call_user_func($itemButtonLabel, $model)
+            : $itemButtonLabel;
+
             $route = is_callable($itemButtonRoute)
             ? call_user_func($itemButtonRoute, $model)
             : $itemButtonRoute;
@@ -87,7 +92,7 @@ use yii\widgets\Pjax;
 
             return $this->render('_item', [
             'model' => $model,
-            'itemButtonLabel' => $itemButtonLabel,
+            'itemButtonLabel' => $label,
             'itemButtonRoute' => $route,
             'updateButtonLabel' => $updateButtonLabel,
             'updateButtonRoute' => $updateRoute,

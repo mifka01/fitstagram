@@ -9,8 +9,9 @@ use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
 $postVoteForm = new PostVoteForm([
-    'id' => $model->id,
+    'postId' => $model->id
 ]);
+
 $form = ActiveForm::begin([
     'id' => 'vote-form-' . $model->id,
     'action' => Url::to(['post/vote']),
@@ -21,7 +22,7 @@ $form = ActiveForm::begin([
     ],
 ]); ?>
 
-<?= $form->field($postVoteForm, 'id')->hiddenInput()->label(false) ?>
+<?= $form->field($postVoteForm, 'postId')->hiddenInput()->label(false) ?>
 
 <button type="submit" name="<?= Html::getInputName($postVoteForm, 'type') ?>" value="1" class="flex items-center justify-center vote-button">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-6 w-6 <?= $model->currentUserVote && $model->currentUserVote->up == 1 ? 'text-orange-600' : 'text-gray-50' ?>">

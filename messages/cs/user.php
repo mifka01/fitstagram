@@ -2,10 +2,11 @@
 
 return [
     'Profile' => 'Profil',
+    'Edit profile' => 'Upravit profil',
+    'Edit Profile' => 'Upravit Profil',
     'Profile updated successfully.' => 'Profil byl úspěšně aktualizován.',
 
     'Member since {date}' => 'Členem od {date}',
-    'Edit Profile' => 'Upravit profil',
     'Last Active' => 'Poslední aktivita',
 
     'New Password' => 'Nové heslo',

@@ -27,7 +27,7 @@ class CommentForm extends Model
 
         return [
             [['content'], 'string', 'max' => 512],
-            [['content'], 'required'],
+            [['content', 'postId'], 'required'],
             [['postId'], 'integer'],
         ];
     }

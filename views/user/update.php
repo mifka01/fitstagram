@@ -3,10 +3,11 @@
 /** @var yii\widgets\ActiveForm $form */
 /** @var \app\models\User $model */
 
+use app\widgets\LanguageSelector;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
-$this->title = Yii::t('app/model', 'Edit Profile');
+$this->title = Yii::t('app/user', 'Edit Profile');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="bg-gray-50 flex flex-col justify-center sm:px-6 lg:px-8">
@@ -42,6 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'class' => 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm',
                         'placeholder' => Yii::t('app/auth', 'Repeat new password')
                 ]) ?>
+                <div class="flex items-center justify-between">
                 <?= $form->field($model, 'show_activity', [
                 'template' => '
                 <label class="inline-flex items-center cursor-pointer">
@@ -60,7 +62,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'class' => 'sr-only peer',
                 'label' => false,
                 ]) ?>
-
+                    <?= LanguageSelector::widget() ?>
+                </div>
 
                     <?= Html::submitButton(
                         Yii::t('app/auth', 'Save Changes'),

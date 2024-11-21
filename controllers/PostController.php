@@ -96,23 +96,35 @@ class PostController extends Controller
         ]);
     }
 
-    public function actionVote(): string
+    public function actionVote(): mixed
     {
+        \Yii::$app->response->format = Response::FORMAT_JSON;
+
         $model = new PostVoteForm();
-        if (!($model->load(Yii::$app->request->post()) && $model->validate() && $model->vote())) {
-            Yii::$app->session->setFlash('error', Yii::t('app/post', 'Failed to vote.'));
+
+        if (($model->load(Yii::$app->request->post()) && $model->validate() && $model->vote())) {
+            $post = Post::findOne($model->postId);
+
+            return [
+            'success' => true,
+            'html' => $this->renderPartial('_vote', [
+                'model' => $post,
+            ]),
+            ];
         }
-        $post = Post::findOne($model->id);
-        return $this->renderAjax('_vote', [
-            'model' => $post,
-        ]);
+
+        Yii::$app->session->setFlash('error', Yii::t('app/post', 'Failed to vote.'));
+        return [
+            'success' => false,
+            'errors' => $model->errors,
+        ];
     }
 
     public function actionComments(int $id): string
     {
         return PostCommentListView::widget([
-            'post' => Post::findOne($id),
-            'page' => Yii::$app->request->getQueryParam(PostCommentListView::PAGE_PARAM, null),
+        'post' => Post::findOne($id),
+        'page' => Yii::$app->request->getQueryParam(PostCommentListView::PAGE_PARAM, null),
         ]);
     }
 }

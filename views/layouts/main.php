@@ -16,8 +16,15 @@ $this->registerMetaTag(['charset' => Yii::$app->charset], 'charset');
 $this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, initial-scale=1, shrink-to-fit=no']);
 $this->registerMetaTag(['name' => 'description', 'content' => $this->params['meta_description'] ?? '']);
 $this->registerMetaTag(['name' => 'keywords', 'content' => $this->params['meta_keywords'] ?? '']);
-$this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii::getAlias('@web/favicon.ico')]);
 $this->registerLinkTag(['rel' => 'stylesheet', 'href' => 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css', 'integrity' => 'sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==', 'crossorigin' => 'anonymous', 'referrerpolicy' => 'no-referrer']);
+
+$this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'href' => Yii::getAlias('@web/favicon/favicon-96x96.png'), 'sizes'=>'96x96']);
+$this->registerLinkTag(['rel' => 'icon', 'type' => 'image/svg+xml', 'href' => Yii::getAlias('@web/favicon/favicon.svg')]);
+$this->registerLinkTag(['rel' => 'shortcut icon', 'href' => Yii::getAlias('@web/favicon/favicon.ico')]);
+$this->registerLinkTag(['rel' => 'apple-touch-icon', 'sizes' => '180x180', 'href' => Yii::getAlias('@web/favicon/apple-touch-icon.png')]);
+$this->registerMetaTag(['name' => 'apple-mobile-web-app-title', 'content' => 'FITstagram']);
+$this->registerLinkTag(['rel' => 'manifest', 'href' => Yii::getAlias('@web/favicon/site.webmanifest')]);
+
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>

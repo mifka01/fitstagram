@@ -6,7 +6,6 @@
 use app\models\forms\CommentForm;
 use app\widgets\CarouselWidget;
 use app\widgets\PostCommentListView;
-use yii\widgets\Pjax;
 
 $js = <<<JS
 $(document).ready(function() {
@@ -84,21 +83,13 @@ $this->registerJs($js);
                 'mediaFiles' => $model->mediaFiles,
             ]) ?>
             <div class="divide-y-2 divide-gray-200">
-                <div class="px-2 py-2">
+                <div class="post-detail px-2 py-2">
                     <!-- Votes and Place line -->
                     <div class="flex justify-between">
-                        <!-- Votes -->
-
-                        <?php Pjax::begin([
-                            'id' => 'pjax-vote-' . $model->id,
-                            'enablePushState' => false,
-                        ]); ?>
                         <?= $this->render('/post/_vote', [
                             'model' => $model
                         ]) ?>
-                        <?php Pjax::end(); ?>
 
-                        <!-- Place -->
                         <div class="div text-gray-500 text-sm mt-2 justify-center">
                             <p class="text-gray-500 text-sm"><?= $model->place ?></p>
                         </div>
@@ -125,25 +116,14 @@ $this->registerJs($js);
                     </div>
                 </div>
                 <!-- Comments -->
-                <div class="px-2 py-2">
-                    <?php Pjax::begin([
-                        'id' => 'pjax-comments-' . $model->id,
-                        'enablePushState' => false,
-                    ]); ?>
+                <div class="comments px-2 py-2">
                     <?= PostCommentListView::widget([
                         'post' => $model,
                     ]) ?>
-                    <?php Pjax::end(); ?>
 
-
-                    <?php Pjax::begin([
-                        'id' => 'pjax-comment-form-' . $model->id,
-                        'enablePushState' => false,
-                    ]); ?>
                     <?= $this->render('/comment/create', [
                         'model' => new CommentForm(['postId' => $model->id]),
                     ]) ?>
-                    <?php Pjax::end(); ?>
                 </div>
             </div>
         </div>

@@ -32,7 +32,9 @@ return [
 
     'Request to join group has been sent.' => 'Žádost o připojení k skupině byla odeslána.',
     'Failed to send request to join group.' => 'Nepodařilo se odeslat žádost o připojení k skupině.',
-
+    'Request Pending' => 'Čeká na schválení',
+    'Request to join group has been cancelled.' => 'Žádost o připojení k skupině byla zrušena.',
+    'Failed to cancel request to join group.' => 'Nepodařilo se zrušit žádost o připojení k skupině.',
 
     'No groups found.' => 'Nebyly nalezeny žádné skupiny.',
     'No {type}' => 'Žádné {type}',
