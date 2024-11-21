@@ -24,9 +24,12 @@ use yii\widgets\Pjax;
     <h1 class="px-4 text-2xl font-semibold tracking-tight text-gray-900">
         <?= Html::encode($title) ?>
     </h1>
-    <?php if ($ajax): ?>
+    <?php if ($ajax && $searchModel): ?>
         <?php Pjax::begin([
-            'enablePushState' => false]); ?>
+        'formSelector' => '#group-search-form-' . $searchModel->formName(),
+        'linkSelector' => false,
+            'enablePushState' => false
+    ]); ?>
     <?php endif; ?>
 
     <div class="bg-white shadow sm:rounded-lg flex flex-col mt-2">
