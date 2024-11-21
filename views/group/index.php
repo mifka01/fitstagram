@@ -33,10 +33,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'itemButtonRoute' => function ($model) {
                     return ['group/view', 'id' => $model->id];
             },
-            'updateButtonLabel' => Yii::t('app/group', 'Edit'),
-            'updateButtonRoute' => function ($model) {
-                return ['group/update', 'id' => $model->id];
-            },
             'actionButtonLabel' => Yii::t('app/group', 'Create New Group'),
             'actionButtonRoute' => ['group/create'],
             'provider' => $ownedGroupsProvider,
