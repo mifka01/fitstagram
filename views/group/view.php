@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <div class="flex flex-wrap justify-end self-stretch -m-2">
                             <?= Html::a(
                                 Yii::t('app/group', 'Leave group'),
-                                ['group/leave', 'id' => $model->id],
+                                ['group-membership/leave-group', 'id' => $model->id],
                                 ['class' => 'm-1 w-32 py-2 self-center text-center border border-red-300 text-sm font-medium rounded-md text-red-700 bg-white hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500',
                                 'data' => ['method' => 'post']
                                 ]

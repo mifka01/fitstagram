@@ -4,9 +4,7 @@ namespace app\controllers;
 
 use app\enums\GroupType;
 use app\models\forms\GroupForm;
-use app\models\forms\GroupJoinRequestForm;
 use app\models\Group;
-use app\models\GroupJoinRequest;
 use app\models\search\GroupPostSearch;
 use app\models\search\UserGroupSearch;
 use app\models\User;
@@ -100,6 +98,7 @@ class GroupController extends Controller
             return $this->redirect(['view', 'id' => $model->getGroup()->id]);
         }
 
+        Yii::$app->session->setFlash('error', Yii::t('app/group', 'Failed to create group.'));
         return $this->render('create', [
             'model' => $model,
         ]);
@@ -133,30 +132,6 @@ class GroupController extends Controller
         return $this->render('update', [
             'model' => $model,
         ]);
-    }
-
-    public function actionJoin(int $id, bool $cancel = false): Response
-    {
-        if ($cancel) {
-            $model = GroupJoinRequest::find()->pending()->forGroup($id)->byCurrentUser()->one();
-
-            if ($model && !is_array($model)) {
-                $model->delete();
-                Yii::$app->session->setFlash('success', Yii::t('app/group', 'Request to join group has been cancelled.'));
-            } else {
-                Yii::$app->session->setFlash('error', Yii::t('app/group', 'Failed to cancel request to join group.'));
-            }
-            return $this->redirect(['group/index']);
-        }
-        $model = new GroupJoinRequestForm(['group_id' => $id]);
-
-        if ($model->save()) {
-            Yii::$app->session->setFlash('success', Yii::t('app/group', 'Request to join group has been sent.'));
-        } else {
-            Yii::$app->session->setFlash('error', Yii::t('app/group', 'Failed to send request to join group.'));
-        }
-
-        return $this->redirect(['group/index']);
     }
 
     /**

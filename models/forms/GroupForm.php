@@ -3,6 +3,7 @@
 namespace app\models\forms;
 
 use app\models\Group;
+use app\models\GroupMember;
 use app\models\User;
 use Yii;
 use yii\base\Model;
@@ -80,14 +81,11 @@ class GroupForm extends Model
                 $transaction->rollBack();
                 return false;
             }
-            $insertResult = Yii::$app->db->createCommand()
-            ->insert('group_member', [
-                'group_id' => $this->group->id,
-                'user_id' => Yii::$app->user->id,
-            ])
-            ->execute();
-
-            if (!$insertResult) {
+            $groupMember = new GroupMember();
+            $groupMember->group_id = $this->group->id;
+            $groupMember->user_id = $user->id;
+           
+            if (!$groupMember->save()) {
                 $transaction->rollBack();
                 return false;
             }

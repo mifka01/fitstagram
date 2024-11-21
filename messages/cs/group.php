@@ -30,11 +30,14 @@ return [
 
     'Group has been created.' => 'Skupina byla vytvořena.',
 
-    'Request to join group has been sent.' => 'Žádost o připojení k skupině byla odeslána.',
-    'Failed to send request to join group.' => 'Nepodařilo se odeslat žádost o připojení k skupině.',
-    'Request Pending' => 'Čeká na schválení',
-    'Request to join group has been cancelled.' => 'Žádost o připojení k skupině byla zrušena.',
-    'Failed to cancel request to join group.' => 'Nepodařilo se zrušit žádost o připojení k skupině.',
+    'Request to join group submitted.' => 'Žádost o připojení k skupině byla odeslána.',
+    'Error requesting to join group.' => 'Při žádosti o připojení k skupině došlo k chybě.',
+    'Request to join group cancelled.' => 'Žádost o připojení k skupině byla zrušena.',
+    'Error cancelling request to join group.' => 'Při zrušení žádosti o připojení k skupině došlo k chybě.',
+    'Membership request approved.' => 'Žádost o členství byla schválena.',
+    'Membership request rejected.' => 'Žádost o členství byla zamítnuta.',
+    'You have left the group.' => 'Opustili jste skupinu.',
+    'Error leaving group.' => 'Při opouštění skupiny došlo k chybě.',
 
     'No groups found.' => 'Nebyly nalezeny žádné skupiny.',
     'No {type}' => 'Žádné {type}',

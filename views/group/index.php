@@ -69,9 +69,9 @@ $this->params['breadcrumbs'][] = $this->title;
         if (Yii::$app->user->isGuest) {
             return ['auth/login'];
         } elseif (GroupJoinRequest::find()->pending()->forGroup($model->id)->byCurrentUser()->exists()) {
-            return ['group/join', 'id' => $model->id, 'cancel' => true];
+            return ['group-membership/request-cancel', 'id' => $model->id];
         }
-            return ['group/join', 'id' => $model->id];
+            return ['group-membership/request-join', 'id' => $model->id];
     },
         'provider' => $publicGroupsProvider,
         'ajax' => true,
