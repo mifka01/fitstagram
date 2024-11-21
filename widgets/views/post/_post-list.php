@@ -24,6 +24,7 @@ use yii\widgets\Pjax;
         <?= SortWidget::widget([
             'sort' => $dataProvider->sort,
             'containerOptions' => ['class' => 'flex justify-center space-x-4 mb-2'],
+            'activeLinkOptions' => ['class' => 'text-orange-600'],
             'allowBothWays' => false,
             'defaultSort' => 'new'
         ]) ?>

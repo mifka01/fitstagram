@@ -18,6 +18,11 @@ return [
     'Create new Post' => 'Vytvořit nový příspěvek',
     'Show more' => 'Zobrazit více',
     'Show less' => 'Zobrazit méně',
+    'Controversial' => 'Sporné',
+    'Best' => 'Nejlepší',
+    'Worst' => 'Nejhorší',
+    'New' => 'Nové',
+    'Old' => 'Staré',
 
     'Waiting for results...' => 'Čekání na výsledky...',
     'Select a tag ...' => 'Vyberte štítek ...',

@@ -12,5 +12,3 @@ $this->title = Yii::t('app', 'Posts');
 <?= PostListWidget::widget([
     'dataProvider' => $postDataProvider,
 ]);
-
-
