@@ -25,7 +25,8 @@ use yii\widgets\Pjax;
         <?= Html::encode($title) ?>
     </h1>
     <?php if ($ajax): ?>
-        <?php Pjax::begin(); ?>
+        <?php Pjax::begin([
+            'enablePushState' => false]); ?>
     <?php endif; ?>
 
     <div class="bg-white shadow sm:rounded-lg flex flex-col mt-2">
