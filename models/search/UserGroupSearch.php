@@ -97,7 +97,8 @@ class UserGroupSearch extends Model
         }
 
         if (!empty($this->keyword)) {
-            $query->andWhere(['or',
+            $query->andWhere([
+                'or',
                 ['like', 'name', $this->keyword],
                 ['like', 'description', $this->keyword]
             ]);
@@ -124,7 +125,7 @@ class UserGroupSearch extends Model
 
         if ($user === null) {
             if ($type === GroupType::PUBLIC) {
-                return Group::find()->active()->deleted(false)->banned(false);
+                return Group::find()->active()->deleted(false);
             }
             return Group::find()->where('1=0');
         }
@@ -135,7 +136,7 @@ class UserGroupSearch extends Model
             GroupType::JOINED => $user->getJoinedGroups()->active(),
         };
 
-        $query->deleted(false)->banned(false);
+        $query->deleted(false);
 
         return $query;
     }

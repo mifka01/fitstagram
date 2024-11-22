@@ -28,14 +28,4 @@ class GroupQuery extends \yii\db\ActiveQuery
     {
         return $this->andWhere(['deleted' => $deleted]);
     }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @return \app\models\query\GroupQuery
-     */
-    public function banned(bool $banned = true): self
-    {
-        return $this->andWhere(['banned' => $banned]);
-    }
 }

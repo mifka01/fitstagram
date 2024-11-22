@@ -86,7 +86,6 @@ Table Group {
   owner_id integer [not null, ref: > User.id]
   active boolean
   deleted boolean
-  banned boolean
   created_at timestamp 
   updated_at timestamp [default: `CURRENT_TIMESTAMP`]
 }

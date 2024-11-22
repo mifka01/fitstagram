@@ -249,7 +249,6 @@ class SeedController extends Controller
                 'owner_id' => $ownerId = self::$faker->numberBetween(1, self::USER_COUNT),
                 'active' => true,
                 'deleted' => false,
-                'banned' => false,
                 'created_at' => $createdAt = self::$faker->dateTimeThisYear()->format('Y-m-d H:i:s'),
                 'updated_at' => self::$faker->dateTimeBetween($createdAt)->format('Y-m-d H:i:s'),
             ];
