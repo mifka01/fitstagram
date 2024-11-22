@@ -20,12 +20,12 @@ class GroupMembershipController extends Controller
     public function behaviors(): array
     {
         return [
-           'access' => [
-               'class' => AccessControl::class,
-               'rules' => [
-                   [
-                       'actions' => ['request-join', 'request-cancel'],
-                       'allow' => true,
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'actions' => ['request-join', 'request-cancel'],
+                        'allow' => true,
                         'roles' => ['@'],
                     ],
                     [
@@ -37,8 +37,8 @@ class GroupMembershipController extends Controller
                         ],
                     ],
                     [
-                       'actions' => ['approve-request', 'reject-request'],
-                       'allow' => true,
+                        'actions' => ['approve-request', 'reject-request', 'kick-user'],
+                        'allow' => true,
                         'roles' => ['manageGroup'],
                         'roleParams' => [
                             'groupId' => GroupJoinRequest::findOne(Yii::$app->request->get('id'))?->group_id,
@@ -52,8 +52,16 @@ class GroupMembershipController extends Controller
                             'groupId' => Yii::$app->request->get('id'),
                         ],
                     ],
-               ],
-           ],
+                    [
+                        'actions' => ['leave-group'],
+                        'allow' => false,
+                        'roles' => ['manageGroup'],
+                        'roleParams' => [
+                            'groupId' => Yii::$app->request->get('id'),
+                        ],
+                    ],
+                ],
+            ],
         ];
     }
 
@@ -169,20 +177,39 @@ class GroupMembershipController extends Controller
         if ($user_id === null) {
             return $this->redirect(['site/login']);
         }
-
-       
-        $model->load(Yii::$app->request->post());
         // Set current user
         $model->user_id = (int)$user_id;
 
+        $model->load(Yii::$app->request->post());
+
+
         if ($model->leaveGroup()) {
             Yii::$app->session->setFlash('success', Yii::t('app/group', 'You have left the group.'));
-            return $this->redirect(['group/index']);
+            return $this->redirect(['/group/index']);
         }
 
         Yii::$app->session->setFlash('error', Yii::t('app/group', 'Error leaving group.'));
-        return $this->render('group/view', [
-        'id' => $id,
-        ]);
+        return $this->redirect(['group/view', 'id' => $id]);
+    }
+
+    /**
+     * Action to kick user from group
+     */
+    public function actionKickUser(int $id, int $userId): Response|string
+    {
+        $model = new GroupMembershipForm(['group_id' => $id]);
+        $model->scenario = GroupMembershipForm::SCENARIO_KICK_USER;
+
+        $model->user_id = (int)$userId;
+
+        $model->load(Yii::$app->request->post());
+
+        if ($model->kickUser()) {
+            Yii::$app->session->setFlash('success', Yii::t('app/group', 'User has been removed from the group.'));
+
+            return $this->redirect(['group/index']);
+        }
+        Yii::$app->session->setFlash('error', Yii::t('app/group', 'Error removing user from group.'));
+        return $this->redirect(['group/members', 'id' => $id]);
     }
 }

@@ -358,8 +358,8 @@ class SeedController extends Controller
             $groupJoinRequest = [
                 'group_id' => $groupId,
                 'created_by' => $userId,
-                'pending' => $pending = self::$faker->boolean(),
-                'declined' => !$pending,
+                'pending' => self::$faker->boolean(),
+                'declined' => false,
                 'accepted' => false,
                 'created_at' => $createdAt = self::$faker->dateTimeThisYear()->format('Y-m-d H:i:s'),
                 'updated_at' => self::$faker->dateTimeBetween($createdAt)->format('Y-m-d H:i:s'),

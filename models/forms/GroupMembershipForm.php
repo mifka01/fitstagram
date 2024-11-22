@@ -24,6 +24,7 @@ class GroupMembershipForm extends Model
     public const SCENARIO_APPROVE_MEMBER = 'approve_member';
     public const SCENARIO_REJECT_MEMBER = 'reject_member';
     public const SCENARIO_LEAVE_GROUP = 'leave_group';
+    public const SCENARIO_KICK_USER = 'kick_user';
 
     /**
      * @return array<int, array<mixed>>
@@ -32,7 +33,7 @@ class GroupMembershipForm extends Model
     {
         return [
             // Common rules for all scenarios
-            [['group_id', 'user_id'], 'required', 'on' => [self::SCENARIO_REQUEST_JOIN, self::SCENARIO_LEAVE_GROUP, self::SCENARIO_REQUEST_CANCEL]],
+            [['group_id', 'user_id'], 'required', 'on' => [self::SCENARIO_REQUEST_JOIN, self::SCENARIO_LEAVE_GROUP, self::SCENARIO_REQUEST_CANCEL, self::SCENARIO_KICK_USER]],
             [['group_request_id'], 'required', 'on' => [self::SCENARIO_APPROVE_MEMBER, self::SCENARIO_REJECT_MEMBER]],
             [['group_id', 'user_id', 'group_request_id'], 'integer'],
             [['group_id'], 'exist', 'skipOnError' => true, 'targetClass' => Group::class, 'targetAttribute' => ['group_id' => 'id']],
@@ -188,13 +189,9 @@ class GroupMembershipForm extends Model
         return $this->processMembershipRequest();
     }
 
-    /**
-     * Leave a group
-     *
-     * @return bool
-     */
-    public function leaveGroup(): bool
+    private function revokeMembership(): bool
     {
+
         if (!$this->validate()) {
             return false;
         }
@@ -205,21 +202,23 @@ class GroupMembershipForm extends Model
                 'group_id' => $this->group_id,
                 'user_id' => $this->user_id,
             ]);
+            if (!$groupMember) {
+                $this->addError('user_id', 'User is not a member of this group.');
+                return false;
+            }
 
             $groupJoinRequest = GroupJoinRequest::findOne([
-                'group_id' => $this->group_id,
-                'created_by' => $this->user_id,
+                'group_id' => $groupMember->group_id,
+                'created_by' => $groupMember->user_id,
                 'accepted' => true,
             ]);
 
-            if (!$groupMember) {
-                $this->addError('user_id', 'You are not a member of this group.');
-                return false;
-            }
+
             if (!$groupJoinRequest) {
                 $this->addError('user_id', 'You have not been accepted into this group.');
                 return false;
             }
+
 
             if (!$groupMember->delete()) {
                 $this->addErrors($groupMember->errors);
@@ -241,6 +240,26 @@ class GroupMembershipForm extends Model
             $this->addError('user_id', 'An error occurred while leaving the group.');
             return false;
         }
+    }
+
+    /**
+     * Leave a group
+     *
+     * @return bool
+     */
+    public function leaveGroup(): bool
+    {
+        return $this->revokeMembership();
+    }
+
+    /**
+     * Kick user from group
+     *
+     * @return bool
+     */
+    public function kickUser(): bool
+    {
+        return $this->revokeMembership();
     }
 
     /**
