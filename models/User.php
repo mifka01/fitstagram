@@ -252,10 +252,10 @@ class User extends TimestampRecord implements IdentityInterface
 
     public function isGroupMember(int $groupId): bool
     {
-         $groupMemberRecord = (new \yii\db\Query())
-        ->from('group_member')
-        ->where(['group_id' => $groupId, 'user_id' => $this->id])
-        ->one();
+        $groupMemberRecord = (new \yii\db\Query())
+            ->from('group_member')
+            ->where(['group_id' => $groupId, 'user_id' => $this->id])
+            ->one();
 
         return $groupMemberRecord !== false;
     }
@@ -299,8 +299,8 @@ class User extends TimestampRecord implements IdentityInterface
     {
         /** @var GroupQuery $query */
         $query = $this->hasMany(Group::class, ['id' => 'group_id'])
-        ->viaTable('group_member', ['user_id' => 'id'])
-        ->where(['!=', 'owner_id', Yii::$app->user->id]);
+            ->viaTable('group_member', ['user_id' => 'id'])
+            ->where(['!=', 'owner_id', Yii::$app->user->id]);
 
         return $query;
     }
@@ -338,7 +338,7 @@ class User extends TimestampRecord implements IdentityInterface
      */
     public function isPermittedUser(int $userId): bool
     {
-        return $this->getPermittedUsers()->andWhere(['permitted_user_id' => $userId])->exists();
+        return $this->getPermittedUsers()->andWhere(['id' => $userId])->exists();
     }
 
     /**

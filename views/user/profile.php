@@ -1,4 +1,5 @@
 <?php
+
 /** @var yii\web\View $this */
 /** @var app\models\User $model */
 /** @var bool $isOwnProfile */
@@ -9,6 +10,7 @@
 /** @var int $countOwnedGroups */
 /** @var int $countJoinedGroups */
 /** @var int $countPosts */
+/** @var app\models\User $currentUser */
 
 use app\widgets\GroupWidget;
 use yii\helpers\Html;
@@ -30,8 +32,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                 </h1>
                                 <div class="mt-1 flex items-center space-x-2 text-sm text-gray-500">
                                     <span><?= Yii::t('app/user', 'Member since {date}', [
-                                        'date' => Yii::$app->formatter->asDate($model->created_at)
-                                    ]) ?></span>
+                                                'date' => Yii::$app->formatter->asDate($model->created_at)
+                                            ]) ?></span>
                                 </div>
                             </div>
                         </div>
@@ -40,6 +42,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?php if ($isOwnProfile): ?>
                         <div class="flex flex-wrap justify-end self-stretch -m-2">
                             <?= Html::a(
+                                Yii::t('app/user', 'Friends'),
+                                ['user/permitted-users'],
+                                ['class' => 'm-1 w-32 py-2 self-center text-center border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500']
+                            ) ?>
+                            <?= Html::a(
                                 Yii::t('app/user', 'Edit Profile'),
                                 ['user/update'],
                                 ['class' => 'm-1 w-32 py-2 self-center text-center border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500']
@@ -47,11 +54,28 @@ $this->params['breadcrumbs'][] = $this->title;
                             <?= Html::a(
                                 Yii::t('app/auth', 'Logout'),
                                 ['auth/logout'],
-                                ['class' => 'm-1 w-32 py-2 self-center text-center border border-red-300 text-sm font-medium rounded-md text-red-700 bg-white hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500',
-                                'data' => ['method' => 'post']
+                                [
+                                    'class' => 'm-1 w-32 py-2 self-center text-center border border-red-300 text-sm font-medium rounded-md text-red-700 bg-white hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500',
+                                    'data' => ['method' => 'post']
                                 ]
                             ) ?>
-                    </div>
+                        </div>
+                    <?php else: ?>
+                        <div class="flex flex-wrap justify-end self-stretch -m-2">
+                            <?php if ($currentUser->isPermittedUser($model->id)): ?>
+                                <?= Html::a(
+                                    Yii::t('app/user', 'Remove Friend'),
+                                    ['user/revoke-permitted-user', 'id' => $model->id],
+                                    ['class' => 'm-1 w-32 py-2 self-center text-center border border-red-300 text-sm font-medium rounded-md text-red-700 bg-white hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500',]
+                                ) ?>
+                            <?php else: ?>
+                                <?= Html::a(
+                                    Yii::t('app/user', 'Add Friend'),
+                                    ['user/add-permitted-user', 'id' => $model->id],
+                                    ['class' => 'm-1 w-32 py-2 self-center text-center border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500']
+                                ) ?>
+                            <?php endif; ?>
+                        </div>
                     <?php endif; ?>
                 </div>
                 <div class="mt-6 grid grid-cols-4 gap-4 border-t border-gray-200 pt-4">

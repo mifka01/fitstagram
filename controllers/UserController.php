@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\enums\GroupType;
+use app\models\forms\PermittedUserForm;
 use app\models\forms\UserUpdateForm;
 use app\models\query\GroupQuery;
 use app\models\search\PermittedUserSearch;
@@ -31,7 +32,7 @@ class UserController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['update', 'permitted-users'],
+                        'actions' => ['update', 'permitted-users', 'revoke-permitted-user', 'add-permitted-user'],
                         'roles' => ['@'],
                     ],
                     [
@@ -52,7 +53,7 @@ class UserController extends Controller
     public function actionProfile(string $username): string
     {
         $model = User::findByUsername($username);
-        $user = Yii::$app->user;
+        $user = $this->getCurrentUser();
 
         if ($model === null || $user == null) {
             throw new NotFoundHttpException('User not found');
@@ -92,6 +93,7 @@ class UserController extends Controller
             'countOwnedGroups' => $ownedProvider->getTotalCount(),
             'countJoinedGroups' => $model->getJoinedGroups()->active()->count(),
             'countPosts' => $posts->count(),
+            'currentUser' => $user
         ]);
     }
 
@@ -125,9 +127,14 @@ class UserController extends Controller
      *
      * @return string|Response
      */
-    public function actionPermittedUsers(int $id): string|Response
+    public function actionPermittedUsers(): string|Response
     {
-        $model = User::findOne($id);
+        $user = $this->getCurrentUser();
+        if ($user === null) {
+            throw new NotFoundHttpException(Yii::t('app/error', 'User not found.'));
+        }
+
+        $model = User::findOne($user->id);
         if ($model === null || $model->active == false) {
             throw new NotFoundHttpException(Yii::t('app/user', 'User not found.'));
         }
@@ -137,7 +144,7 @@ class UserController extends Controller
 
         $permittedUserProvider = $permittedUserModel->search(array_merge(
             Yii::$app->request->queryParams,
-            ['id' => $id]
+            ['id' => $user->id]
         ));
 
 
@@ -146,6 +153,50 @@ class UserController extends Controller
             'permittedUserProvider' => $permittedUserProvider,
             'model' => $model,
         ]);
+    }
+
+    /**
+     * Action to revoke permitted user
+     */
+    public function actionRevokePermittedUser(int $id): Response|string
+    {
+        $model = new PermittedUserForm(['id' => $id]);
+        $user = $this->getCurrentUser();
+        if ($user === null) {
+            throw new NotFoundHttpException(Yii::t('app/error', 'User not found.'));
+        }
+
+        if ($model->revokePermittedUser()) {
+            Yii::$app->session->setFlash('success', Yii::t('app/user', 'Friend removed.'));
+        } else {
+            Yii::$app->session->setFlash('error', Yii::t('app/user', 'Error removing friend.'));
+        }
+
+        return $this->redirect(['permitted-users']);
+    }
+
+    /**
+     * Action to add permitted user
+     */
+    public function actionAddPermittedUser(int $id): Response|string
+    {
+        $model = new PermittedUserForm(['id' => $id]);
+        $user = $this->getCurrentUser();
+        if ($user === null) {
+            throw new NotFoundHttpException(Yii::t('app/error', 'User not found.'));
+        }
+        $permittedUser = User::findOne($id);
+        if ($permittedUser === null) {
+            throw new NotFoundHttpException(Yii::t('app/error', 'User not found.'));
+        }
+
+        if ($model->addPermittedUser()) {
+            Yii::$app->session->setFlash('success', Yii::t('app/user', 'Friend added.'));
+        } else {
+            Yii::$app->session->setFlash('error', Yii::t('app/user', 'Error adding friend.'));
+        }
+
+        return $this->redirect(['profile', 'username' => $permittedUser->username]);
     }
 
     /**

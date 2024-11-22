@@ -8,7 +8,7 @@ use app\models\PermittedUser;
 use app\widgets\UserWidget;
 use yii\helpers\Html;
 
-$this->title = Yii::t('app/group', 'Permitted Users');
+$this->title = Yii::t('app/user', 'Your Friends');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -18,21 +18,21 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= Html::encode($this->title) ?>
         </h1>
         <p class="mt-2 text-center text-sm text-gray-600">
-            <?= Yii::t('app/group', 'See who is permitted user.') ?>
+            <?= Yii::t('app/user', 'All your friends in one place.') ?>
         </p>
     </div>
 
     <?php if (!Yii::$app->user->isGuest): ?>
         <?= UserWidget::widget([
-            'title' => Yii::t('app/group', 'Permitted Users'),
-            'itemButtonLabel' => Yii::t('app/group', 'Revoke'),
+            'title' => Yii::t('app/user', 'Friends'),
+            'itemButtonLabel' => Yii::t('app/user', 'Remove'),
             'itemButtonRoute' => function (PermittedUser $model) {
-                return ['user/remove-permitted-user', 'id' => $model->user_id, 'permittedUserId' => $model->permitted_user_id];
+                return ['user/revoke-permitted-user', 'id' => $model->permitted_user_id];
             },
             'itemView' => '_permittedUser',
             'provider' => $permittedUserProvider,
             'ajax' => true,
-            'emptyMessage' => Yii::t('app/group', 'You have no permited users yet.'),
+            'emptyMessage' => Yii::t('app/user', 'You have no friends users yet.'),
             'searchModel' => $permittedUserSearchModel
         ]) ?>
     <?php endif; ?>
