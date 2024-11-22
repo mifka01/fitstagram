@@ -215,9 +215,9 @@ class GroupMembershipController extends Controller
         if ($model->kickUser()) {
             Yii::$app->session->setFlash('success', Yii::t('app/group', 'User has been removed from the group.'));
 
-            return $this->redirect(['group/index']);
+            return $this->redirect(['group/members', 'id' => $id]);
         }
         Yii::$app->session->setFlash('error', Yii::t('app/group', 'Error removing user from group.'));
-        return $this->redirect(['group/members', 'id' => $id]);
+        return $this->redirect(['group/index']);
     }
 }
