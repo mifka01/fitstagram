@@ -22,7 +22,7 @@ class PostCommentListView extends ListView
         parent::run();
     }
 
-    public function init():void
+    public function init(): void
     {
         $page = $this->page ?? 1;
 
@@ -45,7 +45,7 @@ class PostCommentListView extends ListView
             ]);
         };
         $this->layout = "{items}\n{pager}";
-
+        $this->emptyText = '';
         parent::init();
     }
 }
