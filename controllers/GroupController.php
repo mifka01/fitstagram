@@ -245,7 +245,7 @@ class GroupController extends Controller
     {
         $model = Group::findOne($id);
         if ($model === null || $model->active == false) {
-            throw new NotFoundHttpException(Yii::t('app/user', 'User not found.'));
+            throw new NotFoundHttpException(Yii::t('app/group', 'Group not found.'));
         }
         // Initialize the search model for group members
         $userSearchModel = new GroupMemberSearch(['active' => 1]);

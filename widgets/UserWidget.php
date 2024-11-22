@@ -45,6 +45,8 @@ class UserWidget extends Widget
 
     public string $searchParam = 'keyword';
 
+    public string $itemView = '';
+
     public function init(): void
     {
         $this->emptyMessage = Yii::t('app/users', $this->emptyMessage);
@@ -62,6 +64,7 @@ class UserWidget extends Widget
             'updateButtonRoute' => $this->updateButtonRoute,
             'actionButtonLabel' => $this->actionButtonLabel,
             'actionButtonRoute' => $this->actionButtonRoute,
+            'itemView' => $this->itemView,
             'ajax' => $this->ajax,
             'emptyMessage' => $this->emptyMessage,
             'searchModel' => $this->searchModel,

@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\enums\GroupType;
 use app\models\forms\UserUpdateForm;
 use app\models\query\GroupQuery;
+use app\models\search\PermittedUserSearch;
 use app\models\search\UserGroupSearch;
 use app\models\User;
 use Yii;
@@ -30,7 +31,7 @@ class UserController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['update'],
+                        'actions' => ['update', 'permitted-users'],
                         'roles' => ['@'],
                     ],
                     [
@@ -115,7 +116,35 @@ class UserController extends Controller
         }
 
         return $this->render('update', [
-        'model' => $model,
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * Update action
+     *
+     * @return string|Response
+     */
+    public function actionPermittedUsers(int $id): string|Response
+    {
+        $model = User::findOne($id);
+        if ($model === null || $model->active == false) {
+            throw new NotFoundHttpException(Yii::t('app/user', 'User not found.'));
+        }
+
+        $permittedUserModel = new PermittedUserSearch(['active' => 1]);
+        $permittedUserModel->load(Yii::$app->request->queryParams);
+
+        $permittedUserProvider = $permittedUserModel->search(array_merge(
+            Yii::$app->request->queryParams,
+            ['id' => $id]
+        ));
+
+
+        return $this->render('permittedUsers', [
+            'permittedUserSearchModel' => $permittedUserModel,
+            'permittedUserProvider' => $permittedUserProvider,
+            'model' => $model,
         ]);
     }
 

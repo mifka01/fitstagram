@@ -25,11 +25,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php if (!Yii::$app->user->isGuest): ?>
         <?= UserWidget::widget([
             'title' => Yii::t('app/group', 'Group Members'),
-            'itemButtonLabel' => Yii::t('app/group', 'Kick User'),
+            'itemButtonLabel' => Yii::t('app/group', 'Remove User'),
             'itemButtonRoute' => function (GroupMember $model) {
                 return ['group-membership/kick-user', 'id' => $model->group_id, 'userId' => $model->user_id];
             },
-
+            'itemView' => '_groupMember',
             'provider' => $userProvider,
             'ajax' => true,
             'emptyMessage' => Yii::t('app/group', 'You have no members yet.'),

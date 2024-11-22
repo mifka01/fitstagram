@@ -13,7 +13,7 @@
 /** @var string $emptyMessage */
 /** @var yii\base\Model|false $searchModel */
 /** @var string $searchParam */
-
+/** @var string $itemView */
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -82,7 +82,7 @@ use yii\widgets\Pjax;
 
         <?= ListView::widget([
             'dataProvider' => $provider,
-            'itemView' => function ($model, $key, $index, $widget) use ($itemButtonLabel, $itemButtonRoute, $updateButtonLabel, $updateButtonRoute) {
+            'itemView' => function ($model, $key, $index, $widget) use ($itemButtonLabel, $itemButtonRoute, $updateButtonLabel, $updateButtonRoute, $itemView) {
 
                 $label = is_callable($itemButtonLabel)
                     ? call_user_func($itemButtonLabel, $model)
@@ -96,7 +96,7 @@ use yii\widgets\Pjax;
                     ? call_user_func($updateButtonRoute, $model)
                     : $updateButtonRoute;
 
-                return $this->render('_item', [
+                return $this->render($itemView, [
                     'model' => $model,
                     'itemButtonLabel' => $label,
                     'itemButtonRoute' => $route,

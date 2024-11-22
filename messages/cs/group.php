@@ -52,7 +52,7 @@ return [
     'Manage' => 'Spravovat',
     'Member for of this group for {time}' => 'Členem skupiny po dobu {time}',
     'Number of posts {count}' => 'Počet příspěvků {count}',
-    'Kick User' => 'Vyhodit uživatele',
+    'Remove User' => 'Odebrat uživatele',
     'You have no members yet.' => 'Zatím nemáte žádné členy.',
     'See who is part of the group.' => 'Zjistěte se, kdo je součástí skupiny.',
     'Group Members' => 'Členové skupiny',
