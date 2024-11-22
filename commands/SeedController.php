@@ -9,6 +9,7 @@ use yii\console\Controller;
 
 class SeedController extends Controller
 {
+    const MODERATOR_COUNT = 3;
     const USER_COUNT = 30;
     const POST_COUNT = 100;
     const MAX_MEDIA_FILES_IN_POST = 3;
@@ -27,6 +28,8 @@ class SeedController extends Controller
 
     public function actionIndex(): void
     {
+        $this->actionAdmins();
+        $this->actionModerators();
         $this->actionUsers();
         $this->actionGroups();
         $this->actionTags();
@@ -47,6 +50,69 @@ class SeedController extends Controller
         }
     }
 
+    private function actionAdmins(): void
+    {
+        echo "Seeding of Admins...\n";
+
+        $admin = [
+            'username' => 'admin',
+            'email' => 'admin' . '@' . self::$faker->safeEmailDomain,
+            'password_hash' => '$2a$12$C8kpUKrS5j51gK1lu1a.OOPHIGQsOMD0V8xjIsxt6HGsp.ssxIssm',
+            'password_reset_token' => self::$faker->optional()->uuid,
+            'verification_token' => Yii::$app->security->generateRandomString(),
+            'auth_key' => Yii::$app->security->generateRandomString(),
+            'active' => true,
+            'deleted' => false,
+            'banned' => false,
+            'created_at' => $createdAt = self::$faker->dateTimeThisYear()->format('Y-m-d H:i:s'),
+            'updated_at' => self::$faker->dateTimeBetween($createdAt)->format('Y-m-d H:i:s'),
+        ];
+
+        Yii::$app->db->createCommand()->insert('user', $admin)->execute();
+        $userId = Yii::$app->db->getLastInsertID();
+        $this->addPermittedUsers((int) $userId);
+        Yii::$app->db->createCommand()->insert(
+            'auth_assignment',
+            [
+                'item_name' => 'admin',
+                'user_id' => $userId,
+                'created_at' => self::$faker->dateTimeThisYear()->format('Y-m-d H:i:s')
+            ]
+        )->execute();
+    }
+
+    private function actionModerators(int $count = self::MODERATOR_COUNT): void
+    {
+        echo "Seeding of Moderators...\n";
+
+        for ($i = 0; $i < $count; $i++) {
+            $moderator = [
+                'username' => 'moderator' . $i,
+                'email' => 'moederatot' . $i . '@' . self::$faker->safeEmailDomain,
+                'password_hash' => '$2a$12$RvTlTSObKbmCrzgD4H4lHOC7FtEYfrFcmUMw19P6ItIGkl8ZlEwjG',
+                'password_reset_token' => self::$faker->optional()->uuid,
+                'verification_token' => Yii::$app->security->generateRandomString(),
+                'auth_key' => Yii::$app->security->generateRandomString(),
+                'active' => true,
+                'deleted' => false,
+                'banned' => false,
+                'created_at' => $createdAt = self::$faker->dateTimeThisYear()->format('Y-m-d H:i:s'),
+                'updated_at' => self::$faker->dateTimeBetween($createdAt)->format('Y-m-d H:i:s'),
+            ];
+            Yii::$app->db->createCommand()->insert('user', $moderator)->execute();
+            $userId = Yii::$app->db->getLastInsertID();
+            $this->addPermittedUsers((int) $userId);
+            Yii::$app->db->createCommand()->insert(
+                'auth_assignment',
+                [
+                    'item_name' => 'moderator',
+                    'user_id' => $userId,
+                    'created_at' => self::$faker->dateTimeThisYear()->format('Y-m-d H:i:s')
+                ]
+            )->execute();
+        }
+    }
+
     private function actionUsers(int $count = self::USER_COUNT): void
     {
         echo "Seeding of Users...\n";
@@ -56,19 +122,20 @@ class SeedController extends Controller
             $user = [
                 'username' =>  $userName,
                 'email' => $userName . '@' . self::$faker->safeEmailDomain,
-                'password_hash' => Yii::$app->security->generatePasswordHash('password'),
+                'password_hash' => Yii::$app->security->generatePasswordHash('xPassword1242'),
                 'password_reset_token' => self::$faker->optional()->uuid,
                 'verification_token' => Yii::$app->security->generateRandomString(),
                 'auth_key' => Yii::$app->security->generateRandomString(),
-                'active' => self::$faker->boolean(90),
-                'deleted' => self::$faker->boolean(15),
-                'banned' => self::$faker->boolean(5),
+                'active' => true,
+                'deleted' => false,
+                'banned' => false,
                 'created_at' => $createdAt = self::$faker->dateTimeThisYear()->format('Y-m-d H:i:s'),
                 'updated_at' => self::$faker->dateTimeBetween($createdAt)->format('Y-m-d H:i:s'),
             ];
             Yii::$app->db->createCommand()->insert('user', $user)->execute();
             $userId = Yii::$app->db->getLastInsertID();
             $this->addPermittedUsers((int) $userId);
+            Yii::$app->db->createCommand()->insert('auth_assignment', ['item_name' => 'user', 'user_id' => $userId])->execute();
         }
     }
 
@@ -105,7 +172,7 @@ class SeedController extends Controller
                 'description' => self::$faker->paragraph(3),
                 'place' => self::$faker->city,
                 // 10% chance to be deleted
-                'deleted' => self::$faker->boolean(0),
+                'deleted' => self::$faker->boolean(10),
                 'created_at' => $createdAt = self::$faker->dateTimeThisYear()->format('Y-m-d H:i:s'),
                 'updated_at' => self::$faker->dateTimeBetween($createdAt)->format('Y-m-d H:i:s'),
             ];
@@ -176,14 +243,13 @@ class SeedController extends Controller
 
 
         for ($i = 0; $i < $count; $i++) {
-            $status = self::$faker->randomElement(['active', 'deleted', 'banned']);
             $group = [
                 'name' => self::$faker->text(80),
                 'description' => self::$faker->text(512),
                 'owner_id' => $ownerId = self::$faker->numberBetween(1, self::USER_COUNT),
-                'active' => $status === 'active' ? true : false,
-                'deleted' => $status === 'deleted' ? true : false,
-                'banned' => $status === 'banned' ? true : false,
+                'active' => true,
+                'deleted' => false,
+                'banned' => false,
                 'created_at' => $createdAt = self::$faker->dateTimeThisYear()->format('Y-m-d H:i:s'),
                 'updated_at' => self::$faker->dateTimeBetween($createdAt)->format('Y-m-d H:i:s'),
             ];
@@ -205,7 +271,7 @@ class SeedController extends Controller
         ];
         Yii::$app->db->createCommand()->insert('group_member', $groupMember)->execute();
         $groupMembers[] = $ownerId;
-        
+
         $count = self::$faker->numberBetween(0, self::USER_COUNT / 2);
         for ($i = 0; $i < $count; $i++) {
             $userId = self::$faker->numberBetween(1, self::USER_COUNT);
