@@ -5,7 +5,7 @@ return [
     'Place' => 'Místo',
     'Images' => 'Obrázky',
     'Description' => 'Popis',
-    'Make the post private' => 'Nastavit příspěvek jako soukromý',
+    'Private' => 'Soukromý',
     'Tags' => 'Štítky',
     'Group' => 'Skupina',
     'Create Post' => 'Vytvořit příspěvek',

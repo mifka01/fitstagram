@@ -66,7 +66,7 @@ class Post extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'created_by' => Yii::t('app/model', 'Created By'),
-            'is_private' => 'Is Private',
+            'is_private' => Yii::t('app/post', 'Private'),
             'group_id' => 'Group ID',
             'upvote_count' => 'Upvote Count',
             'downvote_count' => 'Downvote Count',

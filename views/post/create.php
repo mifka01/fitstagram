@@ -92,9 +92,25 @@ $groups = $user ? $user->getGroups()->active()->asArray()->all() : [];
                     'placeholder' => Yii::t('app/post', 'Enter place')
                 ]) ?>
 
-                <?= $form->field($model, 'is_private')->checkbox([
-                    'class' => 'h-4 w-4 rounded border-gray-300 text-orange-600 focus:ring-orange-500',
-                    'labelOptions' => ['class' => 'font-medium text-gray-700']
+
+
+                <?= $form->field($model, 'is_private', [
+                    'template' => '
+                        <label class="inline-flex items-center cursor-pointer">
+                            {input}
+                        <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-orange-300 
+                        rounded-full peer peer-checked:after:translate-x-full 
+                        rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white 
+                        after:content-[\'\'] after:absolute after:top-[2px] after:start-[2px] 
+                        after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5
+                        after:transition-all peer-checked:bg-orange-600"></div>
+                            <span class="ms-3 text-sm font-medium text-gray-900">
+                                ' . $model->getAttributeLabel("is_private") . '
+                            </span>
+                        </label>',
+                ])->checkbox([
+                    'class' => 'sr-only peer',
+                    'label' => false,
                 ]) ?>
 
                 <?= Html::submitButton(

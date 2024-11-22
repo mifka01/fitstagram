@@ -67,7 +67,7 @@ class PostForm extends Model
             'place' => Yii::t('app/post', 'Place'),
             'mediaFiles' => Yii::t('app/post', 'Images'),
             'description' => Yii::t('app/post', 'Description'),
-            'is_private' => Yii::t('app/post', 'Make the post private'),
+            'is_private' => Yii::t('app/post', 'Private'),
             'tags' => Yii::t('app/post', 'Tags'),
             'group' => Yii::t('app/post', 'Group'),
         ];
