@@ -4,6 +4,7 @@ namespace app\models\forms;
 
 use app\models\Group;
 use app\models\GroupMember;
+use app\models\Post;
 use app\models\User;
 use Yii;
 use yii\base\Model;
@@ -22,13 +23,20 @@ class GroupForm extends Model
 
     public ?Group $group = null;
 
+    public ?int $id = null;
+
+    public const SCENARIO_CREATE = 'create';
+    public const SCENARIO_DELETE = 'delete';
+
     /**
      * @return array<int, array<mixed>>
      */
     public function rules(): array
     {
         return [
-            [['name'], 'required'],
+            [['id'], 'integer'],
+            [['id'], 'required', 'on' => self::SCENARIO_DELETE],
+            [['name'], 'required', 'on' => self::SCENARIO_CREATE],
             [['name'], 'string', 'max' => 255],
             [['description'], 'string', 'max' => 512],
             [['active'], 'boolean'],
@@ -64,7 +72,7 @@ class GroupForm extends Model
 
         // Use the existing group if available, otherwise create a new one
         $this->group = $this->group ?? new Group();
-    
+
         $this->group->name = $this->name;
         $this->group->description = $this->description;
         $this->group->active = (int)$this->active;
@@ -84,12 +92,44 @@ class GroupForm extends Model
             $groupMember = new GroupMember();
             $groupMember->group_id = $this->group->id;
             $groupMember->user_id = $user->id;
-           
+
             if (!$groupMember->save()) {
                 $transaction->rollBack();
                 return false;
             }
 
+            $transaction->commit();
+            return true;
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+            throw $e;
+        } catch (\Throwable $e) {
+            $transaction->rollBack();
+            throw $e;
+        }
+    }
+
+    public function delete(): bool
+    {
+
+        $group = Group::findOne($this->id);
+        if ($group === null) {
+            return false;
+        }
+
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+            $group->active = (int)false;
+            $group->deleted = (int)true;
+
+            foreach ($group->getPosts()->all() as $post) {
+                /** @var Post $post */
+                $post->deleted = (int)true;
+                if (!$post->save()) {
+                    $transaction->rollBack();
+                    return false;
+                }
+            }
             $transaction->commit();
             return true;
         } catch (\Exception $e) {

@@ -111,6 +111,7 @@ class GroupController extends Controller
     public function actionCreate(): Response|string
     {
         $model = new GroupForm();
+        $model->scenario = GroupForm::SCENARIO_CREATE;
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 Yii::$app->session->setFlash('success', Yii::t('app/group', 'Group has been created.'));
@@ -262,5 +263,21 @@ class GroupController extends Controller
             'userProvider' => $userProvider,
             'model' => $model,
         ]);
+    }
+
+    public function actionDelete(int $id): Response
+    {
+        $model = new GroupForm();
+        $model->scenario = GroupForm::SCENARIO_DELETE;
+        $model->id = $id;
+        $model->load(Yii::$app->request->post());
+
+        if ($model->delete()) {
+            Yii::$app->session->setFlash('success', Yii::t('app/group', 'Group has been deleted.'));
+            return $this->redirect('group/index');
+        } else {
+            Yii::$app->session->setFlash('error', Yii::t('app/group', 'Failed to delete group.'));
+            return $this->redirect(['group/view', 'id' => $id]);
+        }
     }
 }

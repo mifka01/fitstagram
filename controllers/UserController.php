@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\enums\GroupType;
 use app\models\forms\PermittedUserForm;
+use app\models\forms\UserRemoveForm;
 use app\models\forms\UserUpdateForm;
 use app\models\query\GroupQuery;
 use app\models\search\PermittedUserSearch;
@@ -216,5 +217,35 @@ class UserController extends Controller
             throw new NotFoundHttpException(Yii::t('app/error', 'User not found.'));
         }
         return $user;
+    }
+
+    public function actionDelete(int $id): Response
+    {
+        $model = new UserRemoveForm();
+        $model->id = $id;
+        $model->load(Yii::$app->request->post());
+
+        if ($model->delete()) {
+            Yii::$app->session->setFlash('success', Yii::t('app/user', 'User has been deleted.'));
+            return $this->goHome();
+        } else {
+            Yii::$app->session->setFlash('error', Yii::t('app/user', 'Failed to delete user.'));
+            return $this->redirect(['group/view', 'id' => $id]);
+        }
+    }
+
+    public function actionBan(int $id): Response
+    {
+        $model = new UserRemoveForm();
+        $model->id = $id;
+        $model->load(Yii::$app->request->post());
+
+        if ($model->ban()) {
+            Yii::$app->session->setFlash('success', Yii::t('app/user', 'User has been banned.'));
+            return $this->goHome();
+        } else {
+            Yii::$app->session->setFlash('error', Yii::t('app/user', 'Failed to ban user.'));
+            return $this->refresh();
+        }
     }
 }
