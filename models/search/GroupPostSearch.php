@@ -20,8 +20,7 @@ class GroupPostSearch extends Model
     public function search($params): ActiveDataProvider
     {
         $query = Post::find()->where(['group_id' => $params['id']])->with(['createdBy', 'tags', 'mediaFiles']);
-
-        // add conditions that should always apply here
+        $query->deleted(false);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -36,7 +35,6 @@ class GroupPostSearch extends Model
             return $dataProvider;
         }
 
-        $query->deleted(false);
 
 
         return $dataProvider;

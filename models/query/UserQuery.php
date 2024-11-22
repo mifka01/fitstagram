@@ -13,4 +13,14 @@ class UserQuery extends \yii\db\ActiveQuery
     {
         return $this->andWhere(['active' => $active]);
     }
+
+    public function deleted(bool $deleted = true): UserQuery
+    {
+        return $this->andWhere(['deleted' => $deleted]);
+    }
+
+    public function banned(bool $deleted = true): UserQuery
+    {
+        return $this->andWhere(['banned' => $deleted]);
+    }
 }

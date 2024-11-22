@@ -190,6 +190,16 @@ class Post extends \yii\db\ActiveRecord
     }
 
     /**
+     * Checks if the post is deleted.
+     *
+     * @return bool
+     */
+    public function isBanned(): bool
+    {
+        return $this->createdBy->isBanned();
+    }
+
+    /**
      * Checks if the post is public.
      *
      * @return bool

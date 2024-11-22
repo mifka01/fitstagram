@@ -260,6 +260,16 @@ class User extends TimestampRecord implements IdentityInterface
         return $groupMemberRecord !== false;
     }
 
+    public function isDeleted(): bool
+    {
+        return $this->deleted == 1;
+    }
+
+    public function isBanned(): bool
+    {
+        return $this->banned == 1;
+    }
+
     /**
      * Gets query for [[Comments]].
      *
@@ -320,7 +330,7 @@ class User extends TimestampRecord implements IdentityInterface
     }
 
     /**
-     * Checks if the user is permitted to view the user profile.
+     * Checks if the user is permitted to view the user post.
      *
      * @param int $userId
      * @return bool

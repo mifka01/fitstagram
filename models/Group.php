@@ -73,6 +73,16 @@ class Group extends \yii\db\ActiveRecord
     }
 
     /**
+     * Checks if the group is deleted.
+     *
+     * @return bool
+     */
+    public function isDeleted(): bool
+    {
+        return $this->deleted == 1;
+    }
+
+    /**
      * Gets query for [[JoinRequestUsers]].
      *
      * @return \yii\db\ActiveQuery

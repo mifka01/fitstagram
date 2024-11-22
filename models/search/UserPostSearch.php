@@ -22,12 +22,12 @@ class UserPostSearch extends Model
      */
     public function search($params): ActiveDataProvider
     {
-        $query = Post::find()->public(true);
+        $currentUserGroupIds = $this->getCurrentUserGroupIds();
+        $query = Post::find()->public(true)->andWhere(['group_id' => $currentUserGroupIds])->with(['createdBy', 'tags', 'mediaFiles']);
 
-        $permittedUserIds = $this->getPermittedUserIds();
-        $query->orWhere(['created_by' => $permittedUserIds])->with(['createdBy', 'tags', 'mediaFiles']);
-
-        // add conditions that should always apply here
+        $permittingUserIds = $this->getPermittingUserIds();
+        $query->orWhere(['created_by' => $permittingUserIds]);
+        $query->deleted(false);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -42,25 +42,43 @@ class UserPostSearch extends Model
             return $dataProvider;
         }
 
-        $query->deleted(false);
-
         return $dataProvider;
     }
 
     /**
-     * Get permitted user IDs for the current user.
+     * Get user ids that permit the current user.
      *
      * @return array<int>
      */
-    private function getPermittedUserIds(): array
+    private function getPermittingUserIds(): array
     {
         $user = $this->getCurrentUser();
         if ($user === null) {
             return [];
         }
-        $permittedUserIds = $user->getPermittedUsers()->select('id')->column();
-        $permittedUserIds[] = $user->id;
-        return $permittedUserIds;
+
+        $permittingUserIds = User::find()->deleted(false)->banned(false)
+        ->innerJoin('permitted_user', 'user.id = permitted_user.user_id')
+        ->where(['permitted_user.permitted_user_id' => $user->id])
+        ->select('user.id')->column();
+
+        $permittingUserIds[] = $user->id;
+        return $permittingUserIds;
+    }
+
+    /**
+     * Get ids of groups that current user belongs to and own.
+     *
+     * @return array<int>
+     */
+    private function getCurrentUserGroupIds(): array
+    {
+        $user = $this->getCurrentUser();
+        if ($user === null) {
+            return [];
+        }
+
+        return $user->getGroups()->column();
     }
 
     /**

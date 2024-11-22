@@ -11,11 +11,23 @@ class PostPermissionService
     {
         $post = Post::find()->where(['id' => $postId])->deleted(false)->one();
 
-        if ($post instanceof Post && $post->group !== null && !$post->group->isMember($userId)) {
+        if (!($post instanceof Post)) {
             return false;
         }
 
-        if ($userId != Yii::$app->user->id && $post instanceof Post && !$post->isPublic() && ($createdBy = $post->createdBy) !== null && !$createdBy->isPermittedUser($userId)) {
+        $createdBy = $post->createdBy;
+
+        if ($createdBy->isBanned() || $createdBy->isDeleted()) {
+            return false;
+        }
+
+        $group = $post->group;
+
+        if ($group !== null && (!$group->isMember($userId) || $group->isDeleted())) {
+            return false;
+        }
+
+        if ($userId != Yii::$app->user->id && !$post->isPublic() && !$createdBy->isPermittedUser($userId)) {
             return false;
         }
         return true;
