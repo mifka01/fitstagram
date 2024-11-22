@@ -206,13 +206,30 @@ class GroupMembershipForm extends Model
                 'user_id' => $this->user_id,
             ]);
 
+            $groupJoinRequest = GroupJoinRequest::findOne([
+                'group_id' => $this->group_id,
+                'created_by' => $this->user_id,
+                'accepted' => true,
+            ]);
+
             if (!$groupMember) {
                 $this->addError('user_id', 'You are not a member of this group.');
+                return false;
+            }
+            if (!$groupJoinRequest) {
+                $this->addError('user_id', 'You have not been accepted into this group.');
                 return false;
             }
 
             if (!$groupMember->delete()) {
                 $this->addErrors($groupMember->errors);
+                $transaction->rollBack();
+                return false;
+            }
+
+            if (!$groupJoinRequest->delete()) {
+                $this->addErrors($groupJoinRequest->errors);
+                $transaction->rollBack();
                 return false;
             }
 
