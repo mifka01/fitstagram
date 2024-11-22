@@ -135,6 +135,7 @@ class SeedController extends Controller
                 'banned' => false,
                 'created_at' => $createdAt = self::$faker->dateTimeThisYear()->format('Y-m-d H:i:s'),
                 'updated_at' => self::$faker->dateTimeBetween($createdAt)->format('Y-m-d H:i:s'),
+                'show_activity' => self::$faker->boolean(20),
             ];
             Yii::$app->db->createCommand()->insert('user', $user)->execute();
             $userId = Yii::$app->db->getLastInsertID();
@@ -191,7 +192,6 @@ class SeedController extends Controller
                 'downvote_count' => self::$faker->numberBetween(0, 100),
                 'description' => self::$faker->paragraph(3),
                 'place' => self::$faker->city,
-                // 10% chance to be deleted
                 'deleted' => self::$faker->boolean(10),
                 'created_at' => $createdAt = self::$faker->dateTimeThisYear()->format('Y-m-d H:i:s'),
                 'updated_at' => self::$faker->dateTimeBetween($createdAt)->format('Y-m-d H:i:s'),
