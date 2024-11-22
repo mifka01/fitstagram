@@ -22,12 +22,15 @@ class UserPostSearch extends Model
      */
     public function search($params): ActiveDataProvider
     {
+        $query = Post::find()->public(true)->hasGroup(false)->with(['createdBy', 'tags', 'mediaFiles']);
+            
         $currentUserGroupIds = $this->getCurrentUserGroupIds();
-        $query = Post::find()->public(true)->andWhere(['group_id' => $currentUserGroupIds])->with(['createdBy', 'tags', 'mediaFiles']);
+        $query->orWhere(['group_id' => $currentUserGroupIds]);
 
         $permittingUserIds = $this->getPermittingUserIds();
-        $query->orWhere(['created_by' => $permittingUserIds]);
-        $query->deleted(false);
+        $query->orWhere(['created_by' => $permittingUserIds, 'group_id' => null]);
+
+        $query->deleted(false)->banned(false);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -78,7 +81,7 @@ class UserPostSearch extends Model
             return [];
         }
 
-        return $user->getGroups()->column();
+        return $user->getGroups()->deleted(false)->column();
     }
 
     /**

@@ -301,6 +301,7 @@ class User extends TimestampRecord implements IdentityInterface
         $query = $this->hasMany(Group::class, ['id' => 'group_id'])
         ->viaTable('group_member', ['user_id' => 'id'])
         ->where(['!=', 'owner_id', Yii::$app->user->id]);
+
         return $query;
     }
 

@@ -17,6 +17,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
 /** @var User|null $user */
 $user = Yii::$app->user->isGuest ? null : Yii::$app->user->identity;
+
+// TODO: REMOVE AND REPLACE WITH SELECT 2
 $groups = $user ? $user->getGroups()->active()->asArray()->all() : [];
 
 ?>

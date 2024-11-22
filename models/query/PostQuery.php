@@ -24,8 +24,32 @@ class PostQuery extends \yii\db\ActiveQuery
      *
      * @return \app\models\query\PostQuery
      */
+    public function banned(bool $banned = true): self
+    {
+        return $this->andWhere(['banned' => $banned]);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return \app\models\query\PostQuery
+     */
     public function public(bool $public = true): self
     {
         return $this->andWhere(['is_private' => !$public]);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return \app\models\query\PostQuery
+     */
+    public function hasGroup(bool $hasGroup = true): self
+    {
+        if (!$hasGroup) {
+            return $this->andWhere(['group_id' => null]);
+        }
+
+        return $this->andWhere(['not', ['group_id' => null]]);
     }
 }

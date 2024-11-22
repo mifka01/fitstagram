@@ -10,6 +10,7 @@ return [
     'Updated At' => 'Aktualizováno',
     'Hidden' => 'Skryto',
     'Content' => 'Obsah',
+    'Description' => 'Popis',
 
     ## STATUS
     'Deleted' => 'Smazáno',

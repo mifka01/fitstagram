@@ -86,11 +86,11 @@ class PostForm extends Model
         $post->description = $this->description;
         $post->is_private = intval($this->is_private);
         if (!empty($this->group)) {
-            $group = Group::findOne($this->group);
-            if ($group === null) {
+            $group = Group::find()->deleted(false)->active(true)->andWhere(['id' => $this->group])->one();
+            if (!($group instanceof Group)) {
                 throw new NotFoundHttpException(Yii::t('app/error', 'Group not found.'));
             }
-            if (!$user->getGroups()->where(['id' => $group->id])->exists()) {
+            if (!$group->isMember($user->id)) {
                 throw new ForbiddenHttpException(Yii::t('app/error', 'You do not have rights to post to this group.'));
             }
             $post->group_id = intval($this->group);
@@ -99,6 +99,7 @@ class PostForm extends Model
         }
         $post->place = $this->place;
         $post->deleted = 0;
+        $post->banned = 0;
         $post->created_by = $user->id;
 
         if ($post->save()) {

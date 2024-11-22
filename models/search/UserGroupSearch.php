@@ -131,9 +131,9 @@ class UserGroupSearch extends Model
         }
 
         $query = match ($type) {
-            GroupType::PUBLIC => Group::find()->active()->andWhere(['!=', 'owner_id', $user->id]),
-            GroupType::OWNED => $user->getCreatedGroups(),
-            GroupType::JOINED => $user->getJoinedGroups()->active(),
+            GroupType::PUBLIC => Group::find()->active()->andWhere(['!=', 'owner_id', $user->id])->deleted(false),
+            GroupType::OWNED => $user->getCreatedGroups()->deleted(false),
+            GroupType::JOINED => $user->getJoinedGroups()->active()->deleted(false),
         };
 
         $query->deleted(false);

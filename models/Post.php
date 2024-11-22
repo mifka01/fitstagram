@@ -18,6 +18,7 @@ use yii\db\ActiveQuery;
  * @property string|null $description
  * @property string|null $place
  * @property int|null $deleted
+ * @property int|null $banned
  * @property string $created_at
  * @property string $updated_at
  *
@@ -49,7 +50,7 @@ class Post extends \yii\db\ActiveRecord
     {
         return [
             [['created_by', 'is_private'], 'required'],
-            [['created_by', 'is_private', 'group_id', 'upvote_count', 'downvote_count', 'deleted'], 'integer'],
+            [['created_by', 'is_private', 'group_id', 'upvote_count', 'downvote_count', 'deleted', 'banned'], 'integer'],
             [['description', 'place'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
@@ -67,14 +68,15 @@ class Post extends \yii\db\ActiveRecord
             'id' => 'ID',
             'created_by' => Yii::t('app/model', 'Created By'),
             'is_private' => Yii::t('app/post', 'Private'),
-            'group_id' => 'Group ID',
-            'upvote_count' => 'Upvote Count',
-            'downvote_count' => 'Downvote Count',
-            'description' => 'Description',
-            'place' => 'Place',
-            'deleted' => 'Deleted',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
+            'group_id' => Yii::t('app/group', 'Group ID'),
+            'upvote_count' => Yii::t('app/post', 'Upvote Count'),
+            'downvote_count' => Yii::t('app/post', 'Downvote Count'),
+            'description' => Yii::t('app/model', 'Description'),
+            'place' => Yii::t('app/post', 'Place'),
+            'deleted' => Yii::t('app/model', 'Deleted'),
+            'banned' => Yii::t('app/model', 'Banned'),
+            'created_at' => Yii::t('app/model', 'Created At'),
+            'updated_at' => Yii::t('app/model', 'Updated At'),
         ];
     }
 
@@ -194,9 +196,19 @@ class Post extends \yii\db\ActiveRecord
      *
      * @return bool
      */
+    public function isDeleted(): bool
+    {
+        return $this->deleted == 1;
+    }
+
+    /**
+     * Checks if the post is banned.
+     *
+     * @return bool
+     */
     public function isBanned(): bool
     {
-        return $this->createdBy->isBanned();
+        return $this->banned == 1;
     }
 
     /**

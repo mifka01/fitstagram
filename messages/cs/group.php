@@ -8,6 +8,9 @@ return [
     'Create Group' => 'Vytvořit skupinu',
     'Please fill out the following fields to create a group' => 'Prosím vyplňte následující pole pro vytvoření skupiny',
 
+    'Group' => 'Skupina',
+    'Groups' => 'Skupiny',
+    'Group ID' => 'ID skupiny',
     'Owner ID' => 'ID vlastníka',
     '{count} members' => '{count} členů',
     'Create New Group' => 'Vytvořit novou skupinu',
