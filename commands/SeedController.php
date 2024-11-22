@@ -19,6 +19,11 @@ class SeedController extends Controller
 
     private static Generator $faker;
 
+    /**
+     * @var array<string, bool> $usedCombinations Tracks used group_id and user_id combinations.
+     */
+    private static array $usedCombinations = [];
+
     public function init(): void
     {
         parent::init();
@@ -31,6 +36,7 @@ class SeedController extends Controller
         $this->actionAdmins();
         $this->actionModerators();
         $this->actionUsers();
+        $this->addPermittedUsers();
         $this->actionGroups();
         $this->actionTags();
         $this->actionPosts();
@@ -70,7 +76,6 @@ class SeedController extends Controller
 
         Yii::$app->db->createCommand()->insert('user', $admin)->execute();
         $userId = Yii::$app->db->getLastInsertID();
-        $this->addPermittedUsers((int) $userId);
         Yii::$app->db->createCommand()->insert(
             'auth_assignment',
             [
@@ -101,7 +106,6 @@ class SeedController extends Controller
             ];
             Yii::$app->db->createCommand()->insert('user', $moderator)->execute();
             $userId = Yii::$app->db->getLastInsertID();
-            $this->addPermittedUsers((int) $userId);
             Yii::$app->db->createCommand()->insert(
                 'auth_assignment',
                 [
@@ -134,25 +138,41 @@ class SeedController extends Controller
             ];
             Yii::$app->db->createCommand()->insert('user', $user)->execute();
             $userId = Yii::$app->db->getLastInsertID();
-            $this->addPermittedUsers((int) $userId);
-            Yii::$app->db->createCommand()->insert('auth_assignment', ['item_name' => 'user', 'user_id' => $userId])->execute();
+            Yii::$app->db->createCommand()->insert(
+                'auth_assignment',
+                [
+                    'item_name' => 'user',
+                    'user_id' => $userId,
+                    'created_at' => self::$faker->dateTimeThisYear()->format('Y-m-d H:i:s')
+                ]
+            )->execute();
         }
     }
 
-    public function addPermittedUsers(int $userId): void
+    public function addPermittedUsers(int $count = self::USER_COUNT): void
     {
+        for ($userId = 1; $userId <= $count; $userId++) {
+            // Ensure the user is their own permitted user
+            $permittedUserIds = [$userId];
+            Yii::$app->db->createCommand()->insert('permitted_user', [
+                'user_id' => $userId,
+                'permitted_user_id' => $userId,
+            ])->execute();
 
-        $permittedUserIds[] = $userId;
-        $count = self::$faker->numberBetween(0, (int) self::USER_COUNT / 2 - 1);
-        for ($i = 0; $i < $count; $i++) {
-            $permittedUserId = self::$faker->numberBetween(1, self::USER_COUNT);
-            if (!in_array($permittedUserId, $permittedUserIds)) {
-                $permittedUser = [
-                    'user_id' => $userId,
-                    'permitted_user_id' => $permittedUserId,
-                ];
-                Yii::$app->db->createCommand()->insert('permitted_user', $permittedUser)->execute();
-                $permittedUserIds[] = $permittedUserId;
+            // Determine the number of additional permitted users
+            $additionalCount = self::$faker->numberBetween(0, (int) $count / 2 - 1);
+
+            for ($i = 0; $i < $additionalCount; $i++) {
+                $permittedUserId = self::$faker->numberBetween(1, $count);
+
+                // Ensure the relationship is unique
+                if (!in_array($permittedUserId, $permittedUserIds)) {
+                    Yii::$app->db->createCommand()->insert('permitted_user', [
+                        'user_id' => $userId,
+                        'permitted_user_id' => $permittedUserId,
+                    ])->execute();
+                    $permittedUserIds[] = $permittedUserId;
+                }
             }
         }
     }
@@ -302,6 +322,13 @@ class SeedController extends Controller
 
     public function addAcceptedGroupJoinRequests(int $groupId, int $userId): void
     {
+        $combinationKey = "{$groupId}_{$userId}";
+
+        if (isset(self::$usedCombinations[$combinationKey])) {
+            return;
+        }
+
+        self::$usedCombinations[$combinationKey] = true;
 
         $groupJoinRequest = [
             'group_id' => $groupId,
@@ -318,17 +345,26 @@ class SeedController extends Controller
 
     public function addGroupJoinRequests(int $groupId): void
     {
-
         for ($i = 0; $i < self::MAX_GROUP_REQUESTS; $i++) {
+            $userId = self::$faker->numberBetween(1, self::USER_COUNT);
+            $combinationKey = "{$groupId}_{$userId}";
+
+            if (isset(self::$usedCombinations[$combinationKey])) {
+                continue;
+            }
+
+            self::$usedCombinations[$combinationKey] = true;
+
             $groupJoinRequest = [
                 'group_id' => $groupId,
-                'created_by' => self::$faker->numberBetween(1, self::USER_COUNT),
+                'created_by' => $userId,
                 'pending' => $pending = self::$faker->boolean(),
                 'declined' => !$pending,
                 'accepted' => false,
                 'created_at' => $createdAt = self::$faker->dateTimeThisYear()->format('Y-m-d H:i:s'),
                 'updated_at' => self::$faker->dateTimeBetween($createdAt)->format('Y-m-d H:i:s'),
             ];
+
             Yii::$app->db->createCommand()->insert('group_join_request', $groupJoinRequest)->execute();
         }
     }
