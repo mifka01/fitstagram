@@ -46,13 +46,14 @@ return [
 
     'Pending Requests' => 'Čekající žádosti',
     'Posts' => 'Příspěvky',
-    'Join Requests' => 'Žádosti',
+    'Join Requests' => 'Žádosti o připojení',
     'Members' => 'Členové',
     'Owner' => 'Vlastník',
     'Manage' => 'Spravovat',
 
     'No groups found.' => 'Nebyly nalezeny žádné skupiny.',
     'No {type}' => 'Žádné {type}',
+    'Requested on {date}' => 'Vyžádáno dne {date}',
     'You have not created any groups yet.' => 'Zatím jste nevytvořili žádné skupiny.',
     'You have not joined any groups yet.' => 'Zatím jste se nepřipojili k žádným skupinám.',
     'There are no public groups yet.' => 'Zatím nejsou k dispozici žádné veřejné skupiny.',

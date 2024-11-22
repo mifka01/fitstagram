@@ -1,4 +1,5 @@
 <?php
+
 /** @var yii\web\View $this */
 
 use yii\data\ActiveDataProvider;
@@ -26,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <?= Html::encode($model->name) ?>
                                 </h1>
                                 <div class="mt-1 flex items-center space-x-2 text-sm text-gray-500">
-                                        <span><?= Yii::t('app/group', 'Join requests') ?></span>
+                                    <span><?= Yii::t('app/group', 'Join Requests') ?></span>
                                 </div>
                             </div>
                         </div>
@@ -50,23 +51,23 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
     <div class="sm:mx-auto sm:w-full sm:max-w-3xl">
-    <div class="mt-4 space-y-4">
+        <div class="mt-4 space-y-4">
 
-        <?= ListView::widget(
-            [
-            'id' => 'list-view-posts',
-            'dataProvider' => $dataProvider,
-            'itemView' => '_joinRequest',
-            'itemOptions' => ['class' => 'item mb-2'],
-            'layout' => "{items}\n{pager}",
-            'summary' => '',
-            'emptyText' => Yii::t('app/group', 'No pending requests.'),
-            'emptyTextOptions' => ['class' => 'text-sm text-gray-500'],
-            ],
-        ); ?>
+            <?= ListView::widget(
+                [
+                    'id' => 'list-view-posts',
+                    'dataProvider' => $dataProvider,
+                    'itemView' => '_joinRequest',
+                    'itemOptions' => ['class' => 'item mb-2'],
+                    'layout' => "{items}\n{pager}",
+                    'summary' => '',
+                    'emptyText' => Yii::t('app/group', 'No pending requests.'),
+                    'emptyTextOptions' => ['class' => 'text-sm text-gray-500'],
+                ],
+            ); ?>
         </div>
     </div>
 
-    
-    </div>
+
+</div>
 </div>
