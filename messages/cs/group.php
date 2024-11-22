@@ -50,6 +50,13 @@ return [
     'Members' => 'Členové',
     'Owner' => 'Vlastník',
     'Manage' => 'Spravovat',
+    'Member for of this group for {time}' => 'Členem skupiny po dobu {time}',
+    'Number of posts {count}' => 'Počet příspěvků {count}',
+    'Kick User' => 'Vyhodit uživatele',
+    'You have no members yet.' => 'Zatím nemáte žádné členy.',
+    'See who is part of the group.' => 'Zjistěte se, kdo je součástí skupiny.',
+    'Group Members' => 'Členové skupiny',
+
 
     'No groups found.' => 'Nebyly nalezeny žádné skupiny.',
     'No {type}' => 'Žádné {type}',

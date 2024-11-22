@@ -8,6 +8,7 @@ return [
 
     'Member since {date}' => 'Členem od {date}',
     'Last Active' => 'Poslední aktivita',
+    'Search Users...' => 'Hledat uživatele...',
 
     'New Password' => 'Nové heslo',
     'Repeat New Password' => 'Zopakujte nové heslo',

@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\enums\GroupType;
 use app\models\forms\GroupForm;
 use app\models\Group;
+use app\models\search\GroupMemberSearch;
 use app\models\search\GroupPostSearch;
 use app\models\search\UserGroupSearch;
 use app\models\sort\PostSort;
@@ -40,7 +41,7 @@ class GroupController extends Controller
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['view'],
+                        'actions' => ['view', 'members'],
                         'allow' => true,
                         'roles' => ['participateInGroup'],
                         'roleParams' => [
@@ -215,7 +216,7 @@ class GroupController extends Controller
     {
         $model = Group::findOne($id);
         $user = User::findOne(Yii::$app->user->id);
- 
+
         if ($model === null || $model->active == false) {
             throw new NotFoundHttpException(Yii::t('app/group', 'Group not found.'));
         }
@@ -236,6 +237,29 @@ class GroupController extends Controller
 
         return $this->render('joinRequests', [
             'dataProvider' => $dataProvider,
+            'model' => $model,
+        ]);
+    }
+
+    public function actionMembers(int $id): string
+    {
+        $model = Group::findOne($id);
+        if ($model === null || $model->active == false) {
+            throw new NotFoundHttpException(Yii::t('app/user', 'User not found.'));
+        }
+        // Initialize the search model for group members
+        $userSearchModel = new GroupMemberSearch(['active' => 1]);
+        $userSearchModel->load(Yii::$app->request->queryParams);
+
+        $userProvider = $userSearchModel->search(array_merge(
+            Yii::$app->request->queryParams,
+            ['id' => $id]
+        ));
+
+
+        return $this->render('members', [
+            'userSearchModel' => $userSearchModel,
+            'userProvider' => $userProvider,
             'model' => $model,
         ]);
     }

@@ -37,11 +37,19 @@ class GroupMembershipController extends Controller
                         ],
                     ],
                     [
-                        'actions' => ['approve-request', 'reject-request', 'kick-user'],
+                        'actions' => ['approve-request', 'reject-request'],
                         'allow' => true,
                         'roles' => ['manageGroup'],
                         'roleParams' => [
                             'groupId' => GroupJoinRequest::findOne(Yii::$app->request->get('id'))?->group_id,
+                        ],
+                    ],
+                    [
+                        'actions' => ['kick-user'],
+                        'allow' => true,
+                        'roles' => ['manageGroup'],
+                        'roleParams' => [
+                            'groupId' => Yii::$app->request->get('id'),
                         ],
                     ],
                     [
