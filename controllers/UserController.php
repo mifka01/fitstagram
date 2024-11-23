@@ -33,7 +33,7 @@ class UserController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['permitted-users', 'revoke-permitted-user', 'add-permitted-user', 'profile'],
+                        'actions' => ['permitted-users', 'revoke-permitted-user', 'add-permitted-user'],
                         'roles' => ['@'],
                     ],
                     [
@@ -46,6 +46,11 @@ class UserController extends Controller
                         'actions' => ['delete'],
                         'roles' => ['admin'],
                     ],
+                    [
+                        'allow' => true,
+                        'actions' => ['profile'],
+                        'roles' => ['?'],
+                    ]
                 ],
             ],
         ];
@@ -62,7 +67,7 @@ class UserController extends Controller
         $model = User::findByUsername($username);
         $user = $this->getCurrentUser();
 
-        if ($model === null || $user == null) {
+        if ($model === null) {
             throw new NotFoundHttpException('User not found');
         }
 
@@ -78,7 +83,8 @@ class UserController extends Controller
             GroupType::JOINED
         );
 
-        $isOwnProfile = $model->id === $user->id;
+
+        $isOwnProfile = $user !== null && $model->id === $user->id;
 
         $posts = $model->getPosts()->deleted(false)->banned(false);
 
@@ -92,7 +98,7 @@ class UserController extends Controller
 
         return $this->render('profile', [
             'model' => $model,
-            'isOwnProfile' => $model->id === $user->id,
+            'isOwnProfile' => $isOwnProfile,
             'ownedGroupsProvider' => $ownedProvider,
             'joinedGroupsProvider' => $joinedProvider,
             'ownedSearchModel' => $ownedSearchModel,

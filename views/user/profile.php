@@ -62,7 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         </div>
                     <?php else: ?>
                         <div class="flex flex-wrap justify-end self-stretch -m-2">
-                            <?php if ($currentUser->isPermittedUser($model->id)): ?>
+                            <?php if ($currentUser != null && $currentUser->isPermittedUser($model->id)): ?>
                                 <?= Html::a(
                                     Yii::t('app/user', 'Remove Friend'),
                                     ['user/revoke-permitted-user', 'id' => $model->id],
@@ -119,10 +119,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         <?php if ($countOwnedGroups > 0): ?>
                             <?= GroupWidget::widget([
                                 'title' => Yii::t('app/group', 'Created Groups'),
-                                'itemButtonLabel' => Yii::t('app/group', 'View'),
-                                'itemButtonRoute' => function ($model) {
+                                'itemButtonLabel' => $currentUser != null ? Yii::t('app/group', 'View') : false,
+                                'itemButtonRoute' => $currentUser != null ? function ($model) {
                                     return ['group/view', 'id' => $model->id];
-                                },
+                                } : false,
                                 'linkOnTitle' => true,
                                 'provider' => $ownedGroupsProvider,
                                 'ajax' => true,
