@@ -44,18 +44,22 @@ class UserRemoveForm extends Model
             $user->deleted = (int)true;
 
             foreach ($user->getPosts()->all() as $post) {
+                $postform = new PostRemoveForm();
                 /** @var Post $post */
-                $post->deleted = (int)true;
-                if (!$post->save()) {
+                $postform->id = $post->id;
+
+                if (!$postform->delete()) {
                     $transaction->rollBack();
                     return false;
                 }
             }
 
-            foreach ($user->getComments()->all() as $comment) {
+            foreach ($user->getcomments()->all() as $comment) {
+                $commentform = new CommentRemoveForm();
                 /** @var Comment $comment */
-                $comment->deleted = (int)true;
-                if (!$comment->save()) {
+                $commentform->id = $comment->id;
+
+                if (!$commentform->delete()) {
                     $transaction->rollBack();
                     return false;
                 }
@@ -103,21 +107,25 @@ class UserRemoveForm extends Model
 
         $transaction = Yii::$app->db->beginTransaction();
         try {
-            $user->banned = (int)true;
+            $user->deleted = (int)true;
 
             foreach ($user->getPosts()->all() as $post) {
+                $postform = new PostRemoveForm();
                 /** @var Post $post */
-                $post->banned = (int)true;
-                if (!$post->save()) {
+                $postform->id = $post->id;
+
+                if (!$postform->ban()) {
                     $transaction->rollBack();
                     return false;
                 }
             }
 
-            foreach ($user->getComments()->all() as $comment) {
+            foreach ($user->getcomments()->all() as $comment) {
+                $commentform = new CommentRemoveForm();
                 /** @var Comment $comment */
-                $comment->banned = (int)true;
-                if (!$comment->save()) {
+                $commentform->id = $comment->id;
+
+                if (!$commentform->ban()) {
                     $transaction->rollBack();
                     return false;
                 }
@@ -164,28 +172,29 @@ class UserRemoveForm extends Model
 
         $transaction = Yii::$app->db->beginTransaction();
         try {
-            $user->banned = (int)false;
+            $user->deleted = (int)true;
 
             foreach ($user->getPosts()->all() as $post) {
+                $postform = new PostRemoveForm();
                 /** @var Post $post */
-                $post->banned = (int)false;
-                if (!$post->save()) {
+                $postform->id = $post->id;
+
+                if (!$postform->unban()) {
                     $transaction->rollBack();
                     return false;
                 }
             }
 
-            foreach ($user->getComments()->all() as $comment) {
+            foreach ($user->getcomments()->all() as $comment) {
+                $commentform = new CommentRemoveForm();
                 /** @var Comment $comment */
-                $comment->banned = (int)false;
-                if (!$comment->save()) {
+                $commentform->id = $comment->id;
+
+                if (!$commentform->unban()) {
                     $transaction->rollBack();
                     return false;
                 }
             }
-            
-
-            $user->generateAuthKey();
 
             if (!$user->save(false)) {
                 $transaction->rollBack();

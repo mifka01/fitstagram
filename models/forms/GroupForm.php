@@ -120,7 +120,6 @@ class GroupForm extends Model
 
         $transaction = Yii::$app->db->beginTransaction();
         try {
-            $group->active = (int)false;
             $group->deleted = (int)true;
 
             foreach ($group->getPosts()->all() as $post) {
@@ -168,7 +167,6 @@ class GroupForm extends Model
 
         $transaction = Yii::$app->db->beginTransaction();
         try {
-            $group->active = (int)false;
             $group->banned = (int)true;
 
             foreach ($group->getPosts()->all() as $post) {
@@ -208,7 +206,6 @@ class GroupForm extends Model
 
         $transaction = Yii::$app->db->beginTransaction();
         try {
-            $group->active = (int)false;
             $group->banned = (int)false;
 
             foreach ($group->getPosts()->all() as $post) {
