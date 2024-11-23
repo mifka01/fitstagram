@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\forms\MediaFileForm;
 use app\models\forms\PostForm;
+use app\models\forms\PostRemoveForm;
 use app\models\forms\PostVoteForm;
 use app\models\MediaFile;
 use app\models\Post;
@@ -169,5 +170,20 @@ class PostController extends Controller
         $path = Yii::getAlias('@app') . DIRECTORY_SEPARATOR . MediaFileForm::UPLOAD_PATH . DIRECTORY_SEPARATOR . $mediaFile->path;
 
         return Yii::$app->response->sendFile($path, $mediaFile->name);
+    }
+
+    public function actionDelete(int $id): Response
+    {
+        $model = new PostRemoveForm();
+        $model->id = $id;
+        $model->load(Yii::$app->request->post());
+
+        if ($model->delete()) {
+            Yii::$app->session->setFlash('success', Yii::t('app/post', 'Post has been deleted.'));
+            return $this->goHome();
+        } else {
+            Yii::$app->session->setFlash('error', Yii::t('app/post', 'Failed to delete post.'));
+            return $this->goHome();
+        }
     }
 }
