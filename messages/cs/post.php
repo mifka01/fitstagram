@@ -29,5 +29,22 @@ return [
     'Waiting for results...' => 'Čekání na výsledky...',
     'Select a tag ...' => 'Vyberte štítek ...',
 
-'You cannot make a private post in a group.' => 'Nemůžete vytvořit soukromý příspěvek ve skupině.',
+    'You cannot make a private post in a group.' => 'Nemůžete vytvořit soukromý příspěvek ve skupině.',
+
+    'Share your moments with the community' => 'Sdílejte své okamžiky s komunitou',
+    'Upload Images' => 'Vybrat obrázky',
+    'Upload a file' => 'Nahrát soubor',
+    'or drag and drop' => 'nebo přetáhněte',
+    'Share your thoughts...' => 'Sdílejte své myšlenky...',
+    'Add tags...' => 'Přidat štítky...',
+    'Sharing Options' => 'Možnosti Sdílení',
+    'Public - Share with everyone' => 'Veřejné - Sdílet s každým',
+    'Private - Share with your friends' => 'Soukromé - Sdílet s přáteli',
+    'Group - Share with group members' => 'Skupina - Sdílet se členy skupiny',
+    'Select a group...' => 'Vyberte skupinu...',
+
+    'Location' => 'Místo',
+    'Enter location' => 'Zadejte místo',
+    'Select Images...' => 'Vyberte Obrázky...',
+
 ];

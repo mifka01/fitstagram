@@ -56,6 +56,11 @@ class GroupController extends Controller
                             'groupId' => Yii::$app->request->get('id'),
                         ],
                     ],
+                    [
+                        'actions' => ['list'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
                 ],
             ],
         ];
@@ -279,5 +284,35 @@ class GroupController extends Controller
             Yii::$app->session->setFlash('error', Yii::t('app/group', 'Failed to delete group.'));
             return $this->redirect(['group/view', 'id' => $id]);
         }
+    }
+
+    /**
+     * List action for select2
+     *
+     * @param ?string $q
+     * @param ?int $id
+     * @return array<string, array<mixed>>
+     */
+    public function actionList($q = null, $id = null): array
+    {
+        $user = Yii::$app->user;
+        $user = User::findOne($user->id);
+        if ($user === null) {
+            return [];
+        }
+
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $out = ['results' => ['id' => '', 'text' => '']];
+
+        if (!is_null($q)) {
+            $data = $user->getJoinedGroups()->andWhere(['like', 'name', $q])->limit(20)->select('id, name AS text')->asArray()->all();
+            $out['results'] = $data;
+        } elseif ($id > 0) {
+            $group = Group::findOne($id);
+            if ($group) {
+                $out['results'] = ['id' => $id, 'text' => $group->name];
+            }
+        }
+        return $out;
     }
 }
