@@ -17,7 +17,7 @@ $this->title = Yii::t('app', 'Groups');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<div class="bg-gray-50 flex flex-col justify-center sm:px-6 lg:px-8 space-y-6">
+<div class="min-h-screen px-4 sm:px-6 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-3xl">
         <h1 class="text-center text-3xl font-bold tracking-tight text-gray-900">
             <?= Html::encode($this->title) ?>
