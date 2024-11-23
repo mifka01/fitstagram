@@ -52,7 +52,12 @@ class SiteController extends Controller
         ]);
     }
 
-    public function actionSearch()
+    /**
+     * Displays homepage.
+     *
+     * @return string
+     */
+    public function actionSearch(): string
     {
         return $this->render('search');
     }

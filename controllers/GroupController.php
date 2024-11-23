@@ -309,9 +309,10 @@ class GroupController extends Controller
         $out = ['results' => ['id' => '', 'text' => '']];
 
         if (!is_null($q)) {
-            $data = $user->getGroups()->andWhere(['like', 'name', $q])->deleted(false)->banned(false)->limit(20)->asArray()->all();
+            $data = $user->getGroups()->andWhere(['like', 'name', $q])->deleted(false)->banned(false)->limit(20)->all();
             $data = array_map(function ($group) {
-                return ['id' => $group['id'], 'text' => $group['name']];
+                /** @var Group $group */
+                return ['id' => $group->id, 'text' => $group->name];
             }, $data);
             $out['results'] = $data;
         } elseif ($id > 0) {
