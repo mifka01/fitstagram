@@ -80,7 +80,7 @@ class UserController extends Controller
 
         $isOwnProfile = $model->id === $user->id;
 
-        $posts = $model->getPosts()->deleted(false);
+        $posts = $model->getPosts()->deleted(false)->banned(false);
 
         if (!$isOwnProfile) {
             /** @var GroupQuery $query */

@@ -183,9 +183,9 @@ class GroupController extends Controller
 
         $isMember = false;
 
-        $posts = $model->getPosts()->deleted(false);
+        $posts = $model->getPosts()->deleted(false)->banned(false);
 
-        $users = $model->getMembers()->active(true);
+        $users = $model->getMembers()->active()->banned(false)->deleted(false);
 
 
         if ($user !== null) {
