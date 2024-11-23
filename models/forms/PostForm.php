@@ -47,10 +47,16 @@ class PostForm extends Model
             [['place'], 'string', 'max' => 255],
             [['description'], 'string', 'max' => 512],
             [['is_private'], 'boolean'],
-            [['is_private'], 'required', 'requiredValue' => 0, 'when' => function ($model) {
-                return !empty($model->group);
-            }, 'whenClient' => 'function (attribute, value) { return $("#postform-group").val() !== ""; }',
-                'message' => Yii::t('app/post', 'You cannot make a private post in a group.')],
+            [
+                ['is_private'],
+                'required',
+                'requiredValue' => 0,
+                'when' => function ($model) {
+                    return !empty($model->group);
+                },
+                'whenClient' => 'function (attribute, value) { return $("#postform-group").val() !== ""; }',
+                'message' => Yii::t('app/post', 'You cannot make a private post in a group.')
+            ],
             ['tags', 'each', 'rule' => ['match', 'pattern' => '/^#?[a-zA-Z0-9_]+$/']],
             [['group'], 'integer']
         ];
@@ -86,7 +92,7 @@ class PostForm extends Model
         $post->description = $this->description;
         $post->is_private = intval($this->is_private);
         if (!empty($this->group)) {
-            $group = Group::find()->deleted(false)->banned(false)->active(true)->andWhere(['id' => $this->group])->one();
+            $group = Group::find()->deleted(false)->banned(false)->andWhere(['id' => $this->group])->one();
             if (!($group instanceof Group)) {
                 throw new NotFoundHttpException(Yii::t('app/error', 'Group not found.'));
             }
@@ -133,7 +139,7 @@ class PostForm extends Model
         foreach ($this->mediaFiles as $file) {
             $mediaModel = new MediaFileForm(MediaFileForm::DIR_PATH_POST);
             $mediaModel->file = $file;
-            $mediaModel->postId= $postId;
+            $mediaModel->postId = $postId;
 
             if (!$mediaModel->upload()) {
                 return false;

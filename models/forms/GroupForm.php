@@ -20,8 +20,6 @@ class GroupForm extends Model
 
     public string $description = '';
 
-    public bool $active = true;
-
     public ?Group $group = null;
 
     public ?int $id = null;
@@ -40,7 +38,6 @@ class GroupForm extends Model
             [['name'], 'required', 'on' => self::SCENARIO_CREATE],
             [['name'], 'string', 'max' => 255],
             [['description'], 'string', 'max' => 512],
-            [['active'], 'boolean'],
         ];
     }
 
@@ -54,7 +51,6 @@ class GroupForm extends Model
         return [
             'name' => Yii::t('app/group', 'Name'),
             'description' => Yii::t('app/group', 'Description'),
-            'active' => Yii::t('app/group', 'Active'),
         ];
     }
 
@@ -76,7 +72,6 @@ class GroupForm extends Model
 
         $this->group->name = $this->name;
         $this->group->description = $this->description;
-        $this->group->active = (int)$this->active;
 
         // Only set the owner_id if it's a new group
         if ($this->group->isNewRecord) {

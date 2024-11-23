@@ -35,26 +35,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         'rows' => 4
                     ]) ?>
 
-                    <?= $form->field($model, 'active', [
-                        'template' => '
-                        <label class="inline-flex items-center cursor-pointer">
-                            {input}
-                        <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-orange-300 
-                        rounded-full peer peer-checked:after:translate-x-full 
-                        rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white 
-                        after:content-[\'\'] after:absolute after:top-[2px] after:start-[2px] 
-                        after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5
-                        after:transition-all peer-checked:bg-orange-600"></div>
-                            <span class="ms-3 text-sm font-medium text-gray-900">
-                                '.$model->getAttributeLabel("active").'
-                            </span>
-                        </label>',
-                            ])->checkbox([
-                        'class' => 'sr-only peer',
-                        'label' => false,
-                    ]) ?>
-                    
-
                     <?= Html::submitButton(
                         Yii::t('app/group', 'Edit Group'),
                         ['class' => 'w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition duration-150 ease-in-out',

@@ -19,7 +19,7 @@ class GroupSearch extends Group
     public function rules(): array
     {
         return [
-            [['id', 'owner_id', 'active', 'deleted'], 'integer'],
+            [['id', 'owner_id', 'deleted'], 'integer'],
             [['name', 'created_at', 'updated_at'], 'safe'],
         ];
     }
@@ -63,7 +63,6 @@ class GroupSearch extends Group
         $query->andFilterWhere([
             'id' => $this->id,
             'owner_id' => $this->owner_id,
-            'active' => $this->active,
             'deleted' => $this->deleted,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

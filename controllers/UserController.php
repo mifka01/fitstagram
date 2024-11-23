@@ -6,7 +6,6 @@ use app\enums\GroupType;
 use app\models\forms\PermittedUserForm;
 use app\models\forms\UserRemoveForm;
 use app\models\forms\UserUpdateForm;
-use app\models\query\GroupQuery;
 use app\models\search\PermittedUserSearch;
 use app\models\search\UserGroupSearch;
 use app\models\User;
@@ -89,10 +88,6 @@ class UserController extends Controller
         $posts = $model->getPosts()->deleted(false)->banned(false);
 
         if (!$isOwnProfile) {
-            /** @var GroupQuery $query */
-            $query = $ownedProvider->query;
-            $query->active();
-
             $posts->public(true);
         }
 
@@ -104,7 +99,7 @@ class UserController extends Controller
             'ownedSearchModel' => $ownedSearchModel,
             'joinedSearchModel' => $joinedSearchModel,
             'countOwnedGroups' => $ownedProvider->getTotalCount(),
-            'countJoinedGroups' => $model->getJoinedGroups()->active()->count(),
+            'countJoinedGroups' => $model->getJoinedGroups()->count(),
             'countPosts' => $posts->count(),
             'currentUser' => $user
         ]);

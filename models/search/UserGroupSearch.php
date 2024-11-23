@@ -125,15 +125,15 @@ class UserGroupSearch extends Model
 
         if ($user === null) {
             if ($type === GroupType::PUBLIC) {
-                return Group::find()->active()->deleted(false)->banned(false);
+                return Group::find()->deleted(false)->banned(false);
             }
             return Group::find()->where('1=0');
         }
 
         $query = match ($type) {
-            GroupType::PUBLIC => Group::find()->active()->andWhere(['!=', 'owner_id', $user->id])->deleted(false)->banned(false),
+            GroupType::PUBLIC => Group::find()->andWhere(['!=', 'owner_id', $user->id])->deleted(false)->banned(false),
             GroupType::OWNED => $user->getCreatedGroups()->deleted(false)->banned(false),
-            GroupType::JOINED => $user->getJoinedGroups()->active()->deleted(false)->banned(false),
+            GroupType::JOINED => $user->getJoinedGroups()->deleted(false)->banned(false),
         };
 
         $query->deleted(false)->banned(false);

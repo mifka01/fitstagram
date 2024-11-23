@@ -84,7 +84,6 @@ Table Group {
   id integer [pk, increment]
   name varchar [not null]
   owner_id integer [not null, ref: > User.id]
-  active boolean
   deleted boolean
   created_at timestamp 
   updated_at timestamp [default: `CURRENT_TIMESTAMP`]

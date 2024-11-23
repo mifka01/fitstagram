@@ -25,6 +25,6 @@ class GroupOwnerRule extends Rule
             return false;
         }
 
-        return Group::find()->active()->deleted(false)->banned(false)->andWhere(['id' => $params['groupId']])->andWhere(['owner_id' => $user])->exists();
+        return Group::find()->deleted(false)->banned(false)->andWhere(['id' => $params['groupId']])->andWhere(['owner_id' => $user])->exists();
     }
 }

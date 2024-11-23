@@ -182,7 +182,7 @@ class GroupController extends Controller
         $provider = $searchModel->search(Yii::$app->request->queryParams);
         $provider->setSort($sort);
 
-        if ($model === null || $model->active == false) {
+        if ($model === null) {
             throw new NotFoundHttpException(Yii::t('app/group', 'Group not found.'));
         }
 
@@ -194,7 +194,7 @@ class GroupController extends Controller
 
         $posts = $model->getPosts()->deleted(false)->banned(false);
 
-        $users = $model->getMembers()->active()->banned(false)->deleted(false);
+        $users = $model->getMembers()->banned(false)->deleted(false);
 
 
         if ($user !== null) {
@@ -227,7 +227,7 @@ class GroupController extends Controller
         $model = Group::findOne($id);
         $user = User::findOne(Yii::$app->user->id);
 
-        if ($model === null || $model->active == false) {
+        if ($model === null) {
             throw new NotFoundHttpException(Yii::t('app/group', 'Group not found.'));
         }
 
@@ -254,7 +254,7 @@ class GroupController extends Controller
     public function actionMembers(int $id): string
     {
         $model = Group::findOne($id);
-        if ($model === null || $model->active == false) {
+        if ($model === null) {
             throw new NotFoundHttpException(Yii::t('app/group', 'Group not found.'));
         }
         // Initialize the search model for group members
