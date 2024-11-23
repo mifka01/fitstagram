@@ -15,7 +15,6 @@ $this->params['breadcrumbs'][] = $this->title;
         <p class="mt-2 text-center text-sm text-gray-600 mb-6">
             <?= Yii::t('app', "Find what you're looking for.") ?>
         </p>
-        
             <div class="max-w-xl mx-auto">
                 <?= SearchInput::widget([
                     'search_id' => 'main-search',

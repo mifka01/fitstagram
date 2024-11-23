@@ -35,7 +35,7 @@ use yii\helpers\Html;
             <?php endif; ?>
 
             <div class="mt-2 flex items-center space-x-2 text-sm text-gray-500">
-                <span><?= Html::encode($model->owner->username) ?></span>
+                <span><a href="<?= Yii::$app->urlManager->createUrl(['/user/profile', 'username' => $model->owner->username]) ?>" class="hover:text-orange-600"><?= Html::encode($model->owner->username) ?></a></span>
                 <span>•</span>
                 <span><?= Yii::$app->formatter->asRelativeTime($model->updated_at) ?></span>
             </div>
