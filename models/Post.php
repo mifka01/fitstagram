@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\models\query\CommentQuery;
 use app\models\query\PostQuery;
 use Yii;
 use yii\db\ActiveQuery;
@@ -83,11 +84,13 @@ class Post extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Comments]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return CommentQuery
      */
-    public function getComments(): ActiveQuery
+    public function getComments(): CommentQuery
     {
-        return $this->hasMany(Comment::class, ['post_id' => 'id']);
+        /** @var CommentQuery $query * */
+        $query = $this->hasMany(Comment::class, ['post_id' => 'id']);
+        return $query;
     }
 
     /**

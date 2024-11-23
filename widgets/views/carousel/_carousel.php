@@ -11,11 +11,11 @@ use yii\helpers\Html;
     <div class="relative  overflow-hidden rounded-lg">
         <!-- Items -->
         <?php foreach ($mediaFiles as $index => $mediaFile): ?>
-        <div class="<?= $index === 0 ? 'relative w-full h-full flex items-center justify-center' : 'hidden relative w-full h-full flex items-center justify-center' ?>" data-carousel-item>
-    <img src="/<?= Html::encode($mediaFile->path ?? '') ?>"
-        class="rounded-lg w-full h-full object-contain"
-        alt="<?= Html::encode($mediaFile->name ?? '') ?>">
-</div>
+        <div class="<?= $index === 0 ? 'relative w-full flex items-center justify-center' : 'hidden relative w-full h-full flex items-center justify-center' ?>" data-carousel-item>
+            <img src="/<?= Html::encode($mediaFile->path ?? '') ?>"
+                class="rounded-lg w-full h-full object-contain"
+                alt="<?= Html::encode($mediaFile->name ?? '') ?>">
+        </div>
         <?php endforeach; ?>
 
         <!-- Slider controls -->

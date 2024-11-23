@@ -114,6 +114,17 @@ class Group extends \yii\db\ActiveRecord
     }
 
     /**
+     * Checks if the user is the owner of the group.
+     *
+     * @param int|null|string $userId
+     * @return bool
+     */
+    public function isOwner($userId): bool
+    {
+        return $this->owner_id === $userId;
+    }
+
+    /**
      * Gets query for [[Users]].
      *
      * @return UserQuery

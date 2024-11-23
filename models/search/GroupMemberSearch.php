@@ -37,10 +37,8 @@ class GroupMemberSearch extends Model
      */
     public function search($params): ActiveDataProvider
     {
-        // Query users through the joining table GroupMember
-        $query = GroupMember::find()
-            ->joinWith('user')
-            ->where(['group_member.group_id' => $params['id']]);
+        $query = GroupMember::find()->joinWith(['user', 'group'])->where(['group_id' => $params['id']]);
+        $query->andWhere(['user.deleted' => false, 'user.banned' => false]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

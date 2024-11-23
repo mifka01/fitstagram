@@ -4,12 +4,12 @@
 /** @var app\models\search\UserSearch $userSearchModel */
 /** @var yii\data\ActiveDataProvider $userProvider */
 
-use app\models\GroupMember;
 use app\widgets\UserWidget;
 use yii\helpers\Html;
 
 $this->title = Yii::t('app/group', 'Members');
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 
 <div class="bg-gray-50 flex flex-col justify-center sm:px-6 lg:px-8 space-y-6">
@@ -22,11 +22,18 @@ $this->params['breadcrumbs'][] = $this->title;
         </p>
     </div>
 
-    <?php if (!Yii::$app->user->isGuest): ?>
-        <?= UserWidget::widget([
+    <?= UserWidget::widget([
             'title' => Yii::t('app/group', 'Group Members'),
-            'itemButtonLabel' => Yii::t('app/group', 'Remove User'),
-            'itemButtonRoute' => function (GroupMember $model) {
+            'itemButtonLabel' => function ($model) {
+                if ($model->group->isOwner($model->user_id)) {
+                    return false;
+                }
+                    return Yii::t('app/group', 'Remove user');
+            },
+            'itemButtonRoute' => function ($model) {
+                if ($model->group->isOwner($model->user_id)) {
+                    return false;
+                }
                 return ['group-membership/kick-user', 'id' => $model->group_id, 'userId' => $model->user_id];
             },
             'itemView' => '_groupMember',
@@ -34,6 +41,5 @@ $this->params['breadcrumbs'][] = $this->title;
             'ajax' => true,
             'emptyMessage' => Yii::t('app/group', 'You have no members yet.'),
             'searchModel' => $userSearchModel
-        ]) ?>
-    <?php endif; ?>
+    ]) ?>
 </div>

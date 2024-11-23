@@ -2,49 +2,11 @@
 
 namespace app\widgets;
 
+use app\widgets\GroupWidget;
 use Yii;
-use yii\base\Model;
-use yii\base\Widget;
-use yii\data\ActiveDataProvider;
 
-class UserWidget extends Widget
+class UserWidget extends GroupWidget
 {
-    public string $title;
-
-    public ActiveDataProvider $provider;
-
-    /**
-     * @var string|array<mixed>|false $itemButtonLabel
-     */
-    public $itemButtonLabel = false;
-
-    /**
-     * @var string|array<mixed> $itemButtonRoute
-     */
-    public $itemButtonRoute = '';
-
-    public string|false $actionButtonLabel = false;
-
-    /**
-     * @var string|array<mixed> $actionButtonRoute
-     */
-    public $actionButtonRoute = '';
-
-    public string|false $updateButtonLabel = false;
-
-    /**
-     * @var string|array<mixed> $updateButtonRoute
-     */
-    public $updateButtonRoute = '';
-
-    public bool $ajax = false;
-
-    public string $emptyMessage = 'No users found.';
-
-    public Model|false $searchModel;
-
-    public string $searchParam = 'keyword';
-
     public string $itemView = '';
 
     public function init(): void

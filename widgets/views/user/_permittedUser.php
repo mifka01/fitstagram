@@ -5,7 +5,7 @@
 /** @var string|array<mixed> $itemButtonRoute */
 /** @var string|false $updateButtonLabel */
 /** @var string|array<mixed> $updateButtonRoute */
-/** @var app\models\PermittedUser $model */
+/** @var app\models\User $model */
 
 use Yii;
 use yii\helpers\Html;
@@ -16,8 +16,8 @@ use yii\helpers\Html;
         <div class="flex-1 min-w-0">
             <div class="flex items-center space-x-3">
                 <h2 class="text-lg font-medium text-gray-900 truncate">
-                    <a href="<?= Yii::$app->urlManager->createUrl(['/user/profile', 'username' => $model->permittedUser->username]) ?>">
-                        <?= $model->permittedUser->username ?>
+                    <a href="<?= Yii::$app->urlManager->createUrl(['/user/profile', 'username' => $model->username]) ?>">
+                        <?= $model->username ?>
                     </a>
                 </h2>
             </div>

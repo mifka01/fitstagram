@@ -28,7 +28,7 @@ class PostCommentListView extends ListView
 
         $this->id = 'list-view-comments-' . $this->post?->id;
         $this->dataProvider = new ActiveDataProvider([
-            'query' => $this->post?->getComments()->orderBy(['created_at' => SORT_DESC]),
+            'query' => $this->post?->getComments()->deleted(false)->banned(false)->orderBy(['created_at' => SORT_DESC]),
             'pagination' => [
                 'pageSize' => 3,
                 'pageParam' => self::PAGE_PARAM,

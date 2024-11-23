@@ -9,8 +9,23 @@ namespace app\models\query;
  */
 class CommentQuery extends \yii\db\ActiveQuery
 {
-    /*public function active()
+    /**
+     * {@inheritDoc}
+     *
+     * @return \app\models\query\CommentQuery
+     */
+    public function deleted(bool $deleted = true): self
     {
-        return $this->andWhere('[[status]]=1');
-    }*/
+        return $this->andWhere(['deleted' => $deleted]);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return \app\models\query\CommentQuery
+     */
+    public function banned(bool $banned = true): self
+    {
+        return $this->andWhere(['banned' => $banned]);
+    }
 }

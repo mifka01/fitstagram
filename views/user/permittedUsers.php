@@ -4,7 +4,7 @@
 /** @var app\models\search\PermittedUserSearch $permittedUserSearchModel */
 /** @var yii\data\ActiveDataProvider $permittedUserProvider */
 
-use app\models\PermittedUser;
+use app\models\User;
 use app\widgets\UserWidget;
 use yii\helpers\Html;
 
@@ -26,8 +26,8 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= UserWidget::widget([
             'title' => Yii::t('app/user', 'Friends'),
             'itemButtonLabel' => Yii::t('app/user', 'Remove'),
-            'itemButtonRoute' => function (PermittedUser $model) {
-                return ['user/revoke-permitted-user', 'id' => $model->permitted_user_id];
+            'itemButtonRoute' => function (User $model) {
+                return ['user/revoke-permitted-user', 'id' => $model->id];
             },
             'itemView' => '_permittedUser',
             'provider' => $permittedUserProvider,

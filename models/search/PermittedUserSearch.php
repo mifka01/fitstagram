@@ -2,9 +2,11 @@
 
 namespace app\models\search;
 
-use app\models\PermittedUser;
+use app\models\User;
+use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use yii\web\NotFoundHttpException;
 
 /**
  * PermiedUserSearch represents the model behind the search form for fetching permmited users.
@@ -38,9 +40,14 @@ class PermittedUserSearch extends Model
     public function search($params): ActiveDataProvider
     {
 
-        $query = PermittedUser::find()
-            ->joinWith('permittedUser')
-            ->where(['permitted_user.user_id' => $params['id']])->andWhere(['!=','permitted_user.permitted_user_id', $params['id']]);
+        $user = $this->getCurrentUser();
+        if ($user === null) {
+            throw new NotFoundHttpException(Yii::t('app/error', 'User not found.'));
+        }
+
+        $permittedUserIds = $user->getPermittedUsers()->column();
+
+        $query = User::find()->where(['id' => $permittedUserIds])->deleted(false)->banned(false)->andWhere(['!=', 'id', $user->id]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -57,13 +64,32 @@ class PermittedUserSearch extends Model
         }
 
         if (!empty($this->keyword)) {
-            $query->andWhere(['like', 'user.username', $this->keyword]);
+            $query->andWhere(['like', 'username', $this->keyword]);
         }
 
         if ($this->active !== null) {
-            $query->andWhere(['user.active' => $this->active]);
+            $query->andWhere(['active' => $this->active]);
         }
 
         return $dataProvider;
+    }
+
+    /**
+     * Get the current user.
+     *
+     * @return User|null
+     * @throws NotFoundHttpException
+     */
+    private function getCurrentUser(): User|null
+    {
+        if (Yii::$app->user->isGuest) {
+            return null;
+        }
+
+        $user = User::findOne(Yii::$app->user->id);
+        if ($user === null) {
+            throw new NotFoundHttpException(Yii::t('app/error', 'User not found.'));
+        }
+        return $user;
     }
 }
