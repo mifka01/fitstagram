@@ -19,6 +19,7 @@ use yii\db\ActiveQuery;
  * @property int $owner_id
  * @property int|null $active
  * @property int|null $deleted
+ * @property int|null $banned
  * @property string $created_at
  * @property string|null $updated_at
  *
@@ -66,6 +67,7 @@ class Group extends \yii\db\ActiveRecord
             'owner_id' => Yii::t('app/group', 'Owner ID'),
             'active' => Yii::t('app/group', 'Active'),
             'deleted' => Yii::t('app/group', 'Deleted'),
+            'banned' => Yii::t('app/group', 'Banned'),
             'created_at' => Yii::t('app/group', 'Created At'),
             'updated_at' => Yii::t('app/group', 'Updated At'),
         ];
@@ -79,6 +81,16 @@ class Group extends \yii\db\ActiveRecord
     public function isDeleted(): bool
     {
         return $this->deleted == 1;
+    }
+
+    /**
+     * Checks if the group is deleted.
+     *
+     * @return bool
+     */
+    public function isBanned(): bool
+    {
+        return $this->banned == 1;
     }
 
     /**
