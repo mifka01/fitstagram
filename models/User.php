@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\models\query\GroupJoinRequestQuery;
 use app\models\query\GroupQuery;
 use app\models\query\PostQuery;
 use app\models\query\UserQuery;
