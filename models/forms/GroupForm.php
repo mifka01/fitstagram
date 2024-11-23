@@ -2,7 +2,6 @@
 
 namespace app\models\forms;
 
-use app\models\Comment;
 use app\models\Group;
 use app\models\GroupJoinRequest;
 use app\models\GroupMember;
@@ -125,18 +124,11 @@ class GroupForm extends Model
             $group->deleted = (int)true;
 
             foreach ($group->getPosts()->all() as $post) {
+                $postform = new PostRemoveForm();
                 /** @var Post $post */
-                $post->deleted = (int)true;
-                if (!$post->save()) {
-                    $transaction->rollBack();
-                    return false;
-                }
-            }
+                $postform->id = $post->id;
 
-            foreach ($group->getComments()->all() as $comment) {
-                /** @var Comment $comment */
-                $comment->deleted = (int)true;
-                if (!$comment->save()) {
+                if (!$postform->delete()) {
                     $transaction->rollBack();
                     return false;
                 }
@@ -145,6 +137,86 @@ class GroupForm extends Model
             foreach ($group->getGroupJoinRequests()->all() as $groupJoinRequest) {
                 /** @var GroupJoinRequest $groupJoinRequest */
                 if (!$groupJoinRequest->delete()) {
+                    $transaction->rollBack();
+                    return false;
+                }
+            }
+
+            if (!$group->save()) {
+                $transaction->rollBack();
+                return false;
+            }
+
+            $transaction->commit();
+            return true;
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+            throw $e;
+        } catch (\Throwable $e) {
+            $transaction->rollBack();
+            throw $e;
+        }
+    }
+
+    public function ban(): bool
+    {
+
+        $group = Group::findOne($this->id);
+        if ($group === null) {
+            return false;
+        }
+
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+            $group->active = (int)false;
+            $group->banned = (int)true;
+
+            foreach ($group->getPosts()->all() as $post) {
+                $postform = new PostRemoveForm();
+                /** @var Post $post */
+                $postform->id = $post->id;
+
+                if (!$postform->ban()) {
+                    $transaction->rollBack();
+                    return false;
+                }
+            }
+
+            if (!$group->save()) {
+                $transaction->rollBack();
+                return false;
+            }
+
+            $transaction->commit();
+            return true;
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+            throw $e;
+        } catch (\Throwable $e) {
+            $transaction->rollBack();
+            throw $e;
+        }
+    }
+
+    public function unban(): bool
+    {
+
+        $group = Group::findOne($this->id);
+        if ($group === null) {
+            return false;
+        }
+
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+            $group->active = (int)false;
+            $group->banned = (int)false;
+
+            foreach ($group->getPosts()->all() as $post) {
+                $postform = new PostRemoveForm();
+                /** @var Post $post */
+                $postform->id = $post->id;
+
+                if (!$postform->unban()) {
                     $transaction->rollBack();
                     return false;
                 }
