@@ -3,9 +3,12 @@
 namespace app\models\forms;
 
 use app\models\MediaFile;
+use Imagine\Gd\Imagine;
+use Imagine\Image\Box;
+use Imagine\Image\Palette\RGB;
+use Imagine\Image\Point;
 use Yii;
 use yii\base\Model;
-use yii\imagine\Image;
 use yii\web\UploadedFile;
 
 class MediaFileForm extends Model
@@ -46,7 +49,7 @@ class MediaFileForm extends Model
     public function rules(): array
     {
         return [
-            [['file'], 'file', 'skipOnEmpty' => $this->skipOnEmpty, 'extensions' => 'png, jpg, jpeg, webp, gif', 'maxSize' => 1024 * 1024 * 5],
+            [['file'], 'file', 'skipOnEmpty' => $this->skipOnEmpty, 'extensions' => 'png, jpg, jpeg, webp, gif', 'maxSize' => 5 * 1024 * 1024],
             [['postId', 'file'], 'required'],
             [['postId'], 'integer'],
         ];
@@ -68,16 +71,37 @@ class MediaFileForm extends Model
             mkdir($this->getFilePath() . $this->getFilePathPrefix(), 0777, true);
         }
 
-        $filename = $this->getUniqueFilename($this->file->extension === 'gif' ? 'gif' : 'jpg');
+        $filename = $this->getUniqueFilename();
         $path = $this->getFilePath() . $filename;
         $name = $this->file->name;
 
-        if ($this->file->extension === 'gif') {
-            move_uploaded_file($this->file->tempName, $path);
-        } else {
-            $imagine = Image::resize($this->file->tempName, self::IMAGE_RESOLUTION, self::IMAGE_RESOLUTION);
-            $imagine->save($path, ['jpeg_quality' => self::IMAGE_JPG_QUALITY]);
-        }
+        $imagine = new Imagine();
+
+        $size = new Box(self::IMAGE_RESOLUTION, self::IMAGE_RESOLUTION);
+        $palette = new RGB();
+        $targetImage = $imagine->create($size, $palette->color('#000', 100));
+
+        $sourceImage = $imagine->open($this->file->tempName);
+
+        $sourceSize = $sourceImage->getSize();
+        $ratioWidth = self::IMAGE_RESOLUTION / $sourceSize->getWidth();
+        $ratioHeight = self::IMAGE_RESOLUTION / $sourceSize->getHeight();
+        $ratio = min($ratioWidth, $ratioHeight);
+
+        $newWidth = (int)($sourceSize->getWidth() * $ratio);
+        $newHeight = (int)($sourceSize->getHeight() * $ratio);
+
+        $sourceImage->resize(new Box($newWidth, $newHeight));
+
+        $posX = (int)((self::IMAGE_RESOLUTION - $newWidth) / 2);
+        $posY = (int)((self::IMAGE_RESOLUTION - $newHeight) / 2);
+
+        $targetImage->paste($sourceImage, new Point($posX, $posY));
+
+        // Save the image
+        $targetImage->save($path, [
+        'jpeg_quality' => self::IMAGE_JPG_QUALITY
+        ]);
 
         $fileModel = new MediaFile([
             'name' => $name,

@@ -42,7 +42,7 @@ class PostForm extends Model
     {
 
         return [
-            [['mediaFiles'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg', 'maxFiles' => 5, 'maxSize' => 5 * 1024 * 1024],
+            [['mediaFiles'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg, jpeg, webp, gif', 'maxFiles' => 5, 'maxSize' => 5 * 1024 * 1024],
             [['mediaFiles'], 'required'],
             [['place'], 'string', 'max' => 255],
             [['description'], 'string', 'max' => 512],
