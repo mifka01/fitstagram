@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\models\query\CommentQuery;
 use app\models\query\GroupJoinRequestQuery;
 use app\models\query\GroupQuery;
 use app\models\query\PostQuery;
@@ -144,6 +145,19 @@ class Group extends \yii\db\ActiveRecord
     {
         /** @var PostQuery $query */
         $query = $this->hasMany(Post::class, ['group_id' => 'id']);
+        return $query;
+    }
+
+    /**
+     * Gets query for [[Comments]].
+     *
+     * @return CommentQuery
+     */
+    public function getComments(): ActiveQuery
+    {
+        /** @var CommentQuery $query */
+        $query = $this->hasMany(Comment::class, ['post_id' => 'id'])
+            ->viaTable('post', ['group_id' => 'id']);
         return $query;
     }
 

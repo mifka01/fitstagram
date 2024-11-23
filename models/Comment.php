@@ -14,6 +14,7 @@ use yii\db\ActiveQuery;
  * @property int $created_by
  * @property int $post_id
  * @property int|null $deleted
+ * @property int|null $banned
  * @property string $created_at
  * @property string $updated_at
  *
@@ -36,7 +37,7 @@ class Comment extends \yii\db\ActiveRecord
     {
         return [
             [['content', 'created_by', 'post_id'], 'required'],
-            [['created_by', 'post_id', 'deleted'], 'integer'],
+            [['created_by', 'post_id', 'deleted', 'banned'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['content'], 'string', 'max' => 512],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
@@ -57,6 +58,7 @@ class Comment extends \yii\db\ActiveRecord
             'created_by' => Yii::t('app/model', 'Created By'),
             'post_id' => Yii::t('app/model', 'Post ID'),
             'deleted' => Yii::t('app/model', 'Deleted'),
+            'banned' => Yii::t('app/model', 'Banned'),
             'created_at' => Yii::t('app/model', 'Created At'),
             'updated_at' => Yii::t('app/model', 'Updated At'),
         ];

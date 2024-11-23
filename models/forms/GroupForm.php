@@ -2,6 +2,7 @@
 
 namespace app\models\forms;
 
+use app\models\Comment;
 use app\models\Group;
 use app\models\GroupMember;
 use app\models\Post;
@@ -130,6 +131,16 @@ class GroupForm extends Model
                     return false;
                 }
             }
+
+            foreach ($group->getComments()->all() as $comment) {
+                /** @var Comment $comment */
+                $comment->deleted = (int)true;
+                if (!$comment->save()) {
+                    $transaction->rollBack();
+                    return false;
+                }
+            }
+
             $transaction->commit();
             return true;
         } catch (\Exception $e) {

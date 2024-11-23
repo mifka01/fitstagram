@@ -2,6 +2,7 @@
 
 namespace app\models\forms;
 
+use app\models\Comment;
 use app\models\Post;
 use app\models\User;
 use Yii;
@@ -49,6 +50,16 @@ class UserRemoveForm extends Model
                     return false;
                 }
             }
+
+            foreach ($user->getComments()->all() as $comment) {
+                /** @var Comment $comment */
+                $comment->deleted = (int)true;
+                if (!$comment->save()) {
+                    $transaction->rollBack();
+                    return false;
+                }
+            }
+
             $transaction->commit();
             return true;
         } catch (\Exception $e) {
@@ -85,6 +96,16 @@ class UserRemoveForm extends Model
                     return false;
                 }
             }
+
+            foreach ($user->getComments()->all() as $comment) {
+                /** @var Comment $comment */
+                $comment->banned = (int)true;
+                if (!$comment->save()) {
+                    $transaction->rollBack();
+                    return false;
+                }
+            }
+
             $transaction->commit();
             return true;
         } catch (\Exception $e) {
