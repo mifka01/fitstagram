@@ -33,7 +33,7 @@ class UserController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['permitted-users', 'revoke-permitted-user', 'add-permitted-user'],
+                        'actions' => ['permitted-users', 'revoke-permitted-user', 'add-permitted-user', 'profile', 'update'],
                         'roles' => ['@'],
                     ],
                     [
