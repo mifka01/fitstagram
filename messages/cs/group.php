@@ -74,4 +74,7 @@ return [
     'Membership request decllined.' => 'Žádost o členství byla zamítnuta.',
     'Error declining membership request.' => 'Při zamítnutí žádosti o členství došlo k chybě.',
     'Error approving membership request.' => 'Při schvalování žádosti o členství došlo k chybě.',
+
+    'Approve' => 'Schválit',
+    'Decline' => 'Zamítnout',
 ];
