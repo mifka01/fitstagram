@@ -15,6 +15,52 @@ $config = [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
     ],
+    'modules' => [
+        'main-search' => [
+            'class' => '\kazda01\search\SearchModule',
+            'rules' => [
+                [
+                    'allow' => true,
+                ],
+            ],
+            'searchConfig' => [
+                'UserSearch' => [
+                    'columns' => ['username'],
+                    'matchTitle' => function () {
+                        return Yii::t('app/model', 'User');
+                    },
+                    'matchText' => function ($model) {
+                        return $model->username;
+                    },
+                    'only_if' => function ($model) {
+                        return !$model->deleted && !$model->banned;
+                    },
+                    'route' => '/user/profile',
+                    'route_params' => function ($model) {
+                        return ['username' => $model->username];
+                    },
+                    'group_by' => true,
+                ],
+                'GroupSearch' => [
+                    'columns' => ['name'],
+                    'matchTitle' => function () {
+                        return Yii::t('app/group', 'Group');
+                    },
+                    'matchText' => function ($model) {
+                        return $model->name;
+                    },
+                     'only_if' => function ($model) {
+                        return !$model->deleted && !$model->banned && $model->active;
+                     },
+                    'route' => '/group/index',
+                    'route_params' => function ($model) {
+                        return ['id' => $model->id];
+                    },
+                    'group_by' => true,
+                ],
+            ],
+        ],
+    ],
     'on beforeRequest' => function () {
         Yii::$app->language = Yii::$app->params['defaultLanguage'];
         $cookies = Yii::$app->request->cookies;

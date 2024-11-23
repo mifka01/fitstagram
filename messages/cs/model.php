@@ -18,6 +18,7 @@ return [
     'Banned' => 'Zakázaný',
 
     # USER
+    'User' => 'Uživatel',
     'Username' => 'Uživatelské jméno',
     'Email' => 'Email',
     'Password' => 'Heslo',

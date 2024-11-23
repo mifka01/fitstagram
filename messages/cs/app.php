@@ -11,6 +11,7 @@ return [
     'Privacy' => 'Ochrana osobních údajů',
     'Ban' => 'Zablokovat',
     'Hide' => 'Skrýt',
+    'User' => 'Uživatel',
 
     'Login' => 'Přihlásit se',
     'Logout' => 'Odhlásit se',
@@ -26,6 +27,9 @@ return [
     'Load More' => 'Načíst další',
 
     'now' => 'nyní',
+
+    # SEARCH
+    "Type to search..." => "Začněte psát pro vyhledání...",
 
     # ERRORS
     'The above error occurred while the Web server was processing your request.' => 'Výše uvedená chyba nastala při zpracování vašeho požadavku webovým serverem.',

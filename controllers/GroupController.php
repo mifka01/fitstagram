@@ -36,9 +36,13 @@ class GroupController extends Controller
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['create', 'index'],
+                        'actions' => ['create'],
                         'allow' => true,
                         'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['index'],
+                        'allow' => true,
                     ],
                     [
                         'actions' => ['view', 'members'],
@@ -305,7 +309,10 @@ class GroupController extends Controller
         $out = ['results' => ['id' => '', 'text' => '']];
 
         if (!is_null($q)) {
-            $data = $user->getJoinedGroups()->andWhere(['like', 'name', $q])->limit(20)->select('id, name AS text')->asArray()->all();
+            $data = $user->getGroups()->andWhere(['like', 'name', $q])->deleted(false)->banned(false)->limit(20)->asArray()->all();
+            $data = array_map(function ($group) {
+                return ['id' => $group['id'], 'text' => $group['name']];
+            }, $data);
             $out['results'] = $data;
         } elseif ($id > 0) {
             $group = Group::findOne($id);

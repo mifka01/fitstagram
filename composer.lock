@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6209eafbf1f048b2fba7ef4b0184d3c8",
+    "content-hash": "3e771448442bdd87e2fed4c22b1582d4",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -663,6 +663,66 @@
                 }
             ],
             "time": "2024-07-24T05:21:32+00:00"
+        },
+        {
+            "name": "kazda01/yii2-search",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kazda01/yii2-search.git",
+                "reference": "51c646eb21447ce9cd53ce6db098822b79d256c6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kazda01/yii2-search/zipball/51c646eb21447ce9cd53ce6db098822b79d256c6",
+                "reference": "51c646eb21447ce9cd53ce6db098822b79d256c6",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4.0",
+                "yiisoft/yii2": "^2.0",
+                "yiisoft/yii2-bootstrap5": "2.0.3"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^1.10",
+                "phpunit/phpunit": "^9.6",
+                "squizlabs/php_codesniffer": "*"
+            },
+            "default-branch": true,
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "kazda01\\search\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Kazda Antonín",
+                    "email": "antoninkazda@gmail.com"
+                },
+                {
+                    "name": "Mifka Radim",
+                    "email": "radimmifka@gmail.com"
+                }
+            ],
+            "description": "A simple search engine that allows the user to search for models by defined attributes and rules.",
+            "keywords": [
+                "ajax",
+                "extension",
+                "model",
+                "search",
+                "widget",
+                "yii2"
+            ],
+            "support": {
+                "issues": "https://github.com/kazda01/yii2-search/issues",
+                "source": "https://github.com/kazda01/yii2-search/tree/main"
+            },
+            "time": "2024-03-16T17:14:21+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -2115,16 +2175,16 @@
         },
         {
             "name": "yiisoft/yii2-bootstrap5",
-            "version": "dev-master",
+            "version": "2.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-bootstrap5.git",
-                "reference": "1a4f4d66c9ef3a076dc327999f8dc8b52caa5ac0"
+                "reference": "8cbb0f3a43c0067fda3838112d3d90805e17718b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap5/zipball/1a4f4d66c9ef3a076dc327999f8dc8b52caa5ac0",
-                "reference": "1a4f4d66c9ef3a076dc327999f8dc8b52caa5ac0",
+                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap5/zipball/8cbb0f3a43c0067fda3838112d3d90805e17718b",
+                "reference": "8cbb0f3a43c0067fda3838112d3d90805e17718b",
                 "shasum": ""
             },
             "require": {
@@ -2141,7 +2201,6 @@
             "suggest": {
                 "twbs/bootstrap-icons": "Add this package to the `require` section of your `composer.json` if you'd like to use the bootstrap icon asset."
             },
-            "default-branch": true,
             "type": "yii2-extension",
             "extra": {
                 "branch-alias": {
@@ -2193,7 +2252,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-10-20T14:56:35+00:00"
+            "time": "2022-04-22T13:35:02+00:00"
         },
         {
             "name": "yiisoft/yii2-composer",
@@ -6564,6 +6623,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "kartik-v/yii2-widget-select2": 20,
+        "kazda01/yii2-search": 20,
         "yiisoft/yii2-bootstrap5": 20
     },
     "prefer-stable": false,

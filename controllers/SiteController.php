@@ -51,4 +51,9 @@ class SiteController extends Controller
             'model' => $model,
         ]);
     }
+
+    public function actionSearch()
+    {
+        return $this->render('search');
+    }
 }

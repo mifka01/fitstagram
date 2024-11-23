@@ -22,7 +22,9 @@
         "himiklab/yii2-recaptcha-widget": "*",
         "kartik-v/yii2-widget-select2": "dev-master",
         "yiisoft/yii2-bootstrap5": "@dev",
-        "yiisoft/yii2-imagine": "~2.2.0"
+        "yiisoft/yii2-imagine": "~2.2.0",
+        "kazda01/yii2-search": "@dev"
+
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
