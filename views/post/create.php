@@ -150,7 +150,6 @@ $this->registerJs($js, \yii\web\View::POS_END);
                     <div id="file-counter" class="mt-2 text-sm text-gray-500"></div>
                 </div>
             </div>
-            <!-- Description Field -->
             <?= $form->field($model, 'description', [
                 'options' => ['class' => 'space-y-2']
             ])->textarea([
@@ -160,7 +159,6 @@ $this->registerJs($js, \yii\web\View::POS_END);
                                             'oninput' => 'autoExpand(this)',
             ])->label(Yii::t('app/post', 'Description'), ['class' => 'block text-sm font-medium text-gray-700']) ?>
 
-            <!-- Tags Field -->
             <?= $form->field($model, 'tags', [
                 'options' => ['class' => 'space-y-2']
             ])->widget(Select2::class, [
@@ -191,7 +189,6 @@ $this->registerJs($js, \yii\web\View::POS_END);
                 ],
             ])->label(Yii::t('app/post', 'Tags'), ['class' => 'block text-sm font-medium text-gray-700']) ?>
 
-            <!-- Sharing Options -->
             <div id="sharing-type-container" class="space-y-4">
                 <div class='required'>
                 <label class="block text-sm font-medium text-gray-700">
@@ -276,7 +273,6 @@ $this->registerJs($js, \yii\web\View::POS_END);
                     ]
                 ) ?>
             </div>
-
             <?php ActiveForm::end(); ?>
         </div>
     </div>
