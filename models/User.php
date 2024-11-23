@@ -365,6 +365,18 @@ class User extends TimestampRecord implements IdentityInterface
     }
 
     /**
+     * Gets query for [[GroupJoinRequests]].
+     *
+     * @return GroupJoinRequestQuery
+     */
+    public function getGroupJoinRequests(): ActiveQuery
+    {
+        /** @var GroupJoinRequestQuery $query */
+        $query = $this->hasMany(GroupJoinRequest::class, ['created_by' => 'id']);
+        return $query;
+    }
+
+    /**
      * Gets query for [[Sessions]].
      *
      * @return \yii\db\ActiveQuery

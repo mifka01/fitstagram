@@ -4,6 +4,7 @@ namespace app\models\forms;
 
 use app\models\Comment;
 use app\models\Group;
+use app\models\GroupJoinRequest;
 use app\models\GroupMember;
 use app\models\Post;
 use app\models\User;
@@ -139,6 +140,19 @@ class GroupForm extends Model
                     $transaction->rollBack();
                     return false;
                 }
+            }
+
+            foreach ($group->getGroupJoinRequests()->all() as $groupJoinRequest) {
+                /** @var GroupJoinRequest $groupJoinRequest */
+                if (!$groupJoinRequest->delete()) {
+                    $transaction->rollBack();
+                    return false;
+                }
+            }
+
+            if (!$group->save()) {
+                $transaction->rollBack();
+                return false;
             }
 
             $transaction->commit();

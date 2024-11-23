@@ -3,6 +3,7 @@
 namespace app\models\forms;
 
 use app\models\Comment;
+use app\models\GroupJoinRequest;
 use app\models\Post;
 use app\models\User;
 use Yii;
@@ -60,6 +61,22 @@ class UserRemoveForm extends Model
                 }
             }
 
+            foreach ($user->getGroupJoinRequests()->all() as $groupJoinRequest) {
+                /** @var GroupJoinRequest $groupJoinRequest */
+                if (!$groupJoinRequest->delete()) {
+                    $transaction->rollBack();
+                    return false;
+                }
+            }
+
+
+            $user->generateAuthKey();
+
+            if (!$user->save(false)) {
+                $transaction->rollBack();
+                return false;
+            }
+
             $transaction->commit();
             return true;
         } catch (\Exception $e) {
@@ -104,6 +121,75 @@ class UserRemoveForm extends Model
                     $transaction->rollBack();
                     return false;
                 }
+            }
+
+            foreach ($user->getGroupJoinRequests()->all() as $groupJoinRequest) {
+                /** @var GroupJoinRequest $groupJoinRequest */
+                if (!$groupJoinRequest->delete()) {
+                    $transaction->rollBack();
+                    return false;
+                }
+            }
+
+            $user->generateAuthKey();
+
+            if (!$user->save(false)) {
+                $transaction->rollBack();
+                return false;
+            }
+
+            $transaction->commit();
+            return true;
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+            throw $e;
+        } catch (\Throwable $e) {
+            $transaction->rollBack();
+            throw $e;
+        }
+    }
+
+    /**
+     * Unban user profile.
+     *
+     * @return bool whether the user was unbanned successfully
+     */
+    public function unban(): bool
+    {
+
+        $user = User::findOne($this->id);
+        if ($user === null) {
+            return false;
+        }
+
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+            $user->banned = (int)false;
+
+            foreach ($user->getPosts()->all() as $post) {
+                /** @var Post $post */
+                $post->banned = (int)false;
+                if (!$post->save()) {
+                    $transaction->rollBack();
+                    return false;
+                }
+            }
+
+            foreach ($user->getComments()->all() as $comment) {
+                /** @var Comment $comment */
+                $comment->banned = (int)false;
+                if (!$comment->save()) {
+                    $transaction->rollBack();
+                    return false;
+                }
+            }
+            
+
+            $user->generateAuthKey();
+
+            if (!$user->save(false)) {
+                $transaction->rollBack();
+                return false;
             }
 
             $transaction->commit();

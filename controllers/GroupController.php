@@ -49,7 +49,7 @@ class GroupController extends Controller
                         ],
                     ],
                     [
-                        'actions' => ['join-requests', 'update'],
+                        'actions' => ['join-requests', 'update', 'delete'],
                         'allow' => true,
                         'roles' => ['manageGroup'],
                         'roleParams' => [
