@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\forms\CommentForm;
+use app\models\forms\CommentRemoveForm;
 use app\models\Post;
 use app\widgets\PostCommentListView;
 use Yii;
@@ -30,6 +31,11 @@ class CommentController extends Controller
                         'allow' => true,
                         'roles' => ['@'],
                     ],
+                    [
+                        'actions' => ['delete'],
+                        'allow' => true,
+                        'roles' => ['deleteComment', 'deleteOwnComment'],
+                    ],
                 ],
             ],
         ];
@@ -44,20 +50,20 @@ class CommentController extends Controller
     {
         $model = new CommentForm();
 
-         \Yii::$app->response->format = Response::FORMAT_JSON;
+        \Yii::$app->response->format = Response::FORMAT_JSON;
 
         if ($model->load(Yii::$app->request->post()) && Yii::$app->request->isAjax) {
             if ($model->validate() && $model->save()) {
                 $model->getComment()?->refresh();
                 $post = Post::findOne($model->postId);
                 return [
-                'success' => true,
+                    'success' => true,
                     'html' => PostCommentListView::widget([
                         'post' => $post,
                     ]) .
-                    $this->renderPartial('/comment/create', [
-                        'model' => new CommentForm(['postId' => $post?->id]),
-                    ])
+                        $this->renderPartial('/comment/create', [
+                            'model' => new CommentForm(['postId' => $post?->id]),
+                        ])
 
                 ];
             } else {
@@ -71,5 +77,19 @@ class CommentController extends Controller
         return $this->renderPartial('create', [
             'model' => $model,
         ]);
+    }
+
+    public function actionDelete(int $id): Response
+    {
+        $model = new CommentRemoveForm();
+        $model->id = $id;
+
+        if ($model->delete()) {
+            Yii::$app->session->setFlash('success', Yii::t('app/comment', 'Comment has been deleted.'));
+        } else {
+            Yii::$app->session->setFlash('error', Yii::t('app/comment', 'Failed to delete comment.'));
+        }
+        $referrer = Yii::$app->request->referrer ?? Yii::$app->homeUrl;
+        return $this->redirect($referrer);
     }
 }
