@@ -83,6 +83,8 @@ $config = [
             'rules' => [
                 '' => 'post/index',
                 'user/profile/<username:[\.\w-]+>' => 'user/profile',
+                '<path:post-images/.+>' => 'post/get-media-file',
+
             ],
         ],
         'assetManager' => [

@@ -32,7 +32,7 @@ class PostVoteForm extends Model
 
     public function vote() : bool
     {
-        if (!PostPermissionService::checkPostPermission((int) Yii::$app->user->id, $this->postId)) {
+        if (!PostPermissionService::checkPostPermission(Yii::$app->user->id, $this->postId)) {
             throw new NotFoundHttpException(Yii::t('app/error', 'Post not found.'));
         }
 

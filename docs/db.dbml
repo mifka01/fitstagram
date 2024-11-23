@@ -7,7 +7,7 @@ database_type: "MySQL"
 
 Table Media_File {
   id integer [pk, increment]
-  media_path varchar
+  path varchar
   name varchar [not null]
   post_id integer [not null, ref: > Post.id]
 }

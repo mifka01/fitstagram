@@ -40,3 +40,6 @@ tests/_support/_generated
 
 #tailwind css
 /web/css/tailwind.css
+
+#images
+/uploads

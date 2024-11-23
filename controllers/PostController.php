@@ -2,8 +2,10 @@
 
 namespace app\controllers;
 
+use app\models\forms\MediaFileForm;
 use app\models\forms\PostForm;
 use app\models\forms\PostVoteForm;
+use app\models\MediaFile;
 use app\models\Post;
 use app\models\search\UserPostSearch;
 use app\models\sort\PostSort;
@@ -46,7 +48,7 @@ class PostController extends Controller
                         ],
                     ],
                     [
-                        'actions' => ['comments'],
+                        'actions' => ['comments', 'get-media-file'],
                         'allow' => true,
                     ],
                 ],
@@ -140,7 +142,7 @@ class PostController extends Controller
 
     public function actionComments(int $id): string
     {
-        if (!PostPermissionService::checkPostPermission((int)Yii::$app->user->id, $id)) {
+        if (!PostPermissionService::checkPostPermission(Yii::$app->user->id, $id)) {
             throw new NotFoundHttpException(Yii::t('app/error', 'Post not found.'));
         }
 
@@ -148,5 +150,28 @@ class PostController extends Controller
             'post' => Post::findOne($id),
             'page' => Yii::$app->request->getQueryParam(PostCommentListView::PAGE_PARAM, null),
         ]);
+    }
+
+    public function actionGetMediaFile(string $path): Response
+    {
+        $mediaFile = MediaFile::findOne(['path' => $path]);
+
+        if ($mediaFile === null) {
+            throw new NotFoundHttpException(Yii::t('app/error', 'Media file not found.'));
+        }
+
+        if ($mediaFile->path === null) {
+            throw new NotFoundHttpException(Yii::t('app/error', 'Post not found.'));
+        }
+
+        $post = $mediaFile->post;
+
+        if (!PostPermissionService::checkPostPermission(Yii::$app->user->id, $post->id)) {
+            throw new NotFoundHttpException(Yii::t('app/error', 'Post not found.'));
+        }
+
+        $path = Yii::getAlias('@app') . DIRECTORY_SEPARATOR . MediaFileForm::UPLOAD_PATH . DIRECTORY_SEPARATOR . $mediaFile->path;
+
+        return Yii::$app->response->sendFile($path, $mediaFile->name);
     }
 }

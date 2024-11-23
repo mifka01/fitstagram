@@ -3,11 +3,17 @@
 namespace app\services;
 
 use app\models\Post;
-use Yii;
 
 class PostPermissionService
 {
-    public static function checkPostPermission(int $userId, int $postId): bool
+    /**
+     * Check post permission
+     *
+     * @param int|null|string $userId
+     * @param int $postId
+     * @return bool
+     */
+    public static function checkPostPermission($userId, int $postId): bool
     {
         $post = Post::find()->where(['id' => $postId])->deleted(false)->one();
 
@@ -23,13 +29,32 @@ class PostPermissionService
 
         $group = $post->group;
 
+
+        // Guest
+        if ($userId === null) {
+            return $post->isPublic() && $group === null;
+        }
+
+        // Invalid user id (string)
+        if (!is_int($userId)) {
+            return false;
+        }
+
+
+        // Owner
+        if ($userId === $createdBy->id) {
+            return true;
+        }
+
+        // User
         if ($group !== null && (!$group->isMember($userId) || $group->isDeleted())) {
             return false;
         }
 
-        if ($userId != Yii::$app->user->id && !$post->isPublic() && !$createdBy->isPermittedUser($userId)) {
+        if ($post->isPrivate() && !$createdBy->isPermittedUser($userId)) {
             return false;
         }
+
         return true;
     }
 }

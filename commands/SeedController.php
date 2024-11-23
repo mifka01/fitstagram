@@ -212,7 +212,7 @@ class SeedController extends Controller
         $mediaFiles = [];
         for ($i = 0; $i < $count; $i++) {
             $mediaFile = [
-                'media_path' => '/images/medium.webp',
+                'path' => '/images/medium.webp',
                 'name' => self::$faker->word(),
                 'post_id' => $postId,
             ];
@@ -220,7 +220,7 @@ class SeedController extends Controller
             $mediaFiles[] = $mediaFile;
         }
 
-        Yii::$app->db->createCommand()->batchInsert('media_file', ['media_path', 'name', 'post_id'], $mediaFiles)->execute();
+        Yii::$app->db->createCommand()->batchInsert('media_file', ['path', 'name', 'post_id'], $mediaFiles)->execute();
     }
 
     public function addPostTags(string $postId): void

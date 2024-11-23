@@ -2,8 +2,8 @@
 
 namespace app\models\forms;
 
+use app\models\forms\MediaFileForm;
 use app\models\Group;
-use app\models\MediaFile;
 use app\models\Post;
 use app\models\Tag;
 use app\models\User;
@@ -131,12 +131,11 @@ class PostForm extends Model
     private function saveMediaFiles(int $postId): bool
     {
         foreach ($this->mediaFiles as $file) {
-            $mediaModel = new MediaFile();
-            $filePath = 'images/' . $file->baseName . '.' . $file->extension;
-            $mediaModel->media_path = $filePath;
-            $mediaModel->name = $file->baseName;
-            $mediaModel->post_id = $postId;
-            if (!$mediaModel->save()) {
+            $mediaModel = new MediaFileForm(MediaFileForm::DIR_PATH_POST);
+            $mediaModel->file = $file;
+            $mediaModel->postId= $postId;
+
+            if (!$mediaModel->upload()) {
                 return false;
             }
         }

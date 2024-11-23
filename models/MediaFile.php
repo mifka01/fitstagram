@@ -10,7 +10,7 @@ use yii\db\ActiveQuery;
  * This is the model class for table "media_file".
  *
  * @property int $id
- * @property string|null $media_path
+ * @property string|null $path
  * @property string $name
  * @property int $post_id
  *
@@ -33,7 +33,7 @@ class MediaFile extends \yii\db\ActiveRecord
         return [
             [['name', 'post_id'], 'required'],
             [['post_id'], 'integer'],
-            [['media_path', 'name'], 'string', 'max' => 255],
+            [['path', 'name'], 'string', 'max' => 255],
             [['post_id'], 'exist', 'skipOnError' => true, 'targetClass' => Post::class, 'targetAttribute' => ['post_id' => 'id']],
         ];
     }
@@ -47,7 +47,7 @@ class MediaFile extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app/model', 'ID'),
-            'media_path' => Yii::t('app/model', 'Media Path'),
+            'path' => Yii::t('app/model', 'Media Path'),
             'name' => Yii::t('app/model', 'Name'),
             'post_id' => Yii::t('app/model', 'Post ID'),
         ];
