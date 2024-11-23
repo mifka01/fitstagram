@@ -81,7 +81,7 @@ class UserPostSearch extends Model
             return [];
         }
 
-        return $user->getGroups()->deleted(false)->column();
+        return $user->getGroups()->deleted(false)->banned(false)->column();
     }
 
     /**

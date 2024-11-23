@@ -25,6 +25,6 @@ class AuthorRule extends Rule
             return false;
         }
 
-        return Post::find()->deleted(false)->andWhere(['id' => $params['postId']])->andWhere(['created_by' => $user])->exists();
+        return Post::find()->deleted(false)->banned(false)->andWhere(['id' => $params['postId']])->andWhere(['created_by' => $user])->exists();
     }
 }

@@ -86,7 +86,7 @@ class PostForm extends Model
         $post->description = $this->description;
         $post->is_private = intval($this->is_private);
         if (!empty($this->group)) {
-            $group = Group::find()->deleted(false)->active(true)->andWhere(['id' => $this->group])->one();
+            $group = Group::find()->deleted(false)->banned(false)->active(true)->andWhere(['id' => $this->group])->one();
             if (!($group instanceof Group)) {
                 throw new NotFoundHttpException(Yii::t('app/error', 'Group not found.'));
             }

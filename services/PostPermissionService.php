@@ -15,7 +15,7 @@ class PostPermissionService
      */
     public static function checkPostPermission($userId, int $postId): bool
     {
-        $post = Post::find()->where(['id' => $postId])->deleted(false)->one();
+        $post = Post::find()->where(['id' => $postId])->deleted(false)->banned(false)->one();
 
         if (!($post instanceof Post)) {
             return false;
