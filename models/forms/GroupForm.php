@@ -3,7 +3,6 @@
 namespace app\models\forms;
 
 use app\models\Group;
-use app\models\GroupJoinRequest;
 use app\models\GroupMember;
 use app\models\Post;
 use app\models\User;
@@ -123,14 +122,6 @@ class GroupForm extends Model
                 $postform->id = $post->id;
 
                 if (!$postform->delete()) {
-                    $transaction->rollBack();
-                    return false;
-                }
-            }
-
-            foreach ($group->getGroupJoinRequests()->all() as $groupJoinRequest) {
-                /** @var GroupJoinRequest $groupJoinRequest */
-                if (!$groupJoinRequest->delete()) {
                     $transaction->rollBack();
                     return false;
                 }

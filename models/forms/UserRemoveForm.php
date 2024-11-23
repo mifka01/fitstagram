@@ -179,7 +179,7 @@ class UserRemoveForm extends Model
 
         $transaction = Yii::$app->db->beginTransaction();
         try {
-            $user->banned = (int)true;
+            $user->banned = (int)false;
 
             foreach ($user->getPosts()->all() as $post) {
                 $postform = new PostRemoveForm();
@@ -198,6 +198,18 @@ class UserRemoveForm extends Model
                 $commentform->id = $comment->id;
 
                 if (!$commentform->unban()) {
+                    $transaction->rollBack();
+                    return false;
+                }
+            }
+
+            foreach ($user->getGroups()->all() as $group) {
+                $groupform = new GroupForm();
+                $groupform->scenario = GroupForm::SCENARIO_DELETE;
+                /** @var Group $group */
+                $groupform->id = $group->id;
+
+                if (!$groupform->unban()) {
                     $transaction->rollBack();
                     return false;
                 }
