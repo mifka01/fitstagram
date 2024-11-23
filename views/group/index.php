@@ -34,6 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'itemButtonRoute' => function ($model) {
                 return ['group/view', 'id' => $model->id];
             },
+            'linkOnTitle' => true,
             'actionButtonLabel' => Yii::t('app/group', 'Create New Group'),
             'actionButtonRoute' => ['group/create'],
             'provider' => $ownedGroupsProvider,
@@ -48,6 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'itemButtonRoute' => function ($model) {
                 return ['group/view', 'id' => $model->id];
             },
+            'linkOnTitle' => true,
             'provider' => $joinedGroupsProvider,
             'ajax' => true,
             'emptyMessage' => Yii::t('app/group', 'You have not joined any groups yet.'),

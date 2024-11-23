@@ -12,6 +12,7 @@
 /** @var string $emptyMessage */
 /** @var yii\base\Model|false $searchModel */
 /** @var string $searchParam */
+/** @var bool $linkOnTitle */
 
 
 use yii\helpers\Html;
@@ -80,7 +81,7 @@ use yii\widgets\Pjax;
 
         <?= ListView::widget([
         'dataProvider' => $provider,
-        'itemView' => function ($model, $key, $index, $widget) use ($itemButtonLabel, $itemButtonRoute, $updateButtonLabel, $updateButtonRoute) {
+        'itemView' => function ($model, $key, $index, $widget) use ($itemButtonLabel, $itemButtonRoute, $updateButtonLabel, $updateButtonRoute, $linkOnTitle) {
 
             $label = is_callable($itemButtonLabel)
             ? call_user_func($itemButtonLabel, $model)
@@ -100,6 +101,7 @@ use yii\widgets\Pjax;
             'itemButtonRoute' => $route,
             'updateButtonLabel' => $updateButtonLabel,
             'updateButtonRoute' => $updateRoute,
+            'linkOnTitle' => $linkOnTitle,
             ]);
         },
             'itemOptions' => ['class' => 'border-b border-gray-200 last:border-b-0'],

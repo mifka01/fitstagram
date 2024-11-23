@@ -119,6 +119,11 @@ $this->params['breadcrumbs'][] = $this->title;
                         <?php if ($countOwnedGroups > 0): ?>
                             <?= GroupWidget::widget([
                                 'title' => Yii::t('app/group', 'Created Groups'),
+                                'itemButtonLabel' => Yii::t('app/group', 'View'),
+                                'itemButtonRoute' => function ($model) {
+                                    return ['group/view', 'id' => $model->id];
+                                },
+                                'linkOnTitle' => true,
                                 'provider' => $ownedGroupsProvider,
                                 'ajax' => true,
                                 'emptyMessage' => Yii::t('app/group', 'This user has not created any groups yet.'),
@@ -129,6 +134,11 @@ $this->params['breadcrumbs'][] = $this->title;
                         <?php if ($countJoinedGroups > 0): ?>
                             <?= GroupWidget::widget([
                                 'title' => Yii::t('app/group', 'Joined Groups'),
+                                'itemButtonLabel' => Yii::t('app/group', 'View'),
+                                'itemButtonRoute' => function ($model) {
+                                    return ['group/view', 'id' => $model->id];
+                                },
+                                'linkOnTitle' => true,
                                 'provider' => $joinedGroupsProvider,
                                 'ajax' => true,
                                 'emptyMessage' => Yii::t('app/group', 'This user has not joined any groups yet.'),

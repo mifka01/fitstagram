@@ -46,6 +46,8 @@ class GroupWidget extends Widget
 
     public string $searchParam = 'keyword';
 
+    public bool $linkOnTitle = false;
+
     public function init(): void
     {
         $this->emptyMessage = Yii::t('app/group', $this->emptyMessage);
@@ -69,6 +71,7 @@ class GroupWidget extends Widget
             'emptyMessage' => $this->emptyMessage,
             'searchModel' => $this->searchModel,
             'searchParam' => $this->searchParam,
+            'linkOnTitle' => $this->linkOnTitle,
         ]);
     }
 }

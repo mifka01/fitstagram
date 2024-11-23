@@ -5,6 +5,7 @@
 /** @var string|false $updateButtonLabel */
 /** @var string|array<mixed> $updateButtonRoute */
 /** @var app\models\Group $model */
+/** @var bool $linkOnTitle */
 
 use Yii;
 use yii\helpers\Html;
@@ -15,7 +16,7 @@ use yii\helpers\Html;
         <div class="flex-1 min-w-0">
             <div class="flex items-center space-x-3">
                 <h2 class="text-lg font-medium text-gray-900 truncate">
-                    <?= Html::encode($model->name) ?>
+                    <?= $linkOnTitle ? Html::a(Html::encode($model->name), $itemButtonRoute) : Html::encode($model->name) ?>
                 </h2>
                 <span class="inline-flex justify-center items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800 text-nowrap">
                     <?= Yii::$app->formatter->asMemberCount($model->getMembers()->count()) ?>
