@@ -97,7 +97,9 @@ class User extends TimestampRecord implements IdentityInterface
      */
     public static function findIdentity($id): ?User
     {
-        return static::findOne(['id' => $id, 'active' => true]);
+        /** @var ?static $user  */
+        $user = static::find()->active()->banned(false)->deleted(false)->andWhere(['id' => $id])->one();
+        return $user;
     }
 
     /**
@@ -116,7 +118,9 @@ class User extends TimestampRecord implements IdentityInterface
      */
     public static function findByUsername($username): ?User
     {
-        return static::findOne(['username' => $username, 'active' => true]);
+        /** @var ?static $user  */
+        $user = static::find()->active()->banned(false)->deleted(false)->andWhere(['username' => $username])->one();
+        return $user;
     }
 
     /**
@@ -131,10 +135,9 @@ class User extends TimestampRecord implements IdentityInterface
             return null;
         }
 
-        return static::findOne([
-            'password_reset_token' => $token,
-            'active' => true,
-        ]);
+        /** @var ?static $user  */
+        $user = static::find()->active()->banned(false)->deleted(false)->andWhere(['password_reset_token' => $token])->one();
+        return $user;
     }
 
     /**
@@ -145,10 +148,9 @@ class User extends TimestampRecord implements IdentityInterface
      */
     public static function findByVerificationToken($token): ?User
     {
-        return static::findOne([
-            'verification_token' => $token,
-            'active' => false,
-        ]);
+        /** @var ?static $user  */
+        $user = static::find()->active(false)->banned(false)->deleted(false)->andWhere(['verification_token' => $token])->one();
+        return $user;
     }
 
     /**
