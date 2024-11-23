@@ -109,7 +109,13 @@ class Group extends \yii\db\ActiveRecord
     public function getGroupJoinRequests(): ActiveQuery
     {
         /** @var GroupJoinRequestQuery $query */
-        $query = $this->hasMany(GroupJoinRequest::class, ['group_id' => 'id']);
+        $query = $this->hasMany(GroupJoinRequest::class, ['group_id' => 'id'])
+            ->joinWith('createdBy')
+            ->andWhere([
+                'user.banned' => false,
+                'user.deleted' => false,
+                'user.active' => true,
+            ]);
         return $query;
     }
 
