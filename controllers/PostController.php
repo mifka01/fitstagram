@@ -89,10 +89,6 @@ class PostController extends Controller
                 $transaction = Yii::$app->db->beginTransaction();
                 try {
                     if ($model->save()) {
-                        foreach ($model->mediaFiles as $file) {
-                            $filePath = 'images/' . $file->baseName . '.' . $file->extension;
-                            $file->saveAs($filePath);
-                        }
                         $transaction->commit();
                         Yii::$app->session->setFlash('success', Yii::t('app/post', 'Post has been created.'));
                         return $this->goHome();
