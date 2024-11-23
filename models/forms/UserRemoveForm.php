@@ -3,7 +3,7 @@
 namespace app\models\forms;
 
 use app\models\Comment;
-use app\models\GroupJoinRequest;
+use app\models\Group;
 use app\models\Post;
 use app\models\User;
 use Yii;
@@ -65,14 +65,17 @@ class UserRemoveForm extends Model
                 }
             }
 
-            foreach ($user->getGroupJoinRequests()->all() as $groupJoinRequest) {
-                /** @var GroupJoinRequest $groupJoinRequest */
-                if (!$groupJoinRequest->delete()) {
+            foreach ($user->getGroups()->all() as $group) {
+                $groupform = new GroupForm();
+                $groupform->scenario = GroupForm::SCENARIO_DELETE;
+                /** @var Group $group */
+                $groupform->id = $group->id;
+
+                if (!$groupform->delete()) {
                     $transaction->rollBack();
                     return false;
                 }
             }
-
 
             $user->generateAuthKey();
 
@@ -107,7 +110,7 @@ class UserRemoveForm extends Model
 
         $transaction = Yii::$app->db->beginTransaction();
         try {
-            $user->deleted = (int)true;
+            $user->banned = (int)true;
 
             foreach ($user->getPosts()->all() as $post) {
                 $postform = new PostRemoveForm();
@@ -131,9 +134,13 @@ class UserRemoveForm extends Model
                 }
             }
 
-            foreach ($user->getGroupJoinRequests()->all() as $groupJoinRequest) {
-                /** @var GroupJoinRequest $groupJoinRequest */
-                if (!$groupJoinRequest->delete()) {
+            foreach ($user->getGroups()->all() as $group) {
+                $groupform = new GroupForm();
+                $groupform->scenario = GroupForm::SCENARIO_DELETE;
+                /** @var Group $group */
+                $groupform->id = $group->id;
+
+                if (!$groupform->ban()) {
                     $transaction->rollBack();
                     return false;
                 }
@@ -172,7 +179,7 @@ class UserRemoveForm extends Model
 
         $transaction = Yii::$app->db->beginTransaction();
         try {
-            $user->deleted = (int)true;
+            $user->banned = (int)true;
 
             foreach ($user->getPosts()->all() as $post) {
                 $postform = new PostRemoveForm();

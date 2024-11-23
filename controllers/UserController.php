@@ -255,4 +255,19 @@ class UserController extends Controller
             return $this->refresh();
         }
     }
+
+    public function actionUnban(int $id): Response
+    {
+        $model = new UserRemoveForm();
+        $model->id = $id;
+        $model->load(Yii::$app->request->post());
+
+        if ($model->unban()) {
+            Yii::$app->session->setFlash('success', Yii::t('app/user', 'User has been unbanned.'));
+            return $this->goHome();
+        } else {
+            Yii::$app->session->setFlash('error', Yii::t('app/user', 'Failed to unban user.'));
+            return $this->refresh();
+        }
+    }
 }
