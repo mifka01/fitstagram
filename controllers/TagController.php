@@ -35,6 +35,10 @@ class TagController extends Controller
                         'allow' => true,
                         'roles' => ['@'],
                     ],
+                    [
+                        'actions' => ['view'],
+                        'allow' => true,
+                    ],
                 ],
             ],
         ];
