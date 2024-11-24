@@ -142,7 +142,7 @@ $config = [
         ],
         'formatter' => [
             'class' => '\app\components\Formatter',
-            'timeZone' => 'Etc/GMT+0'
+            'defaultTimeZone' => 'Europe/Prague',
         ],
         'i18n' => [
             'translations' => [
