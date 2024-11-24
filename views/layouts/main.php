@@ -30,11 +30,11 @@ if ($user->isGuest) {
     $isAdmin = false;
 } else {
     $user = User::findOne($user->id);
-    if ($user === null) {
-        $isAdmin = false;
-    }
+    $isAdmin = false;
 
-    $isAdmin = Yii::$app->authManager?->checkAccess($user->id, 'admin');
+    if ($user !== null) {
+        $isAdmin = Yii::$app->authManager?->checkAccess($user->id, 'admin');
+    }
 }
 
 ?>
