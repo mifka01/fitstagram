@@ -46,6 +46,7 @@ function autoExpand(textarea) {
 JS;
 
 $this->registerJs($js);
+$userId = Yii::$app->user->id;
 ?>
 
 <!-- Post Header -->
@@ -65,16 +66,21 @@ $this->registerJs($js);
                     </a>
                 <?php endif; ?>
             </div>
+
             <div class="flex items-center text-gray-500 text-sm space-x-1 me-3">
-                <?= Html::a(
-                    Yii::t('app', 'Delete'),
-                    ['post/delete', 'id' => $model->id],
-                ) ?>
-                <span>|</span>
-                <?= Html::a(
-                    Yii::t('app', 'Ban'),
-                    ['user/ban', 'id' => $model->createdBy->id],
-                ) ?>
+                <?php if ($userId && Yii::$app->authManager?->checkAccess($userId, 'managePost', ['postId' =>$model->id])): ?>
+                    <?= Html::a(
+                        Yii::t('app', 'Delete'),
+                        ['post/delete', 'id' => $model->id],
+                    ) ?>
+                <?php endif; ?>
+                <?php if ($userId && Yii::$app->authManager?->checkAccess($userId, 'moderator')): ?>
+                    <span>|</span>
+                    <?= Html::a(
+                        Yii::t('app', 'Ban'),
+                        ['user/ban', 'id' => $model->createdBy->id],
+                    ) ?>
+                <?php endif; ?>
                 <?php if ($model->is_private): ?>
                     <svg class="w-4 h-4 stroke-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
