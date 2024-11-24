@@ -23,6 +23,7 @@ return [
     "Your email address" => "Vaše emailová adresa",
     "Current password" => "Současné heslo",
     "New password" => "Nové heslo",
+    "Repeat a password" => "Zopakujte heslo",
     "Repeat New Password" => "Zopakujte nové heslo",
     "Repeat new password" => "Zopakujte nové heslo",
     "Leave empty to keep current" => "Nechte prázdné pro zachování stávajícího",
