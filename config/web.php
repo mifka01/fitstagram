@@ -50,7 +50,7 @@ $config = [
                         return $model->name;
                     },
                     'only_if' => function ($model) {
-                        return !$model->deleted && !$model->banned && $model->active;
+                        return !$model->deleted && !$model->banned;
                     },
                     'route' => '/group/index',
                     'route_params' => function ($model) {
