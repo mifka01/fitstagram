@@ -54,4 +54,10 @@ return [
     'in {delta, plural, other{# h}}' => 'za {delta, plural, other{# h}}',
     'in {delta, plural, other{# min}}' => 'za {delta, plural, other{# min}}',
     'in {delta, plural, other{# s}}' => 'za {delta, plural, other{# s}}',
+
+    'Fitstagram is a college project created as a platform for sharing photos and connecting with others through photos. It’s a space where users can showcase moments, creativity, and experiences while building a engaging community.'
+    => 'Fitstagram je studentský projekt vytvořený jako platforma pro sdílení fotografií a propojení s ostatními prostřednictvím fotografií. Je to místo, kde uživatelé mohou sdílet okamžiky, kreativitu, zkušenosti a budovat tak komunitu.',
+    'Share your photos with others or reach out to us for support.' => 'Sdílejte své fotografie s ostatními nebo nás kontaktujte pro podporu.',
+    'Add Post' => 'Přidat příspěvek',
+    'Contact Us' => 'Kontaktujte nás',
 ];
