@@ -25,6 +25,18 @@ $this->registerLinkTag(['rel' => 'apple-touch-icon', 'sizes' => '180x180', 'href
 $this->registerMetaTag(['name' => 'apple-mobile-web-app-title', 'content' => 'FITstagram']);
 $this->registerLinkTag(['rel' => 'manifest', 'href' => Yii::getAlias('@web/favicon/site.webmanifest')]);
 
+$user = Yii::$app->user;
+if ($user->isGuest) {
+    $isAdmin = false;
+} else {
+    $user = User::findOne($user->id);
+    if ($user === null) {
+        $isAdmin = false;
+    }
+
+    $isAdmin = Yii::$app->authManager?->checkAccess($user->id, 'admin');
+}
+
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -62,7 +74,8 @@ $this->registerLinkTag(['rel' => 'manifest', 'href' => Yii::getAlias('@web/favic
                     [
                         'label'=> Yii::t('app', 'Administration'),
                         'route' => ['admin/user/index'],
-                        'icon' => 'fas fa-lock'
+                        'icon' => 'fas fa-lock',
+                        'visible' => $isAdmin
                     ],
                 ],
                 'actionButton' => [

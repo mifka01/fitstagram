@@ -64,17 +64,19 @@ if ($actionButton) {
             border-t
             text-lg text-gray-900
             ">
-            <?php foreach ($items as $item): ?>
+        <?php foreach ($items as $item): ?>
+            <?php if (!isset($item['visible']) || $item['visible']): ?>
               <a href="<?= Url::to($item['route']) ?>" class="
                 w-full text-center
-                <?php if (isset($item['icon'])): ?>
-                    <?= $item['icon'] ?>
-                <?php else: ?>
-                    <?= $item['label']?>
-                <?php endif; ?>
+                    <?php if (isset($item['icon'])): ?>
+                        <?= $item['icon'] ?>
+                    <?php else: ?>
+                        <?= $item['label']?>
+                    <?php endif; ?>
                     ">
             </a>
-            <?php endforeach; ?>
+            <?php endif; ?>
+        <?php endforeach; ?>
             <?php if ($currentActionButton): ?>
                 <a href="<?= Url::to($currentActionButton['route']) ?>" class="
                 w-full text-center
@@ -127,15 +129,16 @@ if ($actionButton) {
             divide-x-2 divide-gray-300"
             >
                 <?php foreach ($items as $item): ?>
+                    <?php if (!isset($item['visible']) || $item['visible']): ?>
             <a href="<?= Url::to($item['route']) ?>" class="
                     text-center
                     flex-grow
                     relative
                     transition-color duration-300
 
-                    <?php if (Yii::$app->requestedRoute === $item['route'][0]): ?>
+                        <?php if (Yii::$app->requestedRoute === $item['route'][0]): ?>
                         text-orange-600
-                    <?php else: ?>
+                        <?php else: ?>
                         after:absolute
                         after:inset-0
                         after:px-8
@@ -149,10 +152,11 @@ if ($actionButton) {
                         after:duration-300 
                         after:-z-10
                         after:shadow-md
-                    <?php endif; ?>
+                        <?php endif; ?>
                     ">
-                    <?= $item['label'] ?>
+                        <?= $item['label'] ?>
             </a>
+                    <?php endif; ?>
                 <?php endforeach; ?>
         </div>
         <?php if ($currentActionButton): ?>
