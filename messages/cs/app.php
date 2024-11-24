@@ -30,6 +30,7 @@ return [
 
     # SEARCH
     "Type to search..." => "Začněte psát pro vyhledání...",
+    "Find what you're looking for." => "Najděte, to co hledáte.",
 
     # ERRORS
     'The above error occurred while the Web server was processing your request.' => 'Výše uvedená chyba nastala při zpracování vašeho požadavku webovým serverem.',
