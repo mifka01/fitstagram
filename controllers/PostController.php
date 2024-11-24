@@ -33,7 +33,6 @@ class PostController extends Controller
         return [
             'access' => [
                 'class' => \yii\filters\AccessControl::class,
-                'only' => ['create', 'vote'],
                 'rules' => [
                     [
                         'actions' => ['create', 'index', 'vote'],
@@ -41,7 +40,7 @@ class PostController extends Controller
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['update'],
+                        'actions' => ['update', 'delete'],
                         'allow' => true,
                         'roles' => ['managePost'],
                         'roleParams' => [

@@ -34,7 +34,10 @@ class CommentController extends Controller
                     [
                         'actions' => ['delete'],
                         'allow' => true,
-                        'roles' => ['deleteComment', 'deleteOwnComment'],
+                        'roles' => ['deleteComment'],
+                        'roleParams' => [
+                            'commentId' => Yii::$app->request->get('id'),
+                        ],
                     ],
                 ],
             ],

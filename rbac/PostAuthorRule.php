@@ -9,9 +9,9 @@ use yii\rbac\Rule;
 /**
  * Checks if post.created_by matches user passed via params
  */
-class AuthorRule extends Rule
+class PostAuthorRule extends Rule
 {
-    public $name = 'isAuthor';
+    public $name = 'isPostAuthor';
 
     /**
      * @param string|int $user the user ID.

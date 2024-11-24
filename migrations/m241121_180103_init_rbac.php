@@ -2,10 +2,11 @@
 
 namespace app\migrations;
 
-use app\rbac\AuthorRule;
+use app\rbac\CommentAuthorRule;
 use app\rbac\GroupMemberRule;
 use app\rbac\GroupOwnerRule;
 use app\rbac\PermittedUserRule;
+use app\rbac\PostAuthorRule;
 use Yii;
 use yii\db\Migration;
 
@@ -25,8 +26,11 @@ class m241121_180103_init_rbac extends Migration
             return;
         }
 
-        $authorRule = new AuthorRule();
-        $auth->add($authorRule);
+        $postAuthorRule = new PostAuthorRule();
+        $auth->add($postAuthorRule);
+
+        $commentAuthorRule = new CommentAuthorRule();
+        $auth->add($commentAuthorRule);
 
         $groupOwnerRule = new GroupOwnerRule();
         $auth->add($groupOwnerRule);
@@ -41,14 +45,14 @@ class m241121_180103_init_rbac extends Migration
         $auth->add($managePost);
 
         $manageOwnPost = $auth->createPermission('manageOwnPost');
-        $manageOwnPost->ruleName = $authorRule->name;
+        $manageOwnPost->ruleName = $postAuthorRule->name;
         $auth->add($manageOwnPost);
 
         $deleteComment = $auth->createPermission('deleteComment');
         $auth->add($deleteComment);
 
         $deleteOwnComment = $auth->createPermission('deleteOwnComment');
-        $deleteOwnComment->ruleName = $authorRule->name;
+        $deleteOwnComment->ruleName = $commentAuthorRule->name;
         $auth->add($deleteOwnComment);
 
         $manageGroup = $auth->createPermission('manageGroup');
@@ -117,7 +121,8 @@ class m241121_180103_init_rbac extends Migration
         ];
 
         $rules = [
-            'isAuthor',
+            'isPostAuthor',
+            'isCommentAuthor',
             'isGroupOwner',
             'isGroupMember',
             'isPermittedUser',
