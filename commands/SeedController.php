@@ -208,11 +208,18 @@ class SeedController extends Controller
     public function addMediaFiles(string $postId): void
     {
 
+        $images = [
+            'images/spring.jpg',
+            'images/summer.jpg',
+            'images/autumn.jpg',
+            'images/winter.jpg',
+        ];
+
         $count = self::$faker->numberBetween(1, self::MAX_MEDIA_FILES_IN_POST);
         $mediaFiles = [];
         for ($i = 0; $i < $count; $i++) {
             $mediaFile = [
-                'path' => 'images/seederimage.jpg',
+                'path' => self::$faker->randomElement($images),
                 'name' => self::$faker->word(),
                 'post_id' => $postId,
             ];

@@ -49,6 +49,7 @@ use yii\widgets\Pjax;
             ],
             'label' => Yii::t('app', 'Load More'),
         ],
+        'emptyText' => '',
     ]); ?>
 
 </div>
