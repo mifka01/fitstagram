@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-2" />
+	<title>Projekt IIS</title>
+	<style type="text/css">
+		table {
+			border-collapse: collapse;
+		}
+
+		td,
+		th {
+			border: 1px solid black;
+			padding: 0.3em 0.5em;
+			text-align: left;
+		}
+
+		dt {
+			font-weight: bold;
+			margin-top: 0.5em;
+		}
+	</style>
+</head>
+
+<body>
+
+	<!-- Zkontrolujte prosím nastavení kódování v hlavičce dokumentu 
+     podle použitého editoru -->
+
+	<h1>FITstagram</h1> <!-- Nahradte názvem svého zadání -->
+
+	<dl>
+		<dt>Autoři</dt>
+		<dd>Radim Mifka <!-- Nahraďte skutečným jménem a e-mailem autora a popisem činnosti -->
+			<a href="mailto:xmifka00@stud.fit.vutbr.cz">xmifka00@stud.fit.vutbr.cz</a> -
+			BE, FE, CI/CD
+		</dd>
+		<dd>Miroslav Bálek <!-- Nahraďte skutečným jménem a e-mailem autora a popisem činnosti -->
+			<a href="mailto:xbalek02@stud.fit.vutbr.cz">xbalek02@stud.fit.vutbr.cz</a> -
+			BE, FE, DB
+		</dd>
+		<dt>URL aplikace</dt>
+		<dd><a href="https://nitte.cz/">https://nitte.cz/</a></dd>
+	</dl>
+
+	<h2>Uživatelé systému pro testování</h2>
+	<p>Uveďte prosím existující zástupce <strong>všech rolí uživatelů</strong>.</p>
+	<table>
+		<tr>
+			<th>Login</th>
+			<th>Heslo</th>
+			<th>Role</th>
+		</tr>
+		<tr>
+			<td>admin</td>
+			<td>ib3wVqnRY4bQRLm</td>
+			<td>Administrátor</td>
+		</tr>
+		<tr>
+			<td>moderator0</td>
+			<td>s6sATaFffBPZICZ</td>
+			<td>Moderátor</td>
+		</tr>
+		<tr>
+			<td>stepanka08</td>
+			<td>xPassword1242</td>
+			<td>Uživatel</td>
+		</tr>
+	</table>
+
+	<h3>Video</h3>
+
+	<a href="">Odkaz na Video</a>
+
+	<h2>Implementace</h2>
+	<p>Jednotlivé případy použití v aplikaci jsou realizovány pomocí kontrolerů. Níže je uveden přehled hlavních
+		kontrolerů a jejich účelu.</p>
+	<ul>
+		<li>
+			<strong>AuthController.php</strong><br>
+			Správa autentizace: přihlášení, odhlášení, registrace uživatele.
+		</li>
+		<li>
+			<strong>CommentController.php</strong><br>
+			Operace s komentáři: vytváření, mazání komentářů.
+		</li>
+		<li>
+			<strong>GroupController.php</strong><br>
+			Správa skupin: vytváření, úprava, mazání a zobrazení informací o skupinách.
+		</li>
+		<li>
+			<strong>GroupMembershipController.php</strong><br>
+			Správa členství ve skupinách: správa žádostí a odstraňování členů.
+		</li>
+		<li>
+			<strong>LanguageController.php</strong><br>
+			Nastavení jazykových preferencí: změna jazyka a správa lokalizace.
+		</li>
+		<li>
+			<strong>PostController.php</strong><br>
+			Operace s příspěvky: vytváření, mazání, hlasování a zobrazování příspěvků.
+		</li>
+		<li>
+			<strong>SiteController.php</strong><br>
+			Obecné stránky: domovská stránka, informace, kontaktní formulář.
+		</li>
+		<li>
+			<strong>TagController.php</strong><br>
+			Správa štítků: přidávání, úprava, mazání a zobrazování štítků.
+		</li>
+		<li>
+			<strong>UserController.php</strong><br>
+			Správa uživatelů: informace o profilu, úprava údajů a seznam uživatelů, blokovaní a odstranění.
+		</li>
+	</ul>
+
+	<h3>Databáze</h3>
+	<img src="./dbschema.png" alt="Databázové schéma" width="80%">
+	<h2>Instalace</h2>
+
+	Stručně popište:
+	<ul>
+		<li>postup instalace na server,</li>
+		<li>softwarové požadavky (verze PHP apod.),</li>
+		<li>jak rozbalit, konfigurovat, inicializovat databázi, ...</li>
+	</ul>
+
+	<h2>Instalace na server</h2>
+
+	<h2>Softwarové požadavky</h2>
+	<ul>
+		<li>PHP 8.3.12</li>
+		<li>Node 22</li>
+		<li>Composer 2.7.2</li>
+	</ul>
+
+	<h2>Spuštění databáze</h2>
+
+
+
+
+</body>
+
+</html>
