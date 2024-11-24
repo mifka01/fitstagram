@@ -17,7 +17,7 @@ $this->title = 'About Us';
                 <p>
                     <?= Yii::t(
                         'app',
-                        'Fitstagram is a college project created as a platform for sharing photos and connecting with others through photos. It’s a space where users can showcase moments, creativity, and experiences while building a engaging community.'
+                        'Fitstagram is a college project created as a platform for sharing photos. It’s a space where users can showcase moments, creativity, and experiences while building a engaging community.'
                     ) ?>
                 </p>
             </div>
