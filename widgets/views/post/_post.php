@@ -17,7 +17,7 @@ $(document).ready(function() {
         setupToggleButtons();
     });
 
-    observer.observe(document.querySelector("#post-scroll-pager"), {
+    observer.observe(document.querySelector("#list-view-posts"), {
         childList: true,
     });
 });
