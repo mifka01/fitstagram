@@ -115,30 +115,67 @@
 		</li>
 	</ul>
 
+	<h2>Bezpeènostní prvky</h2>
+	<ul>
+		<li>
+			<strong>Role-Based Access Control (RBAC)</strong><br>
+			Systém øízení pøístupu zalo¾ený na rolích implementovaný pomocí Yii2 RBAC manageru.</br>
+			Oprávnìní jsou definována v <code>migrations/m241121_180103_init_rbac.php</code>
+		</li>
+		<li>
+			<strong>Google reCAPTCHA v3</strong><br>
+			Ochrana proti automatizovaným útokùm a spamu. Implementována pøedev¹ím pøi odesílání kontaktního formuláøe.<br>
+			ReCAPTCHA je nakonfigurována v souboru <code>.env</code> pomocí následujících promìnných:
+			<ul>
+				<li>RECAPTCHA_SITE_KEY - Veøejný klíè pro inicializaci reCAPTCHA na frontend</li>
+				<li>RECAPTCHA_SECRET_KEY - Privátní klíè pro ovìøení na backend</li>
+			</ul>
+		</li>
+	</ul>
+
 	<h3>Databáze</h3>
 	<img src="./dbschema.png" alt="Databázové schéma" width="80%">
+
+	<h2>Pøehled systému</h2>
+	Aplikace je postavená na frameworku Yii2 s vyu¾itím moderních technologií pro vývoj a nasazení. Frontend je plnì responzivní.
+	Celé prostøedí je kontejnerizované pomocí Dockeru pro zaji¹tìní konzistentního bìhového prostøedí napøíè rùznými systémy.
 	<h2>Instalace</h2>
 
-	Struènì popi¹te:
-	<ul>
-		<li>postup instalace na server,</li>
-		<li>softwarové po¾adavky (verze PHP apod.),</li>
-		<li>jak rozbalit, konfigurovat, inicializovat databázi, ...</li>
-	</ul>
-
 	<h2>Instalace na server</h2>
+	<p>Projekt vyu¾ívá CI/CD pipeline pomocí GitHub Actions. Po pushnutí do vìtve main:<br>
+		<ol>
+			<li>Spustí se automatická kontrola kódu pomocí PHPStan (level 8)</li>
+			<li>V pøípadì úspì¹né kontroly se provede deployment na FTP server</li>		
+			<li>Automaticky se aplikují databázové migrace</li>
+		</ol>
+		Detailní konfiguraci pipeline najdete v souboru <a href="../.github/workflows/main.yml">.github/workflows/main.yml</a>
+	</p>
+
+	<p>Pro nastavení aplikace se pou¾ívá soubor <code>.env</code>, který se automaticky vytvoøí pøi nahrávání na server.</p>
 
 	<h2>Softwarové po¾adavky</h2>
+	V¹echny softwarové po¾adavky jsou zapouzdøeny v Docker containeru pro snadnìj¹í pøenositelnost.
 	<ul>
-		<li>PHP 8.3.12</li>
-		<li>Node 22</li>
+		<li>PHP 8.3.*</li>
+		<li>Node 20.*</li>
 		<li>Composer 2.7.2</li>
+		<li>Docker a Docker Compose (pro lokální vývoj)</li>
+	</ul>
+	<h3>Framework a knihovny</h3>
+	<ul>
+		<li>Yii2 Framework</li>
+		<li>Tailwind CSS pro stylování</li>
+		<li>PHPStan pro statickou analýzu kódu</li>
 	</ul>
 
-	<h2>Spu¹tìní databáze</h2>
-
-
-
+	<h2>Inicializace databáze</h2>
+	<p>Pro inicializaci databáze postupujte následovnì:</p>
+	<ul>
+		<li>Spus»te pøíkaz <code>php yii migrate/fresh</code>, který vytvoøí novou strukturu databáze.</li>
+		<li>Poté spus»te pøíkaz <code>php yii seed</code>, který naplní databázi testovacími daty.</li>
+	</ul>
+	<p>Celý proces je plnì automatizovaný, aby usnadnil vývoj.</p>
+	
 
 </body>
 
