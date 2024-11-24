@@ -31,7 +31,10 @@ class GroupWidget extends Widget
      */
     public $actionButtonRoute = '';
 
-    public string|false $updateButtonLabel = false;
+    /**
+     * @var string|array<mixed>|false $updateButtonLabel
+     */
+    public $updateButtonLabel = false;
 
     /**
      * @var string|array<mixed> $updateButtonRoute

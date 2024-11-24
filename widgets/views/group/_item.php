@@ -1,4 +1,5 @@
 <?php
+
 /** @var yii\web\View $this */
 /** @var string|false $itemButtonLabel */
 /** @var string|array<mixed> $itemButtonRoute */
@@ -50,14 +51,13 @@ use yii\helpers\Html;
                 ) ?>
             <?php endif; ?>
 
-            <?php if (Yii::$app->user->id === $model->owner_id): ?>
-                <?php if ($updateButtonLabel !== false): ?>
-                    <?= Html::a(
-                        $updateButtonLabel,
-                        $updateButtonRoute,
-                        ['class' => 'inline-flex items-center px-3 py-1.5 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500']
-                    ) ?>
-                <?php endif; ?>
+
+            <?php if ($updateButtonLabel !== false): ?>
+                <?= Html::a(
+                    $updateButtonLabel,
+                    $updateButtonRoute,
+                    ['class' => 'inline-flex items-center px-3 py-1.5 border border-red-300 text-sm font-medium rounded-md text-red-700 bg-white hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500']
+                ) ?>
             <?php endif; ?>
         </div>
     </div>

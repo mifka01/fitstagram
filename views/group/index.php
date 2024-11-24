@@ -79,6 +79,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 return ['group-membership/request-join', 'id' => $model->id];
             }
         },
+        'updateButtonLabel' => function ($model) {
+            if (Yii::$app->user->id && Yii::$app->authManager?->checkAccess(Yii::$app->user->id, 'moderator')) {
+                return Yii::t('app/group', 'Delete');
+            }
+            return false;
+        },
+        'updateButtonRoute' => function ($model) {
+                return ['group/delete', 'id' => $model->id];
+        },
         'provider' => $publicGroupsProvider,
         'ajax' => true,
         'emptyMessage' => Yii::t('app/group', 'There are no public groups yet.'),

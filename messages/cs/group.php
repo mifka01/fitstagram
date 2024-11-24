@@ -80,6 +80,7 @@ return [
     'Group has been deleted.' => 'Skupina byla smazána.',
     'Error deleting group.' => 'Při mazání skupiny došlo k chybě.',
     'Delete group' => 'Smazat skupinu',
+    'Delete' => 'Smazat',
 
     'Approve' => 'Schválit',
     'Decline' => 'Zamítnout',

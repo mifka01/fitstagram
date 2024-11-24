@@ -91,6 +91,10 @@ use yii\widgets\Pjax;
             ? call_user_func($itemButtonRoute, $model)
             : $itemButtonRoute;
 
+            $updateButtonLabel = is_callable($updateButtonLabel)
+            ? call_user_func($updateButtonLabel, $model)
+            : $updateButtonLabel;
+
             $updateRoute = is_callable($updateButtonRoute)
             ? call_user_func($updateButtonRoute, $model)
             : $updateButtonRoute;
