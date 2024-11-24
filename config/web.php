@@ -49,10 +49,24 @@ $config = [
                     'matchText' => function ($model) {
                         return $model->name;
                     },
-                     'only_if' => function ($model) {
+                    'only_if' => function ($model) {
                         return !$model->deleted && !$model->banned && $model->active;
-                     },
+                    },
                     'route' => '/group/index',
+                    'route_params' => function ($model) {
+                        return ['id' => $model->id];
+                    },
+                    'group_by' => true,
+                ],
+                'TagSearch' => [
+                    'columns' => ['name'],
+                    'matchTitle' => function () {
+                        return Yii::t('app/tag', 'Tag');
+                    },
+                    'matchText' => function ($model) {
+                        return $model->name;
+                    },
+                    'route' => '/tag/view',
                     'route_params' => function ($model) {
                         return ['id' => $model->id];
                     },
@@ -159,6 +173,7 @@ $config = [
                         'app/mail' => 'mail.php',
                         'app/group' => 'group.php',
                         'app/post' => 'post.php',
+                        'app/tag' => 'tag.php',
                     ],
                 ],
             ],

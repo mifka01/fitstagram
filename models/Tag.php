@@ -3,7 +3,9 @@
 namespace app\models;
 
 use app\models\Post;
+use app\models\query\PostQuery;
 use app\models\query\TagQuery;
+use app\models\query\UserQuery;
 use Yii;
 use yii\db\ActiveQuery;
 
@@ -60,21 +62,25 @@ class Tag extends \yii\db\ActiveRecord
     /**
      * Gets query for [[CreatedBy]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return UserQuery
      */
     public function getCreatedBy(): ActiveQuery
     {
-        return $this->hasOne(User::class, ['id' => 'created_by']);
+        /** @var UserQuery $query */
+        $query = $this->hasOne(User::class, ['id' => 'created_by']);
+        return $query;
     }
 
     /**
      * Gets query for [[Posts]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return PostQuery
      */
     public function getPosts(): ActiveQuery
     {
-        return $this->hasMany(Post::class, ['id' => 'post_id'])->viaTable('post_tag', ['tag_id' => 'id']);
+        /** @var PostQuery $query */
+        $query = $this->hasMany(Post::class, ['id' => 'post_id'])->viaTable('post_tag', ['tag_id' => 'id']);
+        return $query;
     }
 
     /**

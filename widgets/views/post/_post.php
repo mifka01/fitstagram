@@ -109,7 +109,7 @@ $this->registerJs($js);
                         <!-- Tags -->
                         <div class="<?= empty($model->description) ? '' : 'hidden' ?> tags mb-2">
                             <?php foreach ($model->tags as $tag): ?>
-                                <span class="text-gray-500 text-xs">#<?= $tag->name ?></span>
+                                <span class="text-gray-500 text-xs"><?= Html::a("#" . $tag->name, ['tag/view', 'id' => $tag->id],) ?></span>
                             <?php endforeach; ?>
                         </div>
                         <?php if (!empty($model->description)): ?>
