@@ -39,6 +39,10 @@ class UserRemoveForm extends Model
             return false;
         }
 
+        if (Yii::$app->authManager?->checkAccess($user->id, 'admin')) {
+            return false;
+        }
+
         $transaction = Yii::$app->db->beginTransaction();
         try {
             $user->deleted = (int)true;
@@ -54,7 +58,7 @@ class UserRemoveForm extends Model
                 }
             }
 
-            foreach ($user->getcomments()->all() as $comment) {
+            foreach ($user->getComments()->all() as $comment) {
                 $commentform = new CommentRemoveForm();
                 /** @var Comment $comment */
                 $commentform->id = $comment->id;
@@ -102,9 +106,12 @@ class UserRemoveForm extends Model
      */
     public function ban(): bool
     {
-
         $user = User::findOne($this->id);
         if ($user === null) {
+            return false;
+        }
+
+        if (Yii::$app->authManager?->checkAccess($user->id, 'admin')) {
             return false;
         }
 
@@ -123,7 +130,7 @@ class UserRemoveForm extends Model
                 }
             }
 
-            foreach ($user->getcomments()->all() as $comment) {
+            foreach ($user->getComments()->all() as $comment) {
                 $commentform = new CommentRemoveForm();
                 /** @var Comment $comment */
                 $commentform->id = $comment->id;
@@ -192,7 +199,7 @@ class UserRemoveForm extends Model
                 }
             }
 
-            foreach ($user->getcomments()->all() as $comment) {
+            foreach ($user->getComments()->all() as $comment) {
                 $commentform = new CommentRemoveForm();
                 /** @var Comment $comment */
                 $commentform->id = $comment->id;
@@ -210,6 +217,73 @@ class UserRemoveForm extends Model
                 $groupform->id = $group->id;
 
                 if (!$groupform->unban()) {
+                    $transaction->rollBack();
+                    return false;
+                }
+            }
+
+            if (!$user->save(false)) {
+                $transaction->rollBack();
+                return false;
+            }
+
+            $transaction->commit();
+            return true;
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+            throw $e;
+        } catch (\Throwable $e) {
+            $transaction->rollBack();
+            throw $e;
+        }
+    }
+
+    /**
+     * Restore user
+     *
+     * @return bool whether the user was restored successfully
+     */
+    public function restore(): bool
+    {
+
+        $user = User::findOne($this->id);
+        if ($user === null) {
+            return false;
+        }
+
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+            $user->deleted = (int)false;
+
+            foreach ($user->getPosts()->all() as $post) {
+                $postform = new PostRemoveForm();
+                /** @var Post $post */
+                $postform->id = $post->id;
+
+                if (!$postform->restore()) {
+                    $transaction->rollBack();
+                    return false;
+                }
+            }
+
+            foreach ($user->getComments()->all() as $comment) {
+                $commentform = new CommentRemoveForm();
+                /** @var Comment $comment */
+                $commentform->id = $comment->id;
+
+                if (!$commentform->restore()) {
+                    $transaction->rollBack();
+                    return false;
+                }
+            }
+
+            foreach ($user->getGroups()->all() as $group) {
+                $groupform = new GroupForm();
+                $groupform->scenario = GroupForm::SCENARIO_DELETE;
+                /** @var Group $group */
+                $groupform->id = $group->id;
+
+                if (!$groupform->restore()) {
                     $transaction->rollBack();
                     return false;
                 }

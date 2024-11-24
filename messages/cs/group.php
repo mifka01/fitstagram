@@ -2,6 +2,8 @@
 return [
     'Name' => 'Název',
     'Active' => 'Aktivní',
+    'Created At' => 'Vytvořeno',
+    'Updated At' => 'Aktualizováno',
 
     'Enter group name' => 'Zadejte název skupiny',
     'Enter group description' => 'Zadejte popis skupiny',

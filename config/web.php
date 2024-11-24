@@ -1,5 +1,6 @@
 <?php
 
+use app\models\User;
 use yii\helpers\ArrayHelper;
 
 $params = require __DIR__ . '/params.php';
@@ -16,6 +17,9 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
     ],
     'modules' => [
+        'gridview' => [
+            'class' => '\kartik\grid\Module',
+        ],
         'main-search' => [
             'class' => '\kazda01\search\SearchModule',
             'rules' => [
@@ -83,6 +87,15 @@ $config = [
             Yii::$app->language = $language;
         }
     },
+    'on beforeAction' => function ($event) {
+        if (!Yii::$app->user->isGuest) {
+            $user = User::findOne(Yii::$app->user->id);
+            if ($user && ($user->banned || $user->deleted)) {
+                Yii::$app->user->logout();
+                Yii::$app->response->redirect(['site/banned']);
+            }
+        }
+    },
     'components' => [
         'reCaptcha' => [
             'class' => 'himiklab\yii2\recaptcha\ReCaptchaConfig',
@@ -142,6 +155,7 @@ $config = [
             'showScriptName' => false,
             'rules' => [
                 '' => 'post/index',
+                'admin' => '/admin/user/index',
                 'user/profile/<username:[\.\w-]+>' => 'user/profile',
                 '<path:post-images/.+>' => 'post/get-media-file',
 
@@ -174,6 +188,7 @@ $config = [
                         'app/group' => 'group.php',
                         'app/post' => 'post.php',
                         'app/tag' => 'tag.php',
+                        'app/admin' => 'admin.php',
                     ],
                 ],
             ],

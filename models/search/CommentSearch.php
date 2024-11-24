@@ -19,7 +19,7 @@ class CommentSearch extends Comment
     public function rules(): array
     {
         return [
-            [['id', 'created_by', 'post_id', 'deleted'], 'integer'],
+            [['id', 'created_by', 'post_id', 'deleted', 'banned'], 'integer'],
             [['content', 'created_at', 'updated_at'], 'safe'],
         ];
     }

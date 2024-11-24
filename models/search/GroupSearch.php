@@ -20,7 +20,7 @@ class GroupSearch extends Group
     {
         return [
             [['id', 'owner_id', 'deleted', 'banned'], 'integer'],
-            [['name', 'created_at', 'updated_at'], 'safe'],
+            [['name', 'description', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 

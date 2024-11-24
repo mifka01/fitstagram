@@ -51,7 +51,7 @@ class Post extends \yii\db\ActiveRecord
     {
         return [
             [['created_by', 'is_private'], 'required'],
-            [['created_by', 'is_private', 'group_id', 'upvote_count', 'downvote_count', 'deleted', 'banned'], 'integer'],
+            [['id', 'created_by', 'is_private', 'group_id', 'upvote_count', 'downvote_count', 'deleted', 'banned'], 'integer'],
             [['description', 'place'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],

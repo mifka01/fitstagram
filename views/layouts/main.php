@@ -59,6 +59,11 @@ $this->registerLinkTag(['rel' => 'manifest', 'href' => Yii::getAlias('@web/favic
                         'route' => ['site/search'],
                         'icon' => 'fas fa-search'
                     ],
+                    [
+                        'label'=> Yii::t('app', 'Administration'),
+                        'route' => ['admin/user/index'],
+                        'icon' => 'fas fa-lock'
+                    ],
                 ],
                 'actionButton' => [
                     [

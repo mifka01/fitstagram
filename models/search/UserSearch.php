@@ -19,7 +19,7 @@ class UserSearch extends User
     public function rules(): array
     {
         return [
-            [['id', 'active', 'deleted', 'banned'], 'integer'],
+            [['id', 'active', 'deleted', 'banned', 'show_activity'], 'integer'],
             [['username', 'email', 'password_hash', 'password_reset_token', 'verification_token', 'auth_key', 'created_at', 'updated_at'], 'safe'],
         ];
     }
@@ -27,7 +27,7 @@ class UserSearch extends User
     /**
      * {@inheritDoc}
      *
-     * @return array<string,string>
+     * @return array<int, array<int|string, string>>
      */
     public function scenarios(): array
     {
@@ -65,7 +65,7 @@ class UserSearch extends User
             'active' => $this->active,
             'deleted' => $this->deleted,
             'banned' => $this->banned,
-            'created_at' => $this->created_at,
+            'show_activity' => $this->show_activity,
             'updated_at' => $this->updated_at,
         ]);
 

@@ -6,6 +6,7 @@ module.exports = {
     "./widgets/**/views/**/*.php",
     "./widgets/**/tailwind/*.php",
     "./enums/**/tailwind/*.php",
+    "./config/web.php",
     "./email/**/*.php",
     "./input.css",
     "./tailwind/input.css", // for deploy

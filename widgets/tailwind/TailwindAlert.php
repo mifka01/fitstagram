@@ -21,7 +21,6 @@ class TailwindAlert extends Widget
 
     private const DEFAULT_CLASSES = [
         'absolute',
-        'top-100',
         'pt-4',
         'z-50',
         'max-w-sm',

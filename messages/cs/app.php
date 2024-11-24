@@ -1,6 +1,9 @@
 <?php
 
 return [
+    'Select...' => 'Vyberte...',
+    'Yes' => 'Ano',
+    'No' => 'Ne',
     'Home' => 'Domů',
     'Posts' => 'Příspěvky',
     'Groups' => 'Skupiny',
@@ -13,6 +16,7 @@ return [
     'Hide' => 'Skrýt',
     'Delete' => 'Smazat',
     'User' => 'Uživatel',
+    'Administration' => 'Administrace',
 
     'Login' => 'Přihlásit se',
     'Logout' => 'Odhlásit se',

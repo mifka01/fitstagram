@@ -221,6 +221,45 @@ class GroupForm extends Model
         }
     }
 
+    public function restore(): bool
+    {
+
+        $group = Group::findOne($this->id);
+        if ($group === null) {
+            return false;
+        }
+
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+            $group->deleted = (int)false;
+
+            foreach ($group->getPosts()->all() as $post) {
+                $postform = new PostRemoveForm();
+                /** @var Post $post */
+                $postform->id = $post->id;
+
+                if (!$postform->restore()) {
+                    $transaction->rollBack();
+                    return false;
+                }
+            }
+
+            if (!$group->save()) {
+                $transaction->rollBack();
+                return false;
+            }
+
+            $transaction->commit();
+            return true;
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+            throw $e;
+        } catch (\Throwable $e) {
+            $transaction->rollBack();
+            throw $e;
+        }
+    }
+
     public function getGroup(): Group
     {
         if ($this->group === null) {

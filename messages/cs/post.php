@@ -2,6 +2,11 @@
 return [
     'Post has been created.' => 'Příspěvek byl vytvořen.',
     'Failed to create post.' => 'Nepodařilo se vytvořit příspěvek.',
+    'Post has been deleted.' => 'Příspěvek byl smazán.',
+    'Failed to delete post.' => 'Nepodařilo se smazat příspěvek.',
+    'Post has been restored.' => 'Příspěvek byl obnoven.',
+    'Failed to restore post.' => 'Nepodařilo se obnovit příspěvek.',
+
     'Place' => 'Místo',
     'Images' => 'Obrázky',
     'Description' => 'Popis',

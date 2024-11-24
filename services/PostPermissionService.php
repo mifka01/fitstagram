@@ -3,6 +3,7 @@
 namespace app\services;
 
 use app\models\Post;
+use Yii;
 
 class PostPermissionService
 {
@@ -43,6 +44,10 @@ class PostPermissionService
 
         // Owner
         if ($userId === $createdBy->id) {
+            return true;
+        }
+
+        if (Yii::$app->authManager?->checkAccess($userId, 'admin')) {
             return true;
         }
 

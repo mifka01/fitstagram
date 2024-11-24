@@ -19,8 +19,8 @@ class PostSearch extends Post
     public function rules(): array
     {
         return [
-            [['id', 'created_by', 'is_private', 'group_id', 'upvote_count', 'downvote_count', 'deleted'], 'integer'],
-            [['description', 'created_at', 'updated_at', 'place'], 'safe'],
+            [['id', 'created_by', 'is_private', 'group_id', 'upvote_count', 'downvote_count', 'deleted', 'banned'], 'integer'],
+            [['created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -29,7 +29,7 @@ class PostSearch extends Post
      *
      * @return array<string,string>
      */
-    public function scenarios(): array
+    public function scenarios()
     {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
@@ -41,7 +41,7 @@ class PostSearch extends Post
      * @param array<string,string> $params
      * @return ActiveDataProvider
      */
-    public function search($params): ActiveDataProvider
+    public function search($params)
     {
         $query = Post::find();
 
@@ -63,16 +63,18 @@ class PostSearch extends Post
         $query->andFilterWhere([
             'id' => $this->id,
             'created_by' => $this->created_by,
-            'group_id' => $this->group_id,
             'is_private' => $this->is_private,
+            'group_id' => $this->group_id,
             'upvote_count' => $this->upvote_count,
             'downvote_count' => $this->downvote_count,
             'deleted' => $this->deleted,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'banned' => $this->banned,
         ]);
 
-        $query->andFilterWhere(['like', 'description', $this->description])->andFilterWhere(['like', 'place', $this->place]);
+        $query->andFilterWhere(['like', 'description', $this->description])
+            ->andFilterWhere(['like', 'place', $this->place]);
 
         return $dataProvider;
     }

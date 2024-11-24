@@ -26,4 +26,10 @@ return [
     'New Password' => 'Nové heslo',
     'Repeat New Password' => 'Zopakujte nové heslo',
 
+    'User has been unbanned.' => 'Uživatel byl odblokován.',
+    'Failed to unban user.' => 'Nepodařilo se odblokovat uživatele.',
+    'User has been restored.' => 'Uživatel byl obnoven.',
+    'Failed to restore user.' => 'Nepodařilo se obnovit uživatele.',
+    'User has been deleted.' => 'Uživatel byl smazán.',
+    'Failed to delete user.' => 'Nepodařilo se smazat uživatele.',
 ];

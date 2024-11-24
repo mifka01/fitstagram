@@ -103,4 +103,30 @@ class CommentRemoveForm extends Model
             throw $e;
         }
     }
+
+    public function restore(): bool
+    {
+        $comment = Comment::findOne($this->id);
+        if ($comment === null) {
+            return false;
+        }
+
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+            $comment->deleted = (int)false;
+
+            if (!$comment->save(false)) {
+                $transaction->rollBack();
+                return false;
+            }
+            $transaction->commit();
+            return true;
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+            throw $e;
+        } catch (\Throwable $e) {
+            $transaction->rollBack();
+            throw $e;
+        }
+    }
 }
