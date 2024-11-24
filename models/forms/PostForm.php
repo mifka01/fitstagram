@@ -35,6 +35,8 @@ class PostForm extends Model
 
     public bool $is_private = false;
 
+    public ?Post $post = null;
+
     /**
      * @return array<int, array<mixed>>
      */
@@ -88,7 +90,7 @@ class PostForm extends Model
     {
         $user = $this->getCurrentUser();
 
-        $post = new Post();
+        $post = $this->post ?? new Post();
         $post->description = $this->description;
         $post->is_private = intval($this->is_private);
         if (!empty($this->group)) {
@@ -106,7 +108,7 @@ class PostForm extends Model
         $post->place = $this->place;
         $post->deleted = 0;
         $post->banned = 0;
-        $post->created_by = $user->id;
+        $post->created_by = $post->createdBy->id ?? $user->id;
 
         if ($post->save()) {
             return $this->saveMediaFiles($post->id) && $this->saveTags($post);

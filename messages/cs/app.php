@@ -15,6 +15,7 @@ return [
     'Ban' => 'Zablokovat',
     'Hide' => 'Skrýt',
     'Delete' => 'Smazat',
+    'Update' => 'Upravit',
     'User' => 'Uživatel',
     'Administration' => 'Administrace',
 

@@ -68,7 +68,12 @@ $userId = Yii::$app->user->id;
             </div>
 
             <div class="flex items-center text-gray-500 text-sm space-x-1 me-3">
-                <?php if ($userId && Yii::$app->authManager?->checkAccess($userId, 'managePost', ['postId' =>$model->id])): ?>
+                <?php if ($userId && Yii::$app->authManager?->checkAccess($userId, 'managePost', ['postId' => $model->id])): ?>
+                    <?= Html::a(
+                        Yii::t('app', 'Update'),
+                        ['post/update', 'id' => $model->id],
+                    ) ?>
+                    <span>|</span>
                     <?= Html::a(
                         Yii::t('app', 'Delete'),
                         ['post/delete', 'id' => $model->id],

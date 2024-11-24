@@ -107,9 +107,37 @@ class PostController extends Controller
         ]);
     }
 
-    public function actionUpdate(int $id): string
+    public function actionUpdate(int $id): Response|string
     {
-        return '';
+        $post = Post::findOne($id);
+        if (!$post) {
+            throw new NotFoundHttpException(Yii::t('app/post', 'Post not found.'));
+        }
+
+        $model = new PostForm();
+        $model->setAttributes($post->attributes);
+        // Set the existing post object in the form
+        $model->post = $post;
+
+
+
+        $tags = $post->getTags()->select('name')->column();
+
+        if (!empty($tags)) {
+            // Generate keys starting from 1
+            $keys = range(1, count($tags));
+            $model->setTags(array_combine($keys, $tags));
+        }
+
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', Yii::t('app/post', 'Post has been updated.'));
+            return $this->goHome();
+        }
+
+        return $this->render('update', [
+            'model' => $model,
+        ]);
     }
 
     public function actionVote(): mixed
@@ -122,10 +150,10 @@ class PostController extends Controller
             $post = Post::findOne($model->postId);
 
             return [
-            'success' => true,
-            'html' => $this->renderPartial('_vote', [
-                'model' => $post,
-            ]),
+                'success' => true,
+                'html' => $this->renderPartial('_vote', [
+                    'model' => $post,
+                ]),
             ];
         }
 

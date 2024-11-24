@@ -51,5 +51,8 @@ return [
     'Location' => 'Místo',
     'Enter location' => 'Zadejte místo',
     'Select Images...' => 'Vyberte Obrázky...',
+    'Update Post' => 'Aktualizovat Příspěvek',
+    'Post has been updated.' => 'Příspěvek byl aktualizován.',
+    'Post not found.' => 'Příspěvek nebyl nalezen.',
 
 ];
