@@ -11,6 +11,7 @@ return [
     'Privacy' => 'Ochrana osobních údajů',
     'Ban' => 'Zablokovat',
     'Hide' => 'Skrýt',
+    'Delete' => 'Smazat',
     'User' => 'Uživatel',
 
     'Login' => 'Přihlásit se',
