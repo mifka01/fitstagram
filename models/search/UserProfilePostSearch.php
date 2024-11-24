@@ -1,0 +1,113 @@
+<?php
+
+namespace app\models\search;
+
+use app\models\Post;
+use app\models\User;
+use Yii;
+use yii\base\Model;
+use yii\data\ActiveDataProvider;
+use yii\web\NotFoundHttpException;
+
+/**
+ * UserProfilePostSearch represents the model behind the search form of `app\models\Post` filtered by a specific user.
+ */
+class UserProfilePostSearch extends Model
+{
+    /**
+     * @var int The ID of the tag to filter posts by.
+     */
+    public int $id;
+
+    /**
+     * Creates data provider instance with search query applied
+     *
+     * @param array<string,string> $params
+     * @return ActiveDataProvider
+     */
+    public function search($params): ActiveDataProvider
+    {
+        $query = Post::find()->public(true)->hasGroup(false)->with(['createdBy', 'tags', 'mediaFiles']);
+    
+
+        $currentUserGroupIds = $this->getCurrentUserGroupIds();
+        $query->orWhere(['group_id' => $currentUserGroupIds]);
+
+        $permittingUserIds = $this->getPermittingUserIds();
+        $query->orWhere(['created_by' => $permittingUserIds, 'group_id' => null]);
+
+        $query->deleted(false)->banned(false);
+
+        $query->createdBy($this->id);
+        
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            return $dataProvider;
+        }
+
+        return $dataProvider;
+    }
+
+    /**
+     * Get user ids that permit the current user.
+     *
+     * @return array<int>
+     */
+    private function getPermittingUserIds(): array
+    {
+        $user = $this->getCurrentUser();
+        if ($user === null) {
+            return [];
+        }
+
+        $permittingUserIds = User::find()->deleted(false)->banned(false)
+            ->innerJoin('permitted_user', 'user.id = permitted_user.user_id')
+            ->where(['permitted_user.permitted_user_id' => $user->id])
+            ->select('user.id')->column();
+
+        $permittingUserIds[] = $user->id;
+        return $permittingUserIds;
+    }
+
+    /**
+     * Get ids of groups that the current user belongs to and owns.
+     *
+     * @return array<int>
+     */
+    private function getCurrentUserGroupIds(): array
+    {
+        $user = $this->getCurrentUser();
+        if ($user === null) {
+            return [];
+        }
+
+        return $user->getGroups()->deleted(false)->banned(false)->column();
+    }
+
+    /**
+     * Get the current user.
+     *
+     * @return User|null
+     * @throws NotFoundHttpException
+     */
+    private function getCurrentUser(): User|null
+    {
+        if (Yii::$app->user->isGuest) {
+            return null;
+        }
+
+        $user = User::findOne(Yii::$app->user->id);
+        if ($user === null) {
+            throw new NotFoundHttpException(Yii::t('app/error', 'User not found.'));
+        }
+        return $user;
+    }
+}

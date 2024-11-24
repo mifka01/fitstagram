@@ -8,6 +8,8 @@ use app\models\forms\UserRemoveForm;
 use app\models\forms\UserUpdateForm;
 use app\models\search\PermittedUserSearch;
 use app\models\search\UserGroupSearch;
+use app\models\search\UserProfilePostSearch;
+use app\models\sort\PostSort;
 use app\models\User;
 use Yii;
 use yii\web\Controller;
@@ -82,6 +84,11 @@ class UserController extends Controller
             GroupType::JOINED
         );
 
+        $sort = new PostSort();
+        $searchModel = new UserProfilePostSearch();
+        $searchModel->id = $model->id;
+        $provider = $searchModel->search(Yii::$app->request->queryParams);
+        $provider->setSort($sort);
 
         $isOwnProfile = $user !== null && $model->id === $user->id;
 
@@ -101,7 +108,8 @@ class UserController extends Controller
             'countOwnedGroups' => $ownedProvider->getTotalCount(),
             'countJoinedGroups' => $model->getJoinedGroups()->count(),
             'countPosts' => $posts->count(),
-            'currentUser' => $user
+            'currentUser' => $user,
+            'postDataProvider' => $provider,
         ]);
     }
 

@@ -11,15 +11,17 @@
 /** @var int $countJoinedGroups */
 /** @var int $countPosts */
 /** @var app\models\User $currentUser */
+/** @var yii\data\ActiveDataProvider $postDataProvider */
 
 use app\widgets\GroupWidget;
+use app\widgets\PostListWidget;
 use yii\helpers\Html;
 
 $this->title = Yii::t('app/user', '{username}\'s Profile', ['username' => $model->username]);
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<div class="bg-gray-50 flex flex-col justify-center sm:px-6 lg:px-8 space-y-6">
+<div class="bg-gray-50 flex flex-col justify-center sm:px-6 lg:px-8 space-y-6 mb-5">
     <div class="sm:mx-auto sm:w-full sm:max-w-3xl">
         <div class="bg-white shadow sm:rounded-lg">
             <div class="px-4 py-5 sm:px-6">
@@ -151,3 +153,6 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
+<?= PostListWidget::widget([
+        'dataProvider' => $postDataProvider,
+    ]) ?>

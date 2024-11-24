@@ -52,4 +52,14 @@ class PostQuery extends \yii\db\ActiveQuery
 
         return $this->andWhere(['not', ['group_id' => null]]);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return \app\models\query\PostQuery
+     */
+    public function createdBy(int $id): self
+    {
+        return $this->andWhere(['created_by' => $id]);
+    }
 }
