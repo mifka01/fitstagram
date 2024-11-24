@@ -83,4 +83,5 @@ return [
     'Failed to delete group.' => 'Smazání skupiny se nezdařilo.',
     'Posts Count' => 'Počet příspěvků',
     'Members Count' => 'Počet členů',
+    'Owner' => 'Vlastník',
 ];

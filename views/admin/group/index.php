@@ -58,6 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'owner_id',
+                'label' => Yii::t('app/admin', 'Owner'),
                 'value' => function ($model) {
                     return $model->owner->username;
                 },
