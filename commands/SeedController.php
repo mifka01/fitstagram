@@ -212,7 +212,7 @@ class SeedController extends Controller
         $mediaFiles = [];
         for ($i = 0; $i < $count; $i++) {
             $mediaFile = [
-                'path' => '/images/medium.webp',
+                'path' => 'images/seederimage.jpg',
                 'name' => self::$faker->word(),
                 'post_id' => $postId,
             ];
