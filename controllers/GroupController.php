@@ -53,7 +53,7 @@ class GroupController extends Controller
                         ],
                     ],
                     [
-                        'actions' => ['join-requests', 'update', 'delete'],
+                        'actions' => ['manage', 'update', 'delete'],
                         'allow' => true,
                         'roles' => ['manageGroup'],
                         'roleParams' => [
@@ -222,7 +222,7 @@ class GroupController extends Controller
         ]);
     }
 
-    public function actionJoinRequests(int $id): string
+    public function actionManage(int $id): string
     {
         $model = Group::findOne($id);
         $user = User::findOne(Yii::$app->user->id);
@@ -245,7 +245,7 @@ class GroupController extends Controller
             ],
         ]);
 
-        return $this->render('joinRequests', [
+        return $this->render('manage', [
             'dataProvider' => $dataProvider,
             'model' => $model,
         ]);
@@ -283,10 +283,10 @@ class GroupController extends Controller
 
         if ($model->delete()) {
             Yii::$app->session->setFlash('success', Yii::t('app/group', 'Group has been deleted.'));
-            return $this->redirect('group/index');
+            return $this->redirect('/group/index');
         } else {
             Yii::$app->session->setFlash('error', Yii::t('app/group', 'Failed to delete group.'));
-            return $this->redirect(['group/view', 'id' => $id]);
+            return $this->redirect(['/group/view', 'id' => $id]);
         }
     }
 

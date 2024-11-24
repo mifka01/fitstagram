@@ -75,6 +75,10 @@ return [
     'Error declining membership request.' => 'Při zamítnutí žádosti o členství došlo k chybě.',
     'Error approving membership request.' => 'Při schvalování žádosti o členství došlo k chybě.',
 
+    'Group has been deleted.' => 'Skupina byla smazána.',
+    'Error deleting group.' => 'Při mazání skupiny došlo k chybě.',
+    'Delete group' => 'Smazat skupinu',
+
     'Approve' => 'Schválit',
     'Decline' => 'Zamítnout',
 ];

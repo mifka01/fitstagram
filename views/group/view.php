@@ -72,7 +72,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             ) ?>
                             <?= Html::a(
                                 Yii::t('app/group', 'Manage'),
-                                ['group/join-requests', 'id' => $model->id],
+                                ['group/manage', 'id' => $model->id],
                                 ['class' => 'm-1 w-32 py-2 self-center text-center border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500']
                             ) ?>
                         </div>

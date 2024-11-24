@@ -144,7 +144,7 @@ class GroupMembershipController extends Controller
         } else {
             Yii::$app->session->setFlash('error', Yii::t('app/group', 'Error approving membership request.'));
         }
-        return $this->redirect(['group/join-requests', 'id' => $groupJoinRequest->group_id]);
+        return $this->redirect(['group/manage', 'id' => $groupJoinRequest->group_id]);
     }
 
     /**
@@ -170,7 +170,7 @@ class GroupMembershipController extends Controller
         } else {
             Yii::$app->session->setFlash('error', Yii::t('app/group', 'Error declining membership request.'));
         }
-        return $this->redirect(['group/join-requests', 'id' => $groupJoinRequest->group_id]);
+        return $this->redirect(['group/manage', 'id' => $groupJoinRequest->group_id]);
     }
 
     /**
