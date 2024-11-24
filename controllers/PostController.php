@@ -35,7 +35,7 @@ class PostController extends Controller
                 'class' => \yii\filters\AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['create', 'index', 'vote'],
+                        'actions' => ['create', 'vote'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -48,7 +48,7 @@ class PostController extends Controller
                         ],
                     ],
                     [
-                        'actions' => ['comments', 'get-media-file'],
+                        'actions' => ['comments', 'get-media-file', 'index'],
                         'allow' => true,
                     ],
                 ],
