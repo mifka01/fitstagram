@@ -1,12 +1,13 @@
 <?php
 
 return [
-    'Tag {name}' => 'Tag {name}',
+    'Tag {name}' => 'Štítek {name}',
     'Posts' => 'Příspěvky',
     'Created by' => 'Vytvořil(a)',
     'Last use' => 'Naposledy použito',
-    'Tag not found.' => 'Tag nebyl nalezen.',
+    'Tag not found.' => 'Štítek nebyl nalezen.',
 
-    'Tag has been deleted.' => 'Tag byl smazán.',
-    'Failed to delete tag.' => 'Nepodařilo se smazat tag.',
+    'Delete tag' => 'Smazat štítek',
+    'Tag has been deleted.' => 'Štítek byl smazán.',
+    'Failed to delete tag.' => 'Nepodařilo se smazat štítek.',
 ];
