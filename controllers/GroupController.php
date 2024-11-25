@@ -41,11 +41,11 @@ class GroupController extends Controller
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['index'],
+                        'actions' => ['index' , 'view'],
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['view', 'members'],
+                        'actions' => ['members'],
                         'allow' => true,
                         'roles' => ['participateInGroup'],
                         'roleParams' => [
