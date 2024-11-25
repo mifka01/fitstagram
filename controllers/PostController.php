@@ -118,7 +118,7 @@ class PostController extends Controller
         $model->setAttributes($post->attributes);
         // Set the existing post object in the form
         $model->post = $post;
-        $model->group = strval($post->group_id) ?? '';
+        $model->group = $post->group_id ? strval($post->group_id) : '';
 
 
 

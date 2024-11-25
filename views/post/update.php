@@ -18,8 +18,8 @@ $this->params['breadcrumbs'][] = $this->title;
 $tagsInputId = Html::getInputId($model, 'tags');
 $tagsInputValue = json_encode($model->getTags());
 
-$isPrivate = $model->post->is_private ? 'true' : 'false';
-$isGroup = $model->post->group_id ? 'true' : 'false';
+$isPrivate = $model->post?->is_private ? 'true' : 'false';
+$isGroup = $model->post?->group_id ? 'true' : 'false';
 $groupId = $model->group ? $model->group : 'null';
 
 $js = <<<JS
