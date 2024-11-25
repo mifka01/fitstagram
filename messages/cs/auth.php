@@ -75,6 +75,7 @@ return [
 
     'This username is already taken.' => 'Toto uživatelské jméno je již obsazeno.',
     'This email address is already taken.' => 'Tato emailová adresa je již obsazena.',
+    'Incorrect username or password.' => 'Nesprávné uživatelské jméno nebo heslo.',
 
 # MAIL
     'Account registration at' => 'Registrace účtu na',
