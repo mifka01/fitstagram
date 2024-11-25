@@ -118,6 +118,8 @@ class PostController extends Controller
         $model->setAttributes($post->attributes);
         // Set the existing post object in the form
         $model->post = $post;
+        $model->group = strval($post->group_id) ?? '';
+
 
 
 
@@ -130,7 +132,7 @@ class PostController extends Controller
         }
 
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', Yii::t('app/post', 'Post has been updated.'));
             return $this->goHome();
         }

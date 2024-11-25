@@ -56,7 +56,12 @@ class PostForm extends Model
                 'when' => function ($model) {
                     return !empty($model->group);
                 },
-                'whenClient' => 'function (attribute, value) { return $("#postform-group").val() !== ""; }',
+                'whenClient' => 'function (attribute, value) { 
+                    if ($("#postform-group").length) {
+                        return $("#postform-group").val() !== ""; 
+                    }
+                    return false;
+                }',
                 'message' => Yii::t('app/post', 'You cannot make a private post in a group.')
             ],
             ['tags', 'each', 'rule' => ['match', 'pattern' => '/^#?[a-zA-Z0-9_]+$/']],

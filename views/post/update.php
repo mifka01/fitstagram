@@ -18,6 +18,10 @@ $this->params['breadcrumbs'][] = $this->title;
 $tagsInputId = Html::getInputId($model, 'tags');
 $tagsInputValue = json_encode($model->getTags());
 
+$isPrivate = $model->post->is_private ? 'true' : 'false';
+$isGroup = $model->post->group_id ? 'true' : 'false';
+$groupId = $model->group ? $model->group : 'null';
+
 $js = <<<JS
 
 
@@ -29,6 +33,7 @@ $(document).ready(function() {
         const groupSelect = $('#postform-group')
         const privateToggle = document.getElementById('postform-is_private');
         const privateToggleContainer = document.getElementById('privacy-toggle-container');
+        const groupContainer = document.getElementById('group-container');
         const sharingTypeContainer = document.getElementById('sharing-type-container');
         const publicOption = document.getElementById('sharing-public');
         const privateOption = document.getElementById('sharing-private');
@@ -37,14 +42,22 @@ $(document).ready(function() {
         function updateFormState(sharingType) {
             switch(sharingType) {
                 case 'public':
+                    groupContainer.style.display = 'none';
                     privateToggleContainer.style.display = 'none';
                     groupSelect.val(null).trigger('change');
                     privateToggle.checked = false;
                     break;
                 case 'private':
+                    groupContainer.style.display = 'none';
                     privateToggleContainer.style.display = 'none';
                     groupSelect.val(null).trigger('change')
                     privateToggle.checked = true;
+                    break;
+                case 'group':
+                    groupContainer.style.display = 'block';
+                    privateToggleContainer.style.display = 'none';
+                    privateToggle.checked = false;
+                    groupSelect.val($groupId).trigger('change');
                     break;
             }
         }
@@ -55,44 +68,16 @@ $(document).ready(function() {
             });
         });
 
+
+        privateOption.checked = $isPrivate;
+        groupOption.checked = $isGroup;
+
         const initialSharingType = document.querySelector('input[name="sharing-type"]:checked')?.value || 'public';
         updateFormState(initialSharingType);
 
         $('$tagsInputId').val($tagsInputValue).trigger('change');
 });
 
-function handleFileSelect(input) {
-    const fileList = document.getElementById('file-list');
-    const fileCounter = document.getElementById('file-counter');
-
-    fileList.innerHTML = '';
-
-    if (input.files.length > 0) {
-        for (const file of input.files) {
-            const fileItem = document.createElement('div');
-            fileItem.className = 'flex items-center justify-between py-2 px-3 bg-gray-50 rounded-md';
-
-            const fileInfo = document.createElement('div');
-            fileInfo.className = 'flex items-center';
-
-            const fileIcon = document.createElement('svg');
-            fileIcon.className = 'h-5 w-5 text-gray-400 mr-2';
-            fileIcon.innerHTML = '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>';
-
-            const fileName = document.createElement('span');
-            fileName.className = 'text-sm text-gray-700';
-            fileName.textContent = file.name;
-
-            fileInfo.appendChild(fileIcon);
-            fileInfo.appendChild(fileName);
-            fileItem.appendChild(fileInfo);
-
-            fileList.appendChild(fileItem);
-        }
-
-        const fileCount = input.files.length;
-    }
-}
 JS;
 
 $this->registerJs($js, \yii\web\View::POS_END);
@@ -175,9 +160,47 @@ $this->registerJs($js, \yii\web\View::POS_END);
                             <?= Yii::t('app/post', 'Private - Share with your friends') ?>
                         </label>
                     </div>
+                    <div class="flex items-center">
+                        <input type="radio" id="sharing-group" name="sharing-type" value="group" class="sharing-type h-4 w-4 text-orange-600 focus:ring-orange-500">
+                        <label for="sharing-group" class="ml-3 block text-sm font-medium text-gray-700">
+                            <?= Yii::t('app/post', 'Group - Share with group members') ?>
+                        </label>
+                    </div>
                 </div>
             </div>
 
+            <div id="group-container" class="space-y-2 required" style="display:none;">
+
+            <?= $form->field($model, 'group', [
+                'options' => ['class' => 'space-y-2']
+            ])->widget(Select2::class, [
+                'theme' => Select2::THEME_BOOTSTRAP,
+                'name' => 'group',
+                'data' => [$model->group => $model->post?->group?->name],
+                'value' => $model->post?->group?->id,
+                'options' => [
+                    'placeholder' => Yii::t('app/post', 'Select a group...'),
+                    'class' => 'form-control'
+                ],
+                'pluginOptions' => [
+                    'autocomplete' => 'off',
+                    'allowClear' => true,
+                    'minimumInputLength' => 2,
+                    'maximumInputLength' => 20,
+                    'maximumSelectionLength' => 20,
+                    'maintainOrder' => true,
+                    'ajax' => [
+                        'url' => Url::to(['group/list']),
+                        'dataType' => 'json',
+                        'data' => new JsExpression('function(params) { return {q:params.term}; }')
+                    ],
+                    'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
+                    'templateResult' => new JsExpression('function(tag) { return tag.text; }'),
+                    'templateSelection' => new JsExpression('function (tag) { return tag.text; }'),
+                ],
+                ])->label(Yii::t('app/post', 'Group'), ['class' => 'block text-sm font-medium text-gray-700']) ?>
+
+            </div>
 
             <div id="privacy-toggle-container" style="display: none;">
                 <?= $form->field($model, 'is_private', [
